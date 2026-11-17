@@ -1,0 +1,233 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "This file's JSON Schema, for editor hover help.",
+      "markdownDescription": "This file's JSON Schema, for editor hover help."
+    },
+    "preset": {
+      "description": "Built-in color palette: `conness` (light, navy top bar), `light` (white, sky blue), `grays` (light grays), `dark` (black and white), `dark-blues` (slate blues), `mars` (dark, rust red), `evergreen` (dark greens), `ocean` (light cyan), `lavender` (light purples), `meadow` (light greens) or `sand` (light, warm stone). Individual colors (`colors`) override it.",
+      "default": "conness",
+      "type": "string",
+      "enum": [
+        "conness",
+        "light",
+        "grays",
+        "dark",
+        "dark-blues",
+        "mars",
+        "evergreen",
+        "ocean",
+        "lavender",
+        "meadow",
+        "sand"
+      ],
+      "markdownDescription": "Built-in color palette: `conness` (light, navy top bar), `light` (white, sky blue), `grays` (light grays), `dark` (black and white), `dark-blues` (slate blues), `mars` (dark, rust red), `evergreen` (dark greens), `ocean` (light cyan), `lavender` (light purples), `meadow` (light greens) or `sand` (light, warm stone). Individual colors (`colors`) override it.\n\nDefault: `\"conness\"`"
+    },
+    "colors": {
+      "description": "Per-token overrides on top of the preset.",
+      "type": "object",
+      "properties": {
+        "primary": {
+          "description": "Brand color: active states, focus rings, primary buttons.",
+          "default": "blue-900",
+          "type": "string",
+          "markdownDescription": "Brand color: active states, focus rings, primary buttons.\n\nDefault: `\"blue-900\"`"
+        },
+        "text": {
+          "description": "Body text, inputs, dropdowns, readouts and idle icons: most of the text in panels, popups and the info modal.",
+          "default": "slate-600",
+          "type": "string",
+          "markdownDescription": "Body text, inputs, dropdowns, readouts and idle icons: most of the text in panels, popups and the info modal.\n\nDefault: `\"slate-600\"`"
+        },
+        "strongText": {
+          "description": "Names, titles and emphasized text: layer, legend and basemap names, bookmark and drawing names, dialog titles, popup titles and values. Icon buttons turn this color on hover.",
+          "default": "slate-900",
+          "type": "string",
+          "markdownDescription": "Names, titles and emphasized text: layer, legend and basemap names, bookmark and drawing names, dialog titles, popup titles and values. Icon buttons turn this color on hover.\n\nDefault: `\"slate-900\"`"
+        },
+        "surface": {
+          "description": "Info sections, the popup header and footer, section headers, chips, Measure's unit boxes.",
+          "default": "slate-100",
+          "type": "string",
+          "markdownDescription": "Info sections, the popup header and footer, section headers, chips, Measure's unit boxes.\n\nDefault: `\"slate-100\"`"
+        },
+        "layerGroupBg": {
+          "description": "Layer list group header rows.",
+          "default": "surface",
+          "type": "string",
+          "markdownDescription": "Layer list group header rows.\n\nDefault: `\"surface\"`"
+        },
+        "danger": {
+          "description": "Delete and clear buttons.",
+          "default": "rose-600",
+          "type": "string",
+          "markdownDescription": "Delete and clear buttons.\n\nDefault: `\"rose-600\"`"
+        },
+        "dangerHover": {
+          "description": "Hover color for `danger`.",
+          "default": "rose-700",
+          "type": "string",
+          "markdownDescription": "Hover color for `danger`.\n\nDefault: `\"rose-700\"`"
+        },
+        "success": {
+          "description": "Confirm buttons, like draw's \"done\".",
+          "default": "emerald-600",
+          "type": "string",
+          "markdownDescription": "Confirm buttons, like draw's \"done\".\n\nDefault: `\"emerald-600\"`"
+        },
+        "successHover": {
+          "description": "Hover color for `success`.",
+          "default": "emerald-700",
+          "type": "string",
+          "markdownDescription": "Hover color for `success`.\n\nDefault: `\"emerald-700\"`"
+        },
+        "disabledBg": {
+          "description": "Disabled button fill.",
+          "default": "gray-200",
+          "type": "string",
+          "markdownDescription": "Disabled button fill.\n\nDefault: `\"gray-200\"`"
+        },
+        "disabledText": {
+          "description": "Disabled button text.",
+          "default": "gray-400",
+          "type": "string",
+          "markdownDescription": "Disabled button text.\n\nDefault: `\"gray-400\"`"
+        },
+        "hover": {
+          "description": "Item list hover tint.",
+          "default": "amber-500",
+          "type": "string",
+          "markdownDescription": "Item list hover tint.\n\nDefault: `\"amber-500\"`"
+        },
+        "featureHighlight": {
+          "description": "Outline of the feature whose popup is open (`ui.popups.highlight`).",
+          "default": "cyan-400",
+          "type": "string",
+          "markdownDescription": "Outline of the feature whose popup is open (`ui.popups.highlight`).\n\nDefault: `\"cyan-400\"`"
+        },
+        "slider": {
+          "description": "Toggle switches and range sliders.",
+          "default": "primary",
+          "type": "string",
+          "markdownDescription": "Toggle switches and range sliders.\n\nDefault: `\"primary\"`"
+        },
+        "actionActive": {
+          "description": "Selected tool button (draw, measure).",
+          "default": "primary",
+          "type": "string",
+          "markdownDescription": "Selected tool button (draw, measure).\n\nDefault: `\"primary\"`"
+        },
+        "actionActiveHover": {
+          "description": "Hover color for `actionActive`.",
+          "default": "primaryDarker",
+          "type": "string",
+          "markdownDescription": "Hover color for `actionActive`.\n\nDefault: `\"primaryDarker\"`"
+        },
+        "actionNotActive": {
+          "description": "Idle tool button.",
+          "default": "white",
+          "type": "string",
+          "markdownDescription": "Idle tool button.\n\nDefault: `\"white\"`"
+        },
+        "actionNotActiveHover": {
+          "description": "Hover color for `actionNotActive`.",
+          "default": "slate-50",
+          "type": "string",
+          "markdownDescription": "Hover color for `actionNotActive`.\n\nDefault: `\"slate-50\"`"
+        },
+        "save": {
+          "description": "Save buttons (bookmarks, draw).",
+          "default": "primary",
+          "type": "string",
+          "markdownDescription": "Save buttons (bookmarks, draw).\n\nDefault: `\"primary\"`"
+        },
+        "saveHover": {
+          "description": "Hover color for `save`.",
+          "default": "primaryDarker",
+          "type": "string",
+          "markdownDescription": "Hover color for `save`.\n\nDefault: `\"primaryDarker\"`"
+        },
+        "popupHeaderBg": {
+          "description": "Popup title bar.",
+          "default": "surface",
+          "type": "string",
+          "markdownDescription": "Popup title bar.\n\nDefault: `\"surface\"`"
+        },
+        "popupArrow": {
+          "description": "Popup pager arrows.",
+          "default": "text",
+          "type": "string",
+          "markdownDescription": "Popup pager arrows.\n\nDefault: `\"text\"`"
+        },
+        "dropdownHover": {
+          "description": "Dropdown focus (measure's unit selectors).",
+          "default": "primary",
+          "type": "string",
+          "markdownDescription": "Dropdown focus (measure's unit selectors).\n\nDefault: `\"primary\"`"
+        },
+        "panelBg": {
+          "description": "Panels, popups, dialogs, dropdowns and inputs.",
+          "default": "white",
+          "type": "string",
+          "markdownDescription": "Panels, popups, dialogs, dropdowns and inputs.\n\nDefault: `\"white\"`"
+        },
+        "panelBorder": {
+          "description": "Panel borders and dividers.",
+          "default": "slate-200",
+          "type": "string",
+          "markdownDescription": "Panel borders and dividers.\n\nDefault: `\"slate-200\"`"
+        },
+        "panelWidget": {
+          "description": "Side rail widget icons and the side panel collapse chevron. Black on light themes and white on dark ones, like the top bar icons where the top bar shares the panel color.",
+          "default": "black",
+          "type": "string",
+          "markdownDescription": "Side rail widget icons and the side panel collapse chevron. Black on light themes and white on dark ones, like the top bar icons where the top bar shares the panel color.\n\nDefault: `\"black\"`"
+        },
+        "topBarBg": {
+          "description": "Top bar background.",
+          "default": "primary",
+          "type": "string",
+          "markdownDescription": "Top bar background.\n\nDefault: `\"primary\"`"
+        },
+        "titleText": {
+          "description": "The app title in the top bar. Must contrast with `topBarBg`.",
+          "default": "white",
+          "type": "string",
+          "markdownDescription": "The app title in the top bar. Must contrast with `topBarBg`.\n\nDefault: `\"white\"`"
+        },
+        "topBarWidget": {
+          "description": "Top bar widget icons, the info button and the mobile carousel. Must contrast with `topBarBg`.",
+          "default": "white",
+          "type": "string",
+          "markdownDescription": "Top bar widget icons, the info button and the mobile carousel. Must contrast with `topBarBg`.\n\nDefault: `\"white\"`"
+        },
+        "mapControlBg": {
+          "description": "Background of the map's controls and the floating widget buttons. Their icons are black or white (`mapControlIcons`).",
+          "type": "string",
+          "markdownDescription": "Background of the map's controls and the floating widget buttons. Their icons are black or white (`mapControlIcons`).\n\nDefault: the panel color (`panelBg`)"
+        }
+      },
+      "additionalProperties": false,
+      "markdownDescription": "Per-token overrides on top of the preset.\n\n[Docs](https://conness-gis.com/configuration/theme/)"
+    },
+    "widgetTitleColor": {
+      "description": "Widget panel title color. A placement's `header.titleColor` wins.",
+      "default": "text",
+      "type": "string",
+      "enum": ["primary", "text"],
+      "markdownDescription": "Widget panel title color. A placement's `header.titleColor` wins.\n\nDefault: `\"text\"`"
+    },
+    "mapControlIcons": {
+      "description": "Icons on the map's controls and the floating widget buttons: one color for all of them, so MapLibre's own icons and the widgets' match. Locate me's state and the compass tip keep their colors.",
+      "type": "string",
+      "enum": ["black", "white"],
+      "markdownDescription": "Icons on the map's controls and the floating widget buttons: one color for all of them, so MapLibre's own icons and the widgets' match. Locate me's state and the compass tip keep their colors.\n\nDefault: whichever reads on `mapControlBg`"
+    }
+  },
+  "additionalProperties": false,
+  "description": "The project's colors (`theme.json`). Resolves as preset ← `colors`.",
+  "markdownDescription": "The project's colors (`theme.json`). Resolves as preset ← `colors`.\n\n[Docs](https://conness-gis.com/configuration/theme/)"
+}

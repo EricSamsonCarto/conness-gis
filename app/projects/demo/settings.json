@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schema/settings.schema.json",
+  "branding": {
+    "title": "Conness GIS",
+    "appId": "conness-gis",
+    "logo": "/logo.svg",
+    "description": "Application showing off all the different file formats someone can use within conness his"
+  },
+  "ui": {
+    "layout": {
+      "showInfo": false,
+      "showBranding": true,
+      "sideRailIconSize": 21,
+      "sideRailOpenOnLoad": "layer-list",
+      "mobileWidgetBar": "bottom"
+    },
+    "info": { "autoOpen": false, "allowDismiss": true },
+    "widgetHeader": { "showTitle": true, "showDivider": true },
+    "topBar": {
+      "shadow": { "enabled": true, "strength": 0.4 },
+      "logoSize": 35,
+      "mobileVisibleCount": 5
+    },
+    "loader": { "enabled": true, "label": "Loading…", "showDetails": true },
+    "buttonCursor": "pointer",
+    "popups": { "trigger": "click", "height": 300, "closeOnMapClick": true, "resizable": true },
+    "mobile": { "initialSheetVh": 30 }
+  },
+  "map": {
+    "style": "https://tiles.openfreemap.org/styles/positron",
+    "center": [-98.5, 39.5],
+    "zoom": 2.5,
+    "maxZoom": 20,
+    "globe": { "enabled": false, "stars": true, "comets": false, "atmosphere": true },
+    "onlyVisibleOnLoad": true
+  },
+  "commercialUse": false,
+  "mapControls": { "scale": { "style": "minimal", "maxWidth": 150, "unit": "metric" } },
+  "contextMenu": {
+    "centerHere": true,
+    "appleMaps": true,
+    "googleMaps": true,
+    "googleStreetView": true,
+    "custom": [
+      {
+        "label": "Open in Bing Maps",
+        "url": "https://www.bing.com/maps?cp={lat}~{lng}&lvl={zoom}"
+      }
+    ]
+  },
+  "topBarWidgets": [],
+  "sidePanelWidgets": [{ "widgetName": "layer-list" }, { "widgetName": "legend" }],
+  "floatingWidgets": [
+    {
+      "slot": "top-left",
+      "widgets": [{ "widgetName": "search", "order": -1, "stayOnMobile": true }]
+    }
+  ],
+  "mobileWidgets": ["layer-list", "legend"],
+  "widgets": {
+    "search": {
+      "geocoder": { "provider": "nominatim", "limit": 3 },
+      "layers": [
+        {
+          "layerId": "airports",
+          "fields": ["name"],
+          "labelField": "name",
+          "limit": 3,
+          "pointZoom": 12
+        }
+      ],
+      "placeholder": "Search places, airports, or power plants…",
+      "pointZoom": 14,
+      "sectionOrder": "features-first"
+    },
+    "measure": {
+      "persistOnClose": false,
+      "showTotal": true,
+      "showEdgeLabels": false,
+      "defaultLinearUnit": "kilometers",
+      "defaultAreaUnit": "square-kilometers",
+      "precision": 2
+    },
+    "draw": {},
+    "bookmarks": { "maxCount": 35 },
+    "layer-list": {
+      "groupsCollapsedByDefault": true,
+      "rowClickToggle": true,
+      "exportFormats": ["geojson", "geoparquet", "csv"]
+    }
+  }
+}

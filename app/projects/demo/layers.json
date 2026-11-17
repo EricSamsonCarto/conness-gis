@@ -1,0 +1,440 @@
+{
+  "$schema": "../../schema/layers.schema.json",
+  "layers": [
+    {
+      "id": "airports",
+      "type": "geojson",
+      "name": "US Major Airports (GeoJSON External)",
+      "group": "Group 1",
+      "geometryType": "point",
+      "url": "https://gist.githubusercontent.com/EricSamsonCarto/562ae30741bc29b10948874383a624be/raw/9ca8cd12b4cd0ba9810a302332ac8b78984b5a79/US_major_airports.geojson",
+      "symbology": { "kind": "ref", "name": "airports-by-passengers" },
+      "label": {
+        "field": "name",
+        "bold": true,
+        "fontSize": 11,
+        "color": "#1e293b",
+        "haloColor": "#ffffff",
+        "haloWidth": 1.5,
+        "anchor": "top-right",
+        "minZoom": 3
+      },
+      "filters": [
+        { "column": "state", "kind": "categorical", "label": "State" },
+        { "column": "passengers", "kind": "numeric", "label": "Annual Passengers" }
+      ],
+      "popup": {
+        "displayType": "featureHighlights",
+        "title": "name",
+        "header": "{city} Airport",
+        "copyCoordinates": true,
+        "viewInGoogleMaps": true,
+        "fields": {
+          "passengers": "Annual Passengers",
+          "faa_id": "FAA Code",
+          "enplanemen": "Enplanements",
+          "city": "City",
+          "state": "State",
+          "facility": "Facility Type",
+          "owner": "Ownership",
+          "elev_feet": "Elevation (ft)"
+        }
+      }
+    },
+    {
+      "id": "world-places",
+      "type": "geojson",
+      "name": "World Places (DuckDB GeoJSON)",
+      "group": "Group 1",
+      "geometryType": "point",
+      "visible": false,
+      "url": "./layers/world_places.geojson",
+      "duckdb": true,
+      "symbology": { "kind": "ref", "name": "places-by-type" },
+      "label": { "field": "name", "fontSize": 11, "minZoom": 5 },
+      "filters": [
+        { "column": "featurecla", "kind": "categorical", "label": "Place Type" },
+        { "column": "pop_max", "kind": "numeric", "label": "Population" }
+      ],
+      "popup": {
+        "displayType": "standard",
+        "title": "name",
+        "header": "{adm0name}",
+        "fields": {
+          "featurecla": "Place Type",
+          "adm1name": "State or Province",
+          "adm0name": "Country",
+          "pop_max": "Population"
+        }
+      }
+    },
+    {
+      "id": "highways",
+      "type": "geojson",
+      "name": "US Major Highways (GeoJSON)",
+      "group": "Group 2",
+      "geometryType": "line",
+      "url": "./layers/USA_major_highways.geojson",
+      "visible": false,
+      "minZoom": 5,
+      "symbology": { "kind": "simple", "color": "#f59e0b", "width": 1.5 }
+    },
+    {
+      "id": "ndbc-buoys",
+      "type": "esri",
+      "service": "feature",
+      "name": "NDBC Buoys (Feature Service)",
+      "group": "ESRI Services",
+      "geometryType": "point",
+      "url": "https://services5.arcgis.com/7weheFjxuNkGGiZi/arcgis/rest/services/National_Data_Buoy_Center_Station_Observations/FeatureServer/0",
+      "visible": false,
+      "minZoom": 4,
+      "symbology": {
+        "kind": "simple",
+        "color": "#a5d7f7",
+        "radius": 5,
+        "strokeColor": "#ffffff",
+        "strokeWidth": 1
+      },
+      "popup": { "displayType": "standard" },
+      "filters": [
+        { "column": "WSPD", "kind": "numeric", "label": "Wind Speed" },
+        { "column": "WVHT", "kind": "numeric", "label": "Wave Height" }
+      ]
+    },
+    {
+      "id": "usa-dynamic",
+      "type": "esri",
+      "service": "dynamic",
+      "name": "USA States/Counties (MapServer)",
+      "group": "ESRI Services",
+      "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer",
+      "layers": [2, 3],
+      "visible": false,
+      "esriOpacity": 0.7
+    },
+    {
+      "id": "regrid-parcels",
+      "type": "esri",
+      "service": "tiled",
+      "name": "US Parcels (Tiles)",
+      "group": "ESRI Services",
+      "url": "https://tiles.arcgis.com/tiles/KzeiCaQsMoeCfoCq/arcgis/rest/services/Regrid_Nationwide_Parcel_Boundaries_v1/MapServer",
+      "visible": false,
+      "legend": { "kind": "categories", "entries": [{ "label": "Parcels", "color": "#888" }] },
+      "minZoom": 14,
+      "esriOpacity": 0.8
+    },
+    {
+      "id": "overture-places",
+      "type": "pmtiles",
+      "name": "Overture Places (PMTiles Cloud)",
+      "group": "PMTiles",
+      "geometryType": "point",
+      "url": "https://overturemaps-extras-us-west-2.s3.us-west-2.amazonaws.com/tiles/2026-09-23.0/places.pmtiles",
+      "sourceLayers": [
+        {
+          "sourceLayer": "place",
+          "symbology": {
+            "kind": "simple",
+            "color": "#0891b2",
+            "radius": 6,
+            "strokeColor": "#ffffff",
+            "strokeWidth": 3
+          }
+        }
+      ],
+      "visible": false,
+      "minZoom": 10,
+      "popup": { "displayType": "standard" }
+    },
+    {
+      "id": "protomaps-plain",
+      "type": "pmtiles",
+      "name": "Bundled Plain Protomaps (PMTiles Cloud)",
+      "group": "PMTiles",
+      "url": "https://data.source.coop/protomaps/openstreetmap/v4.pmtiles",
+      "visible": false,
+      "popup": { "displayType": "standard" },
+      "sourceLayers": [
+        { "sourceLayer": "boundaries" },
+        { "sourceLayer": "buildings" },
+        { "sourceLayer": "earth" },
+        { "sourceLayer": "landcover" },
+        { "sourceLayer": "landuse" },
+        { "sourceLayer": "places" },
+        { "sourceLayer": "pois" },
+        { "sourceLayer": "roads" },
+        { "sourceLayer": "water" }
+      ]
+    },
+    {
+      "id": "protomaps-styled",
+      "type": "pmtiles",
+      "name": "Bundled Styled Protomaps (PMTiles Cloud)",
+      "group": "PMTiles",
+      "url": "https://data.source.coop/protomaps/openstreetmap/v4.pmtiles",
+      "visible": false,
+      "popup": { "displayType": "standard" },
+      "sourceLayers": [
+        {
+          "sourceLayer": "places",
+          "name": "Places",
+          "geometryType": "point",
+          "symbology": {
+            "kind": "simple",
+            "color": "#1f2937",
+            "radius": 3,
+            "strokeColor": "#ffffff",
+            "strokeWidth": 1
+          },
+          "label": {
+            "field": "name",
+            "fontSize": 11,
+            "color": "#1f2937",
+            "haloColor": "#ffffff",
+            "haloWidth": 1.5,
+            "anchor": "top-right"
+          }
+        },
+        {
+          "sourceLayer": "pois",
+          "name": "Points of Interest",
+          "geometryType": "point",
+          "symbology": {
+            "kind": "simple",
+            "color": "#e11d48",
+            "radius": 3,
+            "strokeColor": "#ffffff",
+            "strokeWidth": 1,
+            "opacity": 0.9
+          }
+        },
+        {
+          "sourceLayer": "boundaries",
+          "name": "Boundaries",
+          "geometryType": "line",
+          "symbology": { "kind": "simple", "color": "#7c3aed", "width": 1.5 }
+        },
+        {
+          "sourceLayer": "roads",
+          "name": "Roads",
+          "geometryType": "line",
+          "symbology": { "kind": "simple", "color": "#f59e0b", "width": 1.5 }
+        },
+        {
+          "sourceLayer": "buildings",
+          "name": "Buildings",
+          "geometryType": "polygon",
+          "symbology": {
+            "kind": "simple",
+            "color": "#94a3b8",
+            "opacity": 0.7,
+            "strokeColor": "#64748b",
+            "strokeWidth": 0.5
+          }
+        },
+        {
+          "sourceLayer": "water",
+          "name": "Water",
+          "symbology": {
+            "kind": "simple",
+            "color": "#3b82f6",
+            "opacity": 0.6,
+            "width": 1.5,
+            "radius": 3
+          }
+        },
+        {
+          "sourceLayer": "landuse",
+          "name": "Land Use",
+          "geometryType": "polygon",
+          "symbology": { "kind": "simple", "color": "#22c55e", "opacity": 0.25 }
+        },
+        {
+          "sourceLayer": "landcover",
+          "name": "Land Cover",
+          "geometryType": "polygon",
+          "symbology": { "kind": "simple", "color": "#84cc16", "opacity": 0.2 }
+        }
+      ]
+    },
+    {
+      "id": "counties",
+      "type": "pmtiles",
+      "name": "US Counties (PMTiles Local)",
+      "group": "PMTiles",
+      "url": "./layers/US_counties.pmtiles",
+      "sourceLayers": [
+        {
+          "sourceLayer": "US_counties",
+          "symbology": {
+            "kind": "simple",
+            "color": "#838291",
+            "strokeColor": "#ffffff",
+            "strokeWidth": 1,
+            "opacity": 0.4,
+            "strokeOpacity": 0.4
+          }
+        }
+      ],
+      "visible": false,
+      "minZoom": 5,
+      "maxZoom": 10,
+      "popup": { "displayType": "standard" }
+    },
+    {
+      "id": "flowers-raster",
+      "type": "pmtiles",
+      "raster": true,
+      "name": "Flowers Imagery (Raster PMTiles)",
+      "group": "PMTiles",
+      "url": "https://air.mtn.tw/flowers.pmtiles",
+      "visible": false
+    },
+    {
+      "id": "demotiles-tilejson",
+      "type": "tiles",
+      "name": "MapLibre Demo Tiles (TileJSON)",
+      "group": "Tile Servers",
+      "url": "https://demotiles.maplibre.org/tiles/tiles.json",
+      "visible": false,
+      "popup": { "displayType": "standard" }
+    },
+    {
+      "id": "demotiles-mlt",
+      "type": "tiles",
+      "name": "MapLibre Demo Tiles (MLT)",
+      "group": "Tile Servers",
+      "url": "https://demotiles.maplibre.org/tiles-mlt/plain/tiles.json",
+      "visible": false,
+      "popup": { "displayType": "standard" }
+    },
+    {
+      "id": "demotiles-xyz",
+      "type": "tiles",
+      "name": "Countries (XYZ Template)",
+      "group": "Tile Servers",
+      "url": "https://demotiles.maplibre.org/tiles/{z}/{x}/{y}.pbf",
+      "maxTileZoom": 6,
+      "visible": false,
+      "popup": { "displayType": "standard" },
+      "sourceLayers": [
+        {
+          "sourceLayer": "countries",
+          "geometryType": "polygon",
+          "symbology": {
+            "kind": "simple",
+            "color": "#f472b6",
+            "opacity": 0.3,
+            "strokeColor": "#be185d",
+            "strokeWidth": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "counties-fgb",
+      "type": "flatgeobuf",
+      "name": "US Counties (FlatGeobuf)",
+      "geometryType": "polygon",
+      "url": "https://flatgeobuf.org/test/data/UScounties.fgb",
+      "bbox": "all",
+      "visible": false,
+      "minZoom": 5,
+      "maxZoom": 10,
+      "symbology": {
+        "kind": "simple",
+        "color": "#9a6fb0",
+        "strokeColor": "#ffffff",
+        "strokeWidth": 1,
+        "opacity": 0.4,
+        "strokeOpacity": 0.4
+      },
+      "popup": { "displayType": "standard" }
+    },
+    {
+      "id": "storm-reports-geoparquet",
+      "type": "geoparquet",
+      "name": "Storm Reports (GeoParquet)",
+      "geometryType": "point",
+      "url": "./layers/storm_reports.parquet",
+      "visible": false,
+      "symbology": {
+        "kind": "simple",
+        "color": "#ff3c3c",
+        "radius": 8,
+        "strokeColor": "#ffffff",
+        "strokeWidth": 1,
+        "opacity": 0.5,
+        "strokeOpacity": 0.5
+      },
+      "popup": {
+        "displayType": "standard",
+        "title": "incident_type",
+        "fields": { "location": "Location", "comments": "Comments", "source": "Source" }
+      },
+      "filters": [{ "column": "incident_type", "kind": "categorical", "label": "Incident Type" }]
+    },
+    {
+      "id": "storm-reports-geoparquet-5070",
+      "type": "geoparquet",
+      "name": "Storm Reports (GeoParquet 5070)",
+      "geometryType": "point",
+      "url": "./layers/storm_reports_5070.parquet",
+      "visible": false,
+      "symbology": {
+        "kind": "simple",
+        "color": "#3c4fff",
+        "radius": 8,
+        "strokeColor": "#ffffff",
+        "strokeWidth": 1,
+        "opacity": 0.5,
+        "strokeOpacity": 0.5
+      },
+      "popup": {
+        "displayType": "standard",
+        "title": "incident_type",
+        "fields": { "location": "Location", "comments": "Comments", "source": "Source" }
+      },
+      "filters": [{ "column": "incident_type", "kind": "categorical", "label": "Incident Type" }]
+    },
+    {
+      "id": "scott-buildings",
+      "type": "geoparquet",
+      "name": "Scott County Buildings (GeoParquet)",
+      "geometryType": "polygon",
+      "url": "./layers/scott_county_iowa_buildings.parquet",
+      "visible": false,
+      "symbology": {
+        "kind": "simple",
+        "color": "#64748b",
+        "opacity": 0.6,
+        "strokeColor": "#334155",
+        "strokeWidth": 0.5
+      },
+      "popup": { "displayType": "standard" },
+      "filters": [{ "column": "Build_Hgt", "kind": "numeric", "label": "Building Height" }],
+      "actions": { "visibilityZoom": true }
+    },
+    {
+      "id": "scott-buildings-mvt",
+      "type": "geoparquet",
+      "name": "Scott County Buildings (GeoParquet Tiled)",
+      "geometryType": "polygon",
+      "url": "./layers/scott_county_iowa_buildings.parquet",
+      "mvt": true,
+      "visible": false,
+      "symbology": {
+        "kind": "simple",
+        "color": "#0d9488",
+        "opacity": 0.6,
+        "strokeColor": "#134e4a",
+        "strokeWidth": 0.5
+      },
+      "popup": { "displayType": "standard" },
+      "filters": [{ "column": "Build_Hgt", "kind": "numeric", "label": "Building Height" }],
+      "actions": { "visibilityZoom": true }
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+.draw-widget {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-panelBg);
+  font-family: inherit;
+  /* anchors the ConfirmDialog overlay to the widget */
+  position: relative;
+}
+
+/* Draw sets the canvas cursor inline, so !important wins */
+.draw-drawing .maplibregl-canvas,
+.draw-vertex-hover .maplibregl-canvas {
+  cursor: crosshair !important;
+}
+
+.draw-feature-hover .maplibregl-canvas {
+  cursor: pointer !important;
+}
+
+.draw-widget * {
+  font-family: inherit;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.draw-widget .widget-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.draw-widget .style-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-panelBorder);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.draw-widget .style-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: var(--text-medium);
+  font-weight: 600;
+  color: var(--color-strongText);
+}
+
+.draw-widget .style-panel-header span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.draw-widget .style-panel-done {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--color-success);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.draw-widget .style-panel-done:hover {
+  background: var(--color-successHover);
+}
+
+.draw-widget .style-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3125rem;
+}
+
+.draw-widget .style-label {
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.draw-widget .swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+}
+
+/* a fixed black ring, it outlines user colors, not theme chrome */
+.draw-widget .swatch {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  padding: 0;
+}
+
+.draw-widget .swatch.active {
+  border-color: var(--color-strongText);
+}
+
+.draw-widget .swatch.custom {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: linear-gradient(45deg, #ddd 25%, transparent 25%),
+    linear-gradient(-45deg, #ddd 25%, transparent 25%);
+  background-size: 8px 8px;
+}
+
+.draw-widget .swatch.custom input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.draw-widget .style-field input[type='range'] {
+  width: 100%;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.draw-widget .text-input {
+  width: 100%;
+  padding: 0.3125rem 0.4375rem;
+  font: inherit;
+  font-size: var(--text-large);
+  border: 1px solid var(--color-panelBorder);
+  border-radius: 3px;
+  color: var(--color-text);
+}
+
+.draw-widget .text-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+.draw-widget .drawings-list {
+  flex: 1;
+  min-height: 7.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.draw-widget .saved-sets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  flex-shrink: 0;
+  border-top: 1px solid var(--color-panelBorder);
+  padding-top: 0.625rem;
+}
+
+.draw-widget .saved-sets-header {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: 100%;
+  padding: 0.125rem 0;
+  background: none;
+  border: none;
+  font-size: var(--text-large);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--color-strongText);
+  cursor: pointer;
+}
+
+.draw-widget .saved-chevron {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.draw-widget .saved-chevron.open {
+  transform: rotate(90deg);
+}
+
+/* own scroll so a long list never pushes the widget around */
+.draw-widget .saved-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  max-height: 13.75rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.draw-widget .save-row {
+  display: flex;
+  gap: 0.375rem;
+  flex-shrink: 0;
+}
+
+.draw-widget .save-name-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.3125rem 0.4375rem;
+  font: inherit;
+  font-size: var(--text-medium);
+  border: 1px solid var(--color-panelBorder);
+  border-radius: 3px;
+  color: var(--color-text);
+}
+
+.draw-widget .save-name-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+.draw-widget .save-button {
+  flex-shrink: 0;
+  padding: 0.3125rem 0.75rem;
+  background: var(--color-save);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: var(--text-medium);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.draw-widget .save-button:hover:not(:disabled) {
+  background: var(--color-saveHover);
+}
+
+.draw-widget .save-button:disabled {
+  background: var(--color-disabledBg);
+  color: var(--color-disabledText);
+  cursor: not-allowed;
+}
+
+.draw-widget .set-count {
+  flex-shrink: 0;
+  min-width: 1.25rem;
+  padding: 0.0625rem 0.375rem;
+  border-radius: 10px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  text-align: center;
+}
+
+.draw-widget .saved-count {
+  min-width: 1.125rem;
+  padding: 0 0.3125rem;
+  border-radius: 9px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-align: center;
+}

@@ -1,0 +1,71 @@
+{
+  "name": "app",
+  "private": true,
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --config vite.editor.config.ts",
+    "dev": "node scripts/run.mjs dev",
+    "build": "node scripts/run.mjs build",
+    "lint": "eslint .",
+    "preview": "node scripts/run.mjs preview",
+    "typecheck": "tsc -b --noEmit",
+    "test": "node --test 'src/**/*.test.ts' 'scripts/*.test.ts'",
+    "new": "node scripts/new-project.mjs",
+    "upgrade": "node scripts/upgrades.ts"
+  },
+  "dependencies": {
+    "@duckdb/duckdb-wasm": "1.33.1-dev114.0",
+    "@mapbox/mapbox-gl-draw": "^1.5.2",
+    "@turf/turf": "^7.4.0",
+    "esri-gl": "^2.1.0",
+    "flatgeobuf": "^4.6.1",
+    "hyparquet-writer": "^0.18.0",
+    "maplibre-contour": "^0.1.1",
+    "maplibre-gl": "^6.16.0",
+    "pmtiles": "^4.5.0",
+    "re-resizable": "^6.11.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/geojson": "^7946.0.16",
+    "@types/mapbox__mapbox-gl-draw": "^1.4.9",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "fflate": "^0.8.3",
+    "globals": "^17.14.0",
+    "react-colorful": "^5.8.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.6",
+    "zod": "^4.6.7"
+  },
+  "overrides": {
+    "esri-gl": {
+      "maplibre-gl": "$maplibre-gl"
+    },
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^7.1.6"
+    },
+    "node-domexception": "npm:@nolyfill/domexception@^1.0.28"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "allowScripts": {
+    "fsevents": false
+  }
+}

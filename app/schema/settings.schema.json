@@ -1,0 +1,2156 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "This file's JSON Schema, for editor hover help.",
+      "markdownDescription": "This file's JSON Schema, for editor hover help."
+    },
+    "connessVersion": {
+      "description": "The Conness GIS release this project was made with, set when it was created. Conness upgrades older projects from it, so leave it as it is.",
+      "type": "string",
+      "markdownDescription": "The Conness GIS release this project was made with, set when it was created. Conness upgrades older projects from it, so leave it as it is.\n\nDefault: older than 1.0.0"
+    },
+    "branding": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "App name, shown in the top bar.",
+          "markdownDescription": "App name, shown in the top bar."
+        },
+        "description": {
+          "description": "One or two sentences about the app. Search engines and link previews show it, and it goes in the build's `llms.txt`.",
+          "type": "string",
+          "markdownDescription": "One or two sentences about the app. Search engines and link previews show it, and it goes in the build's `llms.txt`."
+        },
+        "logo": {
+          "description": "Logo path, e.g. `\"/logo.svg\"` for a file in the project's `public/`. Size it with `ui.topBar.logoSize`.",
+          "type": "string",
+          "markdownDescription": "Logo path, e.g. `\"/logo.svg\"` for a file in the project's `public/`. Size it with `ui.topBar.logoSize`."
+        },
+        "favicon": {
+          "description": "Browser tab icon path, e.g. `\"/favicon.png\"` for a file in the project's `public/`.",
+          "default": "/favicon.svg",
+          "type": "string",
+          "markdownDescription": "Browser tab icon path, e.g. `\"/favicon.png\"` for a file in the project's `public/`.\n\nDefault: `\"/favicon.svg\"`"
+        },
+        "appId": {
+          "description": "Prefix for every localStorage key the app writes (bookmarks, drawings, measure prefs). Give each app its own when several share one domain.",
+          "type": "string",
+          "markdownDescription": "Prefix for every localStorage key the app writes (bookmarks, drawings, measure prefs). Give each app its own when several share one domain.\n\nDefault: slug of `title`"
+        }
+      },
+      "required": ["title"],
+      "additionalProperties": false,
+      "description": "Title, logo, page description and storage id.",
+      "markdownDescription": "Title, logo, page description and storage id.\n\n[Docs](https://conness-gis.com/configuration/branding/)"
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "widgetHeader": {
+          "description": "Widget panel title bar. Title color is `theme.widgetTitleColor`.",
+          "type": "object",
+          "properties": {
+            "showTitle": {
+              "description": "Show the widget's name.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Show the widget's name.\n\nDefault: `true`"
+            },
+            "showDivider": {
+              "description": "Line under the title.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Line under the title.\n\nDefault: `true`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "Widget panel title bar. Title color is `theme.widgetTitleColor`."
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "sideRailSide": {
+              "description": "Side of the side rail (icon strip and its panel).",
+              "default": "left",
+              "type": "string",
+              "enum": ["left", "right"],
+              "markdownDescription": "Side of the side rail (icon strip and its panel).\n\nDefault: `\"left\"`"
+            },
+            "topBarPanelSide": {
+              "description": "Side a top-bar widget's panel opens on. Only needed without side rail widgets. Otherwise it opens opposite the side rail.",
+              "type": "string",
+              "enum": ["left", "right"],
+              "markdownDescription": "Side a top-bar widget's panel opens on. Only needed without side rail widgets. Otherwise it opens opposite the side rail.\n\nDefault: the side opposite `sideRailSide`"
+            },
+            "topBarWidgetsSide": {
+              "description": "Side of the top-bar widget buttons. The title and logo take the other side.",
+              "default": "right",
+              "type": "string",
+              "enum": ["left", "right"],
+              "markdownDescription": "Side of the top-bar widget buttons. The title and logo take the other side.\n\nDefault: `\"right\"`"
+            },
+            "showInfo": {
+              "description": "Info button in the top bar.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Info button in the top bar.\n\nDefault: `true`"
+            },
+            "showBranding": {
+              "description": "Logo and title in the top bar.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Logo and title in the top bar.\n\nDefault: `true`"
+            },
+            "mobileWidgetBar": {
+              "description": "Where the widget buttons sit on phones. `\"bottom\"` gives them their own bar under the map, where thumbs reach (`ui.mobile.widgetBarHeight`). The top bar keeps the logo, title and info button, at `ui.topBar.mobileHeight`.",
+              "default": "top",
+              "type": "string",
+              "enum": ["top", "bottom"],
+              "markdownDescription": "Where the widget buttons sit on phones. `\"bottom\"` gives them their own bar under the map, where thumbs reach (`ui.mobile.widgetBarHeight`). The top bar keeps the logo, title and info button, at `ui.topBar.mobileHeight`.\n\nDefault: `\"top\"`"
+            },
+            "showTopBar": {
+              "description": "The top bar, on desktop. Off hides it with its title, logo, info button and top-bar widgets (mobile keeps its own bar).",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "The top bar, on desktop. Off hides it with its title, logo, info button and top-bar widgets (mobile keeps its own bar).\n\nDefault: `true`"
+            },
+            "showSideRail": {
+              "description": "The side rail, on desktop. Off hides it with its widgets (mobile still offers them in its carousel).",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "The side rail, on desktop. Off hides it with its widgets (mobile still offers them in its carousel).\n\nDefault: `true`"
+            },
+            "sideRailPanelWidth": {
+              "description": "Side panel width in px.",
+              "default": 288,
+              "type": "number",
+              "markdownDescription": "Side panel width in px.\n\nDefault: `288`"
+            },
+            "sideRailStripWidth": {
+              "description": "Icon strip width in px.",
+              "default": 48,
+              "type": "number",
+              "markdownDescription": "Icon strip width in px.\n\nDefault: `48`"
+            },
+            "sideRailOpenOnLoad": {
+              "description": "A side panel widget's id (e.g. `\"layer-list\"`) to have its panel open when the app loads, on desktop. Unset starts closed.",
+              "type": "string",
+              "markdownDescription": "A side panel widget's id (e.g. `\"layer-list\"`) to have its panel open when the app loads, on desktop. Unset starts closed.\n\nDefault: closed"
+            },
+            "topBarOpenOnLoad": {
+              "description": "A top bar widget's id (e.g. `\"bookmarks\"`) to have its panel open when the app loads, on desktop. Unset starts closed.",
+              "type": "string",
+              "markdownDescription": "A top bar widget's id (e.g. `\"bookmarks\"`) to have its panel open when the app loads, on desktop. Unset starts closed.\n\nDefault: closed"
+            },
+            "sideRailChevronSize": {
+              "description": "The side panel's collapse chevron, in px.",
+              "default": 16,
+              "type": "number",
+              "markdownDescription": "The side panel's collapse chevron, in px.\n\nDefault: `16`"
+            },
+            "sideRailIconSize": {
+              "description": "Side rail icon size in px. The button adds 12px. Above ~36, widen `sideRailStripWidth`.",
+              "default": 20,
+              "type": "number",
+              "markdownDescription": "Side rail icon size in px. The button adds 12px. Above ~36, widen `sideRailStripWidth`.\n\nDefault: `20`"
+            },
+            "sideRailShadow": {
+              "description": "Shadow beside the side rail, over the map only.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Show the shadow.",
+                  "default": false,
+                  "type": "boolean",
+                  "markdownDescription": "Show the shadow.\n\nDefault: `false`"
+                },
+                "strength": {
+                  "description": "0 to 1. Scales darkness and height.",
+                  "default": 0.4,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "markdownDescription": "0 to 1. Scales darkness and height.\n\nDefault: `0.4`"
+                }
+              },
+              "additionalProperties": false,
+              "markdownDescription": "Shadow beside the side rail, over the map only."
+            }
+          },
+          "additionalProperties": false,
+          "description": "The layout. Mobile ignores the side settings.",
+          "markdownDescription": "The layout. Mobile ignores the side settings.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#layout-uilayout)"
+        },
+        "info": {
+          "type": "object",
+          "properties": {
+            "autoOpen": {
+              "description": "Open on load. Closing it only lasts until the next load.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Open on load. Closing it only lasts until the next load.\n\nDefault: `false`"
+            },
+            "allowDismiss": {
+              "description": "With `autoOpen`: add a \"don't show again\" checkbox. Editing `info.md` shows it again.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "With `autoOpen`: add a \"don't show again\" checkbox. Editing `info.md` shows it again.\n\nDefault: `true`"
+            },
+            "watermark": {
+              "description": "A small \"Made with Conness GIS\" line at the bottom of the info modal. The map's credits always include it.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "A small \"Made with Conness GIS\" line at the bottom of the info modal. The map's credits always include it.\n\nDefault: `true`"
+            },
+            "width": {
+              "description": "Widest the info modal gets, in px. Narrow screens use their width.",
+              "default": 672,
+              "type": "number",
+              "markdownDescription": "Widest the info modal gets, in px. Narrow screens use their width.\n\nDefault: `672`"
+            },
+            "maxHeight": {
+              "description": "Tallest the info modal gets, in % of the screen height. Longer text scrolls.",
+              "default": 80,
+              "type": "number",
+              "markdownDescription": "Tallest the info modal gets, in % of the screen height. Longer text scrolls.\n\nDefault: `80`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "The info modal, rendered from the project's `info.md`.",
+          "markdownDescription": "The info modal, rendered from the project's `info.md`.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#info-modal-uiinfo)"
+        },
+        "floatingControls": {
+          "type": "object",
+          "properties": {
+            "iconSize": {
+              "description": "Icon size in px. The button is sized so the icon fills 75% of it.",
+              "default": 25,
+              "type": "number",
+              "markdownDescription": "Icon size in px. The button is sized so the icon fills 75% of it.\n\nDefault: `25`"
+            },
+            "mobileIconSize": {
+              "description": "Icon size on mobile.",
+              "type": "number",
+              "markdownDescription": "Icon size on mobile.\n\nDefault: same as `iconSize`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Floating widget buttons and MapLibre's native controls.",
+          "markdownDescription": "Floating widget buttons and MapLibre's native controls.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#floating-controls-uifloatingcontrols)"
+        },
+        "topBar": {
+          "type": "object",
+          "properties": {
+            "height": {
+              "description": "Bar height in px.",
+              "default": 56,
+              "type": "number",
+              "markdownDescription": "Bar height in px.\n\nDefault: `56`"
+            },
+            "mobileHeight": {
+              "description": "Height of the top bar on phones, in px. Below 45 the bar looks cramped.",
+              "type": "number",
+              "markdownDescription": "Height of the top bar on phones, in px. Below 45 the bar looks cramped.\n\nDefault: same as `height`, or 45 with the widget bar at the bottom"
+            },
+            "iconSize": {
+              "description": "Widget and info button icon size in px. A widget's button is twice the icon.",
+              "default": 20,
+              "type": "number",
+              "markdownDescription": "Widget and info button icon size in px. A widget's button is twice the icon.\n\nDefault: `20`"
+            },
+            "mobileIconSize": {
+              "description": "Widget icon size on mobile.",
+              "type": "number",
+              "markdownDescription": "Widget icon size on mobile.\n\nDefault: same as `iconSize`"
+            },
+            "logoSize": {
+              "description": "Logo height in px. Width follows the image.",
+              "default": 32,
+              "type": "number",
+              "markdownDescription": "Logo height in px. Width follows the image.\n\nDefault: `32`"
+            },
+            "mobileLogoSize": {
+              "description": "Logo height on mobile.",
+              "type": "number",
+              "markdownDescription": "Logo height on mobile.\n\nDefault: same as `logoSize`, else 28"
+            },
+            "titleSize": {
+              "description": "The app title's text size in px.",
+              "default": 18,
+              "type": "number",
+              "markdownDescription": "The app title's text size in px.\n\nDefault: `18`"
+            },
+            "mobileTitleSize": {
+              "description": "The app title's text size on mobile.",
+              "default": 16,
+              "type": "number",
+              "markdownDescription": "The app title's text size on mobile.\n\nDefault: `16`"
+            },
+            "mobileVisibleCount": {
+              "description": "Widget buttons the mobile carousel shows at once.",
+              "default": 3,
+              "type": "number",
+              "markdownDescription": "Widget buttons the mobile carousel shows at once.\n\nDefault: `3`"
+            },
+            "mobileCarouselMode": {
+              "description": "`\"step\"` moves one widget per arrow click. `\"paged\"` moves a full window.",
+              "default": "step",
+              "type": "string",
+              "enum": ["step", "paged"],
+              "markdownDescription": "`\"step\"` moves one widget per arrow click. `\"paged\"` moves a full window.\n\nDefault: `\"step\"`"
+            },
+            "shadow": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Show the shadow.",
+                  "default": false,
+                  "type": "boolean",
+                  "markdownDescription": "Show the shadow.\n\nDefault: `false`"
+                },
+                "strength": {
+                  "description": "0 to 1. Scales darkness and height.",
+                  "default": 0.4,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "markdownDescription": "0 to 1. Scales darkness and height.\n\nDefault: `0.4`"
+                }
+              },
+              "additionalProperties": false,
+              "description": "Shadow under the bar, over the map only.",
+              "markdownDescription": "Shadow under the bar, over the map only."
+            }
+          },
+          "additionalProperties": false,
+          "description": "The top bar.",
+          "markdownDescription": "The top bar.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#top-bar-uitopbar)"
+        },
+        "popups": {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "description": "Click or hover.",
+              "default": "click",
+              "type": "string",
+              "enum": ["click", "hover"],
+              "markdownDescription": "Click or hover.\n\nDefault: `\"click\"`"
+            },
+            "position": {
+              "description": "Where popups open: a map corner, or `\"feature\"` next to the clicked or hovered spot. Users can still drag a popup.",
+              "default": "bottom-left",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right", "feature"],
+              "markdownDescription": "Where popups open: a map corner, or `\"feature\"` next to the clicked or hovered spot. Users can still drag a popup.\n\nDefault: `\"bottom-left\"`"
+            },
+            "displayType": {
+              "description": "Template name from the project's `popups.tsx`.",
+              "default": "standard",
+              "type": "string",
+              "markdownDescription": "Template name from the project's `popups.tsx`.\n\nDefault: `\"standard\"`"
+            },
+            "height": {
+              "description": "Height in px, or `\"auto\"` to fit content up to `maxHeight`.",
+              "default": 300,
+              "anyOf": [{ "type": "number" }, { "type": "string", "const": "auto" }],
+              "markdownDescription": "Height in px, or `\"auto\"` to fit content up to `maxHeight`.\n\nDefault: `300`"
+            },
+            "maxHeight": {
+              "description": "Tallest the popup gets: fitting its content (`\"auto\"`) or resized by the user.",
+              "default": 500,
+              "type": "number",
+              "markdownDescription": "Tallest the popup gets: fitting its content (`\"auto\"`) or resized by the user.\n\nDefault: `500`"
+            },
+            "draggable": {
+              "description": "Let users drag the desktop popup by its header.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Let users drag the desktop popup by its header.\n\nDefault: `true`"
+            },
+            "resizable": {
+              "description": "Let users resize the desktop popup from its bottom-right corner. The size is kept until the page reloads.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Let users resize the desktop popup from its bottom-right corner. The size is kept until the page reloads.\n\nDefault: `false`"
+            },
+            "width": {
+              "description": "Desktop popup width in px.",
+              "default": 320,
+              "type": "number",
+              "markdownDescription": "Desktop popup width in px.\n\nDefault: `320`"
+            },
+            "maxWidth": {
+              "description": "Widest a user can resize the popup, in px.",
+              "default": 440,
+              "type": "number",
+              "markdownDescription": "Widest a user can resize the popup, in px.\n\nDefault: `440`"
+            },
+            "closeOnMapClick": {
+              "description": "Close a click popup when the user clicks empty map.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Close a click popup when the user clicks empty map.\n\nDefault: `true`"
+            },
+            "zoomToFeature": {
+              "description": "Zoom-to-feature button.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Zoom-to-feature button.\n\nDefault: `true`"
+            },
+            "highlight": {
+              "description": "Outline the feature whose popup is open, in the theme's `featureHighlight` color.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Outline the feature whose popup is open, in the theme's `featureHighlight` color.\n\nDefault: `true`"
+            },
+            "copyCoordinates": {
+              "description": "Copy-coordinates button.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Copy-coordinates button.\n\nDefault: `false`"
+            },
+            "viewInGoogleMaps": {
+              "description": "View-in-Google-Maps button (drops a pin).",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "View-in-Google-Maps button (drops a pin).\n\nDefault: `false`"
+            },
+            "headerSize": {
+              "description": "Text size of the popup's header bar, next to the close button, in px.",
+              "default": 14,
+              "type": "number",
+              "markdownDescription": "Text size of the popup's header bar, next to the close button, in px.\n\nDefault: `14`"
+            },
+            "titleSize": {
+              "description": "Text size of the title inside the popup, in px. Templates without a title ignore it.",
+              "default": 16,
+              "type": "number",
+              "markdownDescription": "Text size of the title inside the popup, in px. Templates without a title ignore it.\n\nDefault: `16`"
+            },
+            "bodySize": {
+              "description": "Text size of the popup's fields table and body text, in px.",
+              "default": 14,
+              "type": "number",
+              "markdownDescription": "Text size of the popup's fields table and body text, in px.\n\nDefault: `14`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Popup defaults for every layer. A layer's own `popup` wins.",
+          "markdownDescription": "Popup defaults for every layer. A layer's own `popup` wins.\n\n[Docs](https://conness-gis.com/configuration/popups/#global-defaults-uipopups)"
+        },
+        "loader": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Show the overlay.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Show the overlay.\n\nDefault: `true`"
+            },
+            "label": {
+              "description": "Text under the spinner, e.g. `\"Loading…\"`. A list of lines shows one at a time, looping, each for `labelInterval`.",
+              "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }],
+              "markdownDescription": "Text under the spinner, e.g. `\"Loading…\"`. A list of lines shows one at a time, looping, each for `labelInterval`."
+            },
+            "labelInterval": {
+              "description": "With a `label` list: how long each line shows, in ms.",
+              "default": 2500,
+              "type": "number",
+              "markdownDescription": "With a `label` list: how long each line shows, in ms.\n\nDefault: `2500`"
+            },
+            "showDetails": {
+              "description": "Show the line under the label naming what's loading (DuckDB, each layer).",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Show the line under the label naming what's loading (DuckDB, each layer).\n\nDefault: `true`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Overlay that blocks clicks while startup layers load.",
+          "markdownDescription": "Overlay that blocks clicks while startup layers load.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#loading-overlay-uiloader)"
+        },
+        "layerDefaults": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "description": "Label style for layers that have a `label`.",
+              "type": "object",
+              "properties": {
+                "fontSize": {
+                  "default": 12,
+                  "type": "number",
+                  "markdownDescription": "Default: `12`"
+                },
+                "bold": {
+                  "description": "Bold text (Noto Sans Bold instead of Regular).",
+                  "default": false,
+                  "type": "boolean",
+                  "markdownDescription": "Bold text (Noto Sans Bold instead of Regular).\n\nDefault: `false`"
+                },
+                "color": {
+                  "default": "#333333",
+                  "type": "string",
+                  "markdownDescription": "Default: `\"#333333\"`"
+                },
+                "haloColor": {
+                  "default": "#ffffff",
+                  "type": "string",
+                  "markdownDescription": "Default: `\"#ffffff\"`"
+                },
+                "haloWidth": {
+                  "default": 1,
+                  "type": "number",
+                  "markdownDescription": "Default: `1`"
+                },
+                "anchor": {
+                  "default": "center",
+                  "type": "string",
+                  "enum": ["center", "top-left", "top-right", "bottom-left", "bottom-right"],
+                  "description": "Label position relative to its feature.",
+                  "markdownDescription": "Label position relative to its feature.\n\nDefault: `\"center\"`"
+                },
+                "offset": {
+                  "description": "How far a label at a corner sits from its feature, in px, across and up or down. Unset, it's as far as the text is tall. Has no effect when the label is centered.",
+                  "type": "number",
+                  "minimum": 0,
+                  "markdownDescription": "How far a label at a corner sits from its feature, in px, across and up or down. Unset, it's as far as the text is tall. Has no effect when the label is centered."
+                },
+                "allowOverlap": {
+                  "default": false,
+                  "type": "boolean",
+                  "markdownDescription": "Default: `false`"
+                },
+                "spacing": {
+                  "description": "Line layers only: px between repeats of the label along a line.",
+                  "default": 500,
+                  "type": "number",
+                  "minimum": 1,
+                  "markdownDescription": "Line layers only: px between repeats of the label along a line.\n\nDefault: `500`"
+                }
+              },
+              "additionalProperties": false,
+              "markdownDescription": "Label style for layers that have a `label`."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Defaults for every layer. A layer's own values win.",
+          "markdownDescription": "Defaults for every layer. A layer's own values win.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#global-layer-defaults)"
+        },
+        "mobile": {
+          "type": "object",
+          "properties": {
+            "initialSheetVh": {
+              "description": "Height when it opens.",
+              "default": 25,
+              "type": "number",
+              "markdownDescription": "Height when it opens.\n\nDefault: `25`"
+            },
+            "minSheetVh": {
+              "description": "Smallest drag height.",
+              "default": 12,
+              "type": "number",
+              "markdownDescription": "Smallest drag height.\n\nDefault: `12`"
+            },
+            "maxSheetVh": {
+              "description": "Largest drag height.",
+              "default": 65,
+              "type": "number",
+              "markdownDescription": "Largest drag height.\n\nDefault: `65`"
+            },
+            "widgetBarHeight": {
+              "description": "Height in px of the widget bar under the map, with `ui.layout.mobileWidgetBar` at `\"bottom\"`.",
+              "default": 35,
+              "type": "number",
+              "markdownDescription": "Height in px of the widget bar under the map, with `ui.layout.mobileWidgetBar` at `\"bottom\"`.\n\nDefault: `35`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "The phone layout: the bottom sheet heights, in % of screen height, and the widget bar.",
+          "markdownDescription": "The phone layout: the bottom sheet heights, in % of screen height, and the widget bar.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#mobile-uimobile)"
+        },
+        "textSizes": {
+          "type": "object",
+          "properties": {
+            "small": {
+              "description": "Fine print in px: coordinates, opacity percentages, badges, hints.",
+              "default": 11,
+              "type": "number",
+              "markdownDescription": "Fine print in px: coordinates, opacity percentages, badges, hints.\n\nDefault: `11`"
+            },
+            "medium": {
+              "description": "Layer names in the layer list, captions, widgets' info sections and any text without its own size, in px.",
+              "default": 12,
+              "type": "number",
+              "markdownDescription": "Layer names in the layer list, captions, widgets' info sections and any text without its own size, in px.\n\nDefault: `12`"
+            },
+            "large": {
+              "description": "Layer group names, list rows, menus, popup titles, the info modal and the loading screen, in px.",
+              "default": 14,
+              "type": "number",
+              "markdownDescription": "Layer group names, list rows, menus, popup titles, the info modal and the loading screen, in px.\n\nDefault: `14`"
+            },
+            "title": {
+              "description": "Widget and side panel titles, in px.",
+              "default": 14,
+              "type": "number",
+              "markdownDescription": "Widget and side panel titles, in px.\n\nDefault: `14`"
+            },
+            "button": {
+              "description": "Buttons inside widgets, in px.",
+              "default": 14,
+              "type": "number",
+              "markdownDescription": "Buttons inside widgets, in px.\n\nDefault: `14`"
+            },
+            "dialogButton": {
+              "description": "Cancel and confirm buttons in dialogs, in px.",
+              "default": 12,
+              "type": "number",
+              "markdownDescription": "Cancel and confirm buttons in dialogs, in px.\n\nDefault: `12`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "The text sizes the shell and widgets use (the app's title has its own, `ui.topBar.titleSize`). Set in px. They still follow the browser font size.",
+          "markdownDescription": "The text sizes the shell and widgets use (the app's title has its own, `ui.topBar.titleSize`). Set in px. They still follow the browser font size.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#text-sizes-uitextsizes)"
+        },
+        "hideWidgetInfo": {
+          "description": "Widget ids whose info section (the short help at the top of the widget) is hidden.",
+          "type": "array",
+          "items": { "type": "string" },
+          "markdownDescription": "Widget ids whose info section (the short help at the top of the widget) is hidden.\n\nDefault: none: every widget shows it"
+        },
+        "buttonCursor": {
+          "description": "Cursor over buttons. `\"pointer\"`: the hand, as over links on the web. `\"default\"` (Arrow in the editor): the arrow, as over buttons in desktop apps.",
+          "default": "pointer",
+          "type": "string",
+          "enum": ["pointer", "default"],
+          "markdownDescription": "Cursor over buttons. `\"pointer\"`: the hand, as over links on the web. `\"default\"` (Arrow in the editor): the arrow, as over buttons in desktop apps.\n\nDefault: `\"pointer\"`"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Shell settings: layout, top bar, panels, popups and more.",
+      "markdownDescription": "Shell settings: layout, top bar, panels, popups and more.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/)"
+    },
+    "map": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "anyOf": [{ "type": "string" }, {}],
+          "description": "The starting basemap: a style URL or inline style object.",
+          "markdownDescription": "The starting basemap: a style URL or inline style object."
+        },
+        "center": {
+          "type": "array",
+          "items": [{ "type": "number" }, { "type": "number" }],
+          "additionalItems": false,
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "`[lng, lat]`.",
+          "markdownDescription": "`[lng, lat]`."
+        },
+        "zoom": {
+          "type": "number",
+          "description": "Starting zoom.",
+          "markdownDescription": "Starting zoom."
+        },
+        "bearing": {
+          "description": "Rotation in degrees.",
+          "default": 0,
+          "type": "number",
+          "markdownDescription": "Rotation in degrees.\n\nDefault: `0`"
+        },
+        "pitch": {
+          "description": "Tilt in degrees. 0 looks straight down.",
+          "default": 0,
+          "type": "number",
+          "markdownDescription": "Tilt in degrees. 0 looks straight down.\n\nDefault: `0`"
+        },
+        "backgroundColor": {
+          "description": "Fill behind the map: past the globe's edge and before tiles load.",
+          "default": "#000000",
+          "type": "string",
+          "markdownDescription": "Fill behind the map: past the globe's edge and before tiles load.\n\nDefault: `\"#000000\"`"
+        },
+        "minZoom": {
+          "description": "How far out the camera can zoom. Not a layer's `minZoom`.",
+          "default": 1.5,
+          "type": "number",
+          "markdownDescription": "How far out the camera can zoom. Not a layer's `minZoom`.\n\nDefault: `1.5`"
+        },
+        "maxZoom": {
+          "description": "How far in the camera can zoom.",
+          "default": 16,
+          "type": "number",
+          "markdownDescription": "How far in the camera can zoom.\n\nDefault: `16`"
+        },
+        "maxBounds": {
+          "description": "Keep panning inside `[[west, south], [east, north]]`. For a world box, use ±179.9999 longitude. An exact ±180 crashes MapLibre.",
+          "type": "array",
+          "items": [
+            {
+              "type": "array",
+              "items": [{ "type": "number" }, { "type": "number" }],
+              "additionalItems": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "array",
+              "items": [{ "type": "number" }, { "type": "number" }],
+              "additionalItems": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ],
+          "additionalItems": false,
+          "minItems": 2,
+          "maxItems": 2,
+          "markdownDescription": "Keep panning inside `[[west, south], [east, north]]`. For a world box, use ±179.9999 longitude. An exact ±180 crashes MapLibre."
+        },
+        "globe": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Start on the globe. The globe control can still toggle it.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Start on the globe. The globe control can still toggle it.\n\nDefault: `false`"
+            },
+            "stars": {
+              "description": "Starfield behind the globe.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Starfield behind the globe.\n\nDefault: `false`"
+            },
+            "comets": {
+              "description": "Shooting stars. Needs `stars`.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Shooting stars. Needs `stars`.\n\nDefault: `false`"
+            },
+            "atmosphere": {
+              "description": "Glow around the globe's edge. On unless set to `false`.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Glow around the globe's edge. On unless set to `false`.\n\nDefault: `true`"
+            },
+            "starsZoomCutoff": {
+              "description": "Zoom above which stars and comets hide.",
+              "default": 7.3,
+              "type": "number",
+              "markdownDescription": "Zoom above which stars and comets hide.\n\nDefault: `7.3`"
+            },
+            "spin": {
+              "type": "object",
+              "properties": {
+                "direction": {
+                  "description": "`\"east\"` matches Earth's real rotation.",
+                  "default": "east",
+                  "type": "string",
+                  "enum": ["east", "west"],
+                  "markdownDescription": "`\"east\"` matches Earth's real rotation.\n\nDefault: `\"east\"`"
+                },
+                "speed": {
+                  "description": "Degrees of longitude per second.",
+                  "default": 6,
+                  "type": "number",
+                  "markdownDescription": "Degrees of longitude per second.\n\nDefault: `6`"
+                },
+                "continuous": {
+                  "description": "`false` stops the spin for good on the first interaction. `true` pauses while the user drags or zooms, then resumes.",
+                  "default": false,
+                  "type": "boolean",
+                  "markdownDescription": "`false` stops the spin for good on the first interaction. `true` pauses while the user drags or zooms, then resumes.\n\nDefault: `false`"
+                }
+              },
+              "additionalProperties": false,
+              "description": "Auto-spin on load. Turns the globe by moving the center, so north stays up. Omit for no spin.",
+              "markdownDescription": "Auto-spin on load. Turns the globe by moving the center, so north stays up. Omit for no spin.\n\n[Docs](https://conness-gis.com/configuration/map-camera/#globe-projection)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Globe projection, stars and spin. Omit for a flat map.",
+          "markdownDescription": "Globe projection, stars and spin. Omit for a flat map.\n\n[Docs](https://conness-gis.com/configuration/map-camera/#globe-projection)"
+        },
+        "onlyVisibleOnLoad": {
+          "description": "Load only the layers visible at startup. Hidden GeoJSON, GeoParquet and FlatGeobuf layers load the first time they're turned on (a spinner shows in the layer list meanwhile), so startup is faster. Tiled and Esri layers already load only what's in view.",
+          "default": false,
+          "type": "boolean",
+          "markdownDescription": "Load only the layers visible at startup. Hidden GeoJSON, GeoParquet and FlatGeobuf layers load the first time they're turned on (a spinner shows in the layer list meanwhile), so startup is faster. Tiled and Esri layers already load only what's in view.\n\nDefault: `false`"
+        },
+        "scrollZoom": {
+          "description": "Zoom with the mouse wheel or trackpad scroll. Pinch zoom on touch screens isn't affected.",
+          "default": true,
+          "type": "boolean",
+          "markdownDescription": "Zoom with the mouse wheel or trackpad scroll. Pinch zoom on touch screens isn't affected.\n\nDefault: `true`\n\n[Docs](https://conness-gis.com/configuration/map-camera/#scroll-zoom)"
+        }
+      },
+      "required": ["style", "center", "zoom"],
+      "additionalProperties": false,
+      "description": "Initial view and camera limits.",
+      "markdownDescription": "Initial view and camera limits.\n\n[Docs](https://conness-gis.com/configuration/map-camera/)"
+    },
+    "commercialUse": {
+      "description": "Set `true` for a commercial deployment. Drops services that don't allow commercial use.",
+      "default": false,
+      "type": "boolean",
+      "markdownDescription": "Set `true` for a commercial deployment. Drops services that don't allow commercial use.\n\nDefault: `false`\n\n[Docs](https://conness-gis.com/configuration/commercial-use/)"
+    },
+    "mapControls": {
+      "type": "object",
+      "properties": {
+        "navigation": {
+          "description": "Zoom buttons and compass.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "top-left",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"top-left\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            },
+            "showZoom": {
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Default: `true`"
+            },
+            "showCompass": {
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Default: `true`"
+            },
+            "visualizePitch": {
+              "description": "The compass tilts with pitch, and a click flattens the view as well as turning it north.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "The compass tilts with pitch, and a click flattens the view as well as turning it north.\n\nDefault: `true`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "Zoom buttons and compass.\n\n[Docs](https://conness-gis.com/configuration/map-controls/#navigation)"
+        },
+        "geolocate": {
+          "description": "\"Locate me\" button.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "top-left",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"top-left\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            },
+            "trackUserLocation": {
+              "description": "Keep following the user as they move.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Keep following the user as they move.\n\nDefault: `false`"
+            },
+            "showUserLocation": {
+              "description": "Location dot.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Location dot.\n\nDefault: `true`"
+            },
+            "showUserHeading": {
+              "description": "Heading cone.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Heading cone.\n\nDefault: `false`"
+            },
+            "showAccuracyCircle": {
+              "description": "Accuracy halo.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Accuracy halo.\n\nDefault: `true`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "\"Locate me\" button.\n\n[Docs](https://conness-gis.com/configuration/map-controls/#geolocate)"
+        },
+        "fullscreen": {
+          "description": "Fullscreen toggle.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "top-right",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"top-right\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "Fullscreen toggle."
+        },
+        "scale": {
+          "description": "Distance scale bar.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "bottom-left",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"bottom-left\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            },
+            "style": {
+              "description": "Look of the bar. `classic`: MapLibre's bordered box. `minimal`: a thin line with end ticks. `alternating`: a segmented cartographic bar labelled 0, half and full. `pill`: a rounded chip like the map buttons.",
+              "default": "classic",
+              "type": "string",
+              "enum": ["classic", "minimal", "alternating", "pill"],
+              "markdownDescription": "Look of the bar. `classic`: MapLibre's bordered box. `minimal`: a thin line with end ticks. `alternating`: a segmented cartographic bar labelled 0, half and full. `pill`: a rounded chip like the map buttons.\n\nDefault: `\"classic\"`"
+            },
+            "unit": {
+              "description": "`both`: metric above imperial.",
+              "default": "metric",
+              "type": "string",
+              "enum": ["metric", "imperial", "nautical", "both"],
+              "markdownDescription": "`both`: metric above imperial.\n\nDefault: `\"metric\"`"
+            },
+            "maxWidth": {
+              "description": "Max bar width in px.",
+              "default": 100,
+              "type": "number",
+              "markdownDescription": "Max bar width in px.\n\nDefault: `100`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "Distance scale bar.\n\n[Docs](https://conness-gis.com/configuration/map-controls/#scale)"
+        },
+        "globe": {
+          "description": "Globe/flat toggle.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "top-right",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"top-right\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "Globe/flat toggle."
+        },
+        "spin": {
+          "description": "Pause / play button for the globe's spin. Shown while `map.globe.spin` is set.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "top-right",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"top-right\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "Pause / play button for the globe's spin. Shown while `map.globe.spin` is set."
+        },
+        "terrain": {
+          "description": "3D terrain toggle.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "top-right",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"top-right\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            },
+            "exaggeration": {
+              "description": "Elevation multiplier.",
+              "default": 1,
+              "type": "number",
+              "markdownDescription": "Elevation multiplier.\n\nDefault: `1`"
+            },
+            "enabled": {
+              "description": "Start with terrain on. The button can still toggle it.",
+              "default": false,
+              "type": "boolean",
+              "markdownDescription": "Start with terrain on. The button can still toggle it.\n\nDefault: `false`"
+            },
+            "source": {
+              "type": "object",
+              "properties": {
+                "tiles": {
+                  "description": "Raster-DEM tile URL template (a list, for mirrors of the same tiles). Or use `url`, not both. The default is Mapterhorn, credited as © Mapterhorn.",
+                  "default": ["https://tiles.mapterhorn.com/{z}/{x}/{y}.webp"],
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "markdownDescription": "Raster-DEM tile URL template (a list, for mirrors of the same tiles). Or use `url`, not both. The default is Mapterhorn, credited as © Mapterhorn.\n\nDefault: `[\"https://tiles.mapterhorn.com/{z}/{x}/{y}.webp\"]`"
+                },
+                "url": {
+                  "description": "A TileJSON URL, instead of `tiles`. Its tile size and zoom range come from the TileJSON.",
+                  "type": "string",
+                  "markdownDescription": "A TileJSON URL, instead of `tiles`. Its tile size and zoom range come from the TileJSON.\n\nDefault: none, `tiles` is used"
+                },
+                "encoding": {
+                  "description": "How elevation is packed into the tile colors: `terrarium` (Mapterhorn, Mapzen), `mapbox` (Mapbox Terrain-RGB), or `custom`.",
+                  "default": "terrarium",
+                  "type": "string",
+                  "enum": ["terrarium", "mapbox", "custom"],
+                  "markdownDescription": "How elevation is packed into the tile colors: `terrarium` (Mapterhorn, Mapzen), `mapbox` (Mapbox Terrain-RGB), or `custom`.\n\nDefault: `\"terrarium\"`"
+                },
+                "tileSize": {
+                  "description": "Tile size in px. Mapterhorn's are 512. Your own tiles use MapLibre's default (512) unless set.",
+                  "default": 512,
+                  "type": "number",
+                  "markdownDescription": "Tile size in px. Mapterhorn's are 512. Your own tiles use MapLibre's default (512) unless set.\n\nDefault: `512`"
+                },
+                "maxzoom": {
+                  "description": "Highest zoom with real tiles. MapLibre stretches past it. Mapterhorn's go to 17.",
+                  "default": 17,
+                  "type": "number",
+                  "markdownDescription": "Highest zoom with real tiles. MapLibre stretches past it. Mapterhorn's go to 17.\n\nDefault: `17`"
+                }
+              },
+              "additionalProperties": false,
+              "description": "Elevation tiles (raster DEM). The default is Mapterhorn, free and open, credited in the map.",
+              "markdownDescription": "Elevation tiles (raster DEM). The default is Mapterhorn, free and open, credited in the map."
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "3D terrain toggle.\n\n[Docs](https://conness-gis.com/configuration/map-controls/#terrain)"
+        },
+        "zoomLevel": {
+          "description": "Current zoom level, e.g. `z 12.4`, for picking layer zoom ranges.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "bottom-left",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"bottom-left\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 0,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `0`"
+            },
+            "precision": {
+              "description": "Decimal places shown.",
+              "default": 1,
+              "type": "number",
+              "markdownDescription": "Decimal places shown.\n\nDefault: `1`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "Current zoom level, e.g. `z 12.4`, for picking layer zoom ranges.\n\n[Docs](https://conness-gis.com/configuration/map-controls/#zoom-level)"
+        },
+        "attribution": {
+          "description": "The map's credits button. Always shown, since the data and tile licenses require it. This only moves it.",
+          "type": "object",
+          "properties": {
+            "position": {
+              "description": "Map corner.",
+              "default": "bottom-right",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right"],
+              "markdownDescription": "Map corner.\n\nDefault: `\"bottom-right\"`"
+            },
+            "order": {
+              "description": "Place in its corner, shared with floating widgets: lower comes first.",
+              "default": 1000,
+              "type": "number",
+              "markdownDescription": "Place in its corner, shared with floating widgets: lower comes first.\n\nDefault: `1000`"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "The map's credits button. Always shown, since the data and tile licenses require it. This only moves it.\n\n[Docs](https://conness-gis.com/configuration/map-controls/#attribution)"
+        }
+      },
+      "additionalProperties": false,
+      "description": "MapLibre's built-in controls. Include a key to add that control.",
+      "markdownDescription": "MapLibre's built-in controls. Include a key to add that control.\n\n[Docs](https://conness-gis.com/configuration/map-controls/)"
+    },
+    "contextMenu": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Turn off for the browser's own menu, keeping the items below for later.",
+          "default": true,
+          "type": "boolean",
+          "markdownDescription": "Turn off for the browser's own menu, keeping the items below for later.\n\nDefault: `true`"
+        },
+        "centerHere": {
+          "description": "Fly the map to the clicked point.",
+          "type": "boolean",
+          "markdownDescription": "Fly the map to the clicked point."
+        },
+        "googleMaps": { "type": "boolean" },
+        "googleStreetView": { "type": "boolean" },
+        "osm": {
+          "description": "OpenStreetMap.",
+          "type": "boolean",
+          "markdownDescription": "OpenStreetMap."
+        },
+        "appleMaps": { "type": "boolean" },
+        "copernicus": {
+          "description": "Copernicus Browser (satellite imagery).",
+          "type": "boolean",
+          "markdownDescription": "Copernicus Browser (satellite imagery)."
+        },
+        "custom": {
+          "description": "Your own items, added last.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "url": {
+                "type": "string",
+                "description": "URL with `{lat}`, `{lng}` and `{zoom}` placeholders, e.g. `\"https://www.bing.com/maps?cp={lat}~{lng}&lvl={zoom}\"`.",
+                "markdownDescription": "URL with `{lat}`, `{lng}` and `{zoom}` placeholders, e.g. `\"https://www.bing.com/maps?cp={lat}~{lng}&lvl={zoom}\"`."
+              }
+            },
+            "required": ["label", "url"],
+            "additionalProperties": false,
+            "description": "Custom right-click item. Opens `url` in a new tab.",
+            "markdownDescription": "Custom right-click item. Opens `url` in a new tab."
+          },
+          "markdownDescription": "Your own items, added last."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Desktop right-click menu. Set an item to `true` to include it. Omit the block, or set `enabled` to `false`, for the browser's own menu.",
+      "markdownDescription": "Desktop right-click menu. Set an item to `true` to include it. Omit the block, or set `enabled` to `false`, for the browser's own menu.\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#right-click-context-menu-contextmenu)"
+    },
+    "widgets": {
+      "description": "Each widget's own settings, keyed by widget id: `\"measure\": { … }`.",
+      "type": "object",
+      "properties": {
+        "basemap": {
+          "type": "object",
+          "properties": {
+            "showNone": {
+              "description": "Show a \"No Basemap\" switch with Hillshade and Contours. Turning it off brings back the basemap that was on before. With no basemap, `map.backgroundColor` shows.",
+              "default": true,
+              "label": "Offer \"No basemap\"",
+              "type": "boolean",
+              "markdownDescription": "Show a \"No Basemap\" switch with Hillshade and Contours. Turning it off brings back the basemap that was on before. With no basemap, `map.backgroundColor` shows.\n\nDefault: `true`"
+            },
+            "hillshade": {
+              "popout": true,
+              "label": "Hillshade",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Turn the hillshade on when the app loads, even without the Basemap widget.",
+                  "default": false,
+                  "label": "On at load",
+                  "type": "boolean",
+                  "markdownDescription": "Turn the hillshade on when the app loads, even without the Basemap widget.\n\nDefault: `false`"
+                },
+                "showToggle": {
+                  "description": "Show the Hillshade switch in the Basemap widget, so users can turn it on and off.",
+                  "default": true,
+                  "label": "Toggle in widget",
+                  "type": "boolean",
+                  "markdownDescription": "Show the Hillshade switch in the Basemap widget, so users can turn it on and off.\n\nDefault: `true`"
+                },
+                "opacity": {
+                  "description": "How strong the hillshade is, 0 to 1. MapLibre's hillshade has no opacity, so this scales its colors' alpha.",
+                  "default": 0.5,
+                  "label": "Opacity",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "markdownDescription": "How strong the hillshade is, 0 to 1. MapLibre's hillshade has no opacity, so this scales its colors' alpha.\n\nDefault: `0.5`"
+                },
+                "exaggeration": {
+                  "description": "How much the hillshade exaggerates the terrain, 0 to 1.",
+                  "default": 0.5,
+                  "label": "Shading strength",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "markdownDescription": "How much the hillshade exaggerates the terrain, 0 to 1.\n\nDefault: `0.5`"
+                },
+                "method": {
+                  "description": "MapLibre's hillshade method. `igor` keeps flat areas clear.",
+                  "default": "standard",
+                  "label": "Shading method",
+                  "type": "string",
+                  "enum": ["standard", "basic", "combined", "igor", "multidirectional"],
+                  "markdownDescription": "MapLibre's hillshade method. `igor` keeps flat areas clear.\n\nDefault: `\"standard\"`"
+                },
+                "highlightColor": {
+                  "description": "Hillshade color on slopes facing the light.",
+                  "default": "rgb(255, 255, 228)",
+                  "advanced": true,
+                  "type": "string",
+                  "markdownDescription": "Hillshade color on slopes facing the light.\n\nDefault: `\"rgb(255, 255, 228)\"`"
+                },
+                "shadowColor": {
+                  "description": "Hillshade color on slopes facing away.",
+                  "default": "rgb(114, 124, 131)",
+                  "advanced": true,
+                  "type": "string",
+                  "markdownDescription": "Hillshade color on slopes facing away.\n\nDefault: `\"rgb(114, 124, 131)\"`"
+                },
+                "accentColor": {
+                  "description": "Hillshade color on the steepest slopes (`standard` method).",
+                  "default": "#000000",
+                  "advanced": true,
+                  "type": "string",
+                  "markdownDescription": "Hillshade color on the steepest slopes (`standard` method).\n\nDefault: `\"#000000\"`"
+                },
+                "source": {
+                  "description": "Elevation tiles the hillshade is drawn from. The default is Mapterhorn.",
+                  "advanced": true,
+                  "label": "Elevation source",
+                  "editor": "dem-source",
+                  "type": "object",
+                  "properties": {
+                    "tiles": {
+                      "description": "Raster-DEM tile URL template (a list, for mirrors of the same tiles). Or use `url`, not both. The default is Mapterhorn, credited as © Mapterhorn.",
+                      "default": ["https://tiles.mapterhorn.com/{z}/{x}/{y}.webp"],
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "markdownDescription": "Raster-DEM tile URL template (a list, for mirrors of the same tiles). Or use `url`, not both. The default is Mapterhorn, credited as © Mapterhorn.\n\nDefault: `[\"https://tiles.mapterhorn.com/{z}/{x}/{y}.webp\"]`"
+                    },
+                    "url": {
+                      "description": "A TileJSON URL, instead of `tiles`. Its tile size and zoom range come from the TileJSON.",
+                      "type": "string",
+                      "markdownDescription": "A TileJSON URL, instead of `tiles`. Its tile size and zoom range come from the TileJSON.\n\nDefault: none, `tiles` is used"
+                    },
+                    "encoding": {
+                      "description": "How elevation is packed into the tile colors: `terrarium` (Mapterhorn, Mapzen), `mapbox` (Mapbox Terrain-RGB), or `custom`.",
+                      "default": "terrarium",
+                      "type": "string",
+                      "enum": ["terrarium", "mapbox", "custom"],
+                      "markdownDescription": "How elevation is packed into the tile colors: `terrarium` (Mapterhorn, Mapzen), `mapbox` (Mapbox Terrain-RGB), or `custom`.\n\nDefault: `\"terrarium\"`"
+                    },
+                    "tileSize": {
+                      "description": "Tile size in px. Mapterhorn's are 512. Your own tiles use MapLibre's default (512) unless set.",
+                      "default": 512,
+                      "type": "number",
+                      "markdownDescription": "Tile size in px. Mapterhorn's are 512. Your own tiles use MapLibre's default (512) unless set.\n\nDefault: `512`"
+                    },
+                    "maxzoom": {
+                      "description": "Highest zoom with real tiles. MapLibre stretches past it. Mapterhorn's go to 17.",
+                      "default": 17,
+                      "type": "number",
+                      "markdownDescription": "Highest zoom with real tiles. MapLibre stretches past it. Mapterhorn's go to 17.\n\nDefault: `17`"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "markdownDescription": "Elevation tiles the hillshade is drawn from. The default is Mapterhorn."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Shaded relief over the basemap, under your data.",
+              "markdownDescription": "Shaded relief over the basemap, under your data.\n\n[Docs](https://conness-gis.com/widgets/basemap/#hillshade)"
+            },
+            "contours": {
+              "popout": true,
+              "label": "Contours",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Turn the contour lines on when the app loads, even without the Basemap widget.",
+                  "default": false,
+                  "label": "On at load",
+                  "type": "boolean",
+                  "markdownDescription": "Turn the contour lines on when the app loads, even without the Basemap widget.\n\nDefault: `false`"
+                },
+                "showToggle": {
+                  "description": "Show the Contours switch in the Basemap widget, so users can turn them on and off.",
+                  "default": true,
+                  "label": "Toggle in widget",
+                  "type": "boolean",
+                  "markdownDescription": "Show the Contours switch in the Basemap widget, so users can turn them on and off.\n\nDefault: `true`"
+                },
+                "unit": {
+                  "description": "Contour intervals and labels in meters or feet.",
+                  "default": "meters",
+                  "type": "string",
+                  "enum": ["meters", "feet"],
+                  "markdownDescription": "Contour intervals and labels in meters or feet.\n\nDefault: `\"meters\"`"
+                },
+                "minZoom": {
+                  "description": "Zoom the contour lines appear from.",
+                  "default": 10,
+                  "label": "Lines from zoom",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 24,
+                  "markdownDescription": "Zoom the contour lines appear from.\n\nDefault: `10`"
+                },
+                "labels": {
+                  "description": "Label the contour lines with their elevation.",
+                  "default": true,
+                  "type": "boolean",
+                  "markdownDescription": "Label the contour lines with their elevation.\n\nDefault: `true`"
+                },
+                "labelMinZoom": {
+                  "description": "Zoom the contour labels appear from.",
+                  "label": "Labels from zoom",
+                  "dependsOn": { "path": "contours.labels" },
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 24,
+                  "markdownDescription": "Zoom the contour labels appear from.\n\nDefault: the lines' zoom (`minZoom`)"
+                },
+                "labelMaxZoom": {
+                  "description": "Zoom the contour labels hide past.",
+                  "label": "Labels up to zoom",
+                  "dependsOn": { "path": "contours.labels" },
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 24,
+                  "markdownDescription": "Zoom the contour labels hide past.\n\nDefault: no limit"
+                },
+                "labelSize": {
+                  "description": "Contour label size in px.",
+                  "label": "Label size",
+                  "dependsOn": { "path": "contours.labels" },
+                  "type": "number",
+                  "markdownDescription": "Contour label size in px.\n\nDefault: Label defaults font size (`ui.layerDefaults.label.fontSize`), else 12"
+                },
+                "lineColor": {
+                  "description": "Contour line color.",
+                  "default": "rgb(215, 151, 60)",
+                  "type": "string",
+                  "markdownDescription": "Contour line color.\n\nDefault: `\"rgb(215, 151, 60)\"`"
+                },
+                "labelColor": {
+                  "description": "Contour label color, on a white halo.",
+                  "default": "rgb(172, 120, 48)",
+                  "type": "string",
+                  "markdownDescription": "Contour label color, on a white halo.\n\nDefault: `\"rgb(172, 120, 48)\"`"
+                },
+                "width": {
+                  "description": "Width of the major (thicker) lines in px. Minor lines are half as wide.",
+                  "default": 1,
+                  "type": "number",
+                  "markdownDescription": "Width of the major (thicker) lines in px. Minor lines are half as wide.\n\nDefault: `1`"
+                },
+                "thresholds": {
+                  "description": "Line intervals by zoom, in the chosen unit: `{ \"12\": [100, 500] }` draws a line every 100 and a major line every 500 from zoom 12 up. The editor shows it read-only, so change it in settings.json under `widgets.basemap.contours.thresholds`.",
+                  "advanced": true,
+                  "type": "object",
+                  "propertyNames": { "type": "string" },
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": [{ "type": "number" }, { "type": "number" }],
+                    "additionalItems": false,
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "markdownDescription": "Line intervals by zoom, in the chosen unit: `{ \"12\": [100, 500] }` draws a line every 100 and a major line every 500 from zoom 12 up. The editor shows it read-only, so change it in settings.json under `widgets.basemap.contours.thresholds`.\n\nDefault: meters `{ 10: [200, 1000], 12: [100, 500], 14: [20, 100] }`, feet `{ 10: [500, 2500], 12: [250, 1000], 14: [50, 250] }`"
+                },
+                "source": {
+                  "description": "Elevation tiles the contours are drawn from, as a tile URL template (a TileJSON `url` is not supported here). The default is Mapterhorn.",
+                  "advanced": true,
+                  "label": "Elevation source",
+                  "editor": "dem-source",
+                  "type": "object",
+                  "properties": {
+                    "tiles": {
+                      "description": "Raster-DEM tile URL template (a list, for mirrors of the same tiles). Or use `url`, not both. The default is Mapterhorn, credited as © Mapterhorn.",
+                      "default": ["https://tiles.mapterhorn.com/{z}/{x}/{y}.webp"],
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "markdownDescription": "Raster-DEM tile URL template (a list, for mirrors of the same tiles). Or use `url`, not both. The default is Mapterhorn, credited as © Mapterhorn.\n\nDefault: `[\"https://tiles.mapterhorn.com/{z}/{x}/{y}.webp\"]`"
+                    },
+                    "url": {
+                      "description": "A TileJSON URL, instead of `tiles`. Its tile size and zoom range come from the TileJSON.",
+                      "type": "string",
+                      "markdownDescription": "A TileJSON URL, instead of `tiles`. Its tile size and zoom range come from the TileJSON.\n\nDefault: none, `tiles` is used"
+                    },
+                    "encoding": {
+                      "description": "How elevation is packed into the tile colors: `terrarium` (Mapterhorn, Mapzen), `mapbox` (Mapbox Terrain-RGB), or `custom`.",
+                      "default": "terrarium",
+                      "type": "string",
+                      "enum": ["terrarium", "mapbox", "custom"],
+                      "markdownDescription": "How elevation is packed into the tile colors: `terrarium` (Mapterhorn, Mapzen), `mapbox` (Mapbox Terrain-RGB), or `custom`.\n\nDefault: `\"terrarium\"`"
+                    },
+                    "tileSize": {
+                      "description": "Tile size in px. Mapterhorn's are 512. Your own tiles use MapLibre's default (512) unless set.",
+                      "default": 512,
+                      "type": "number",
+                      "markdownDescription": "Tile size in px. Mapterhorn's are 512. Your own tiles use MapLibre's default (512) unless set.\n\nDefault: `512`"
+                    },
+                    "maxzoom": {
+                      "description": "Highest zoom with real tiles. MapLibre stretches past it. Mapterhorn's go to 17.",
+                      "default": 17,
+                      "type": "number",
+                      "markdownDescription": "Highest zoom with real tiles. MapLibre stretches past it. Mapterhorn's go to 17.\n\nDefault: `17`"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "markdownDescription": "Elevation tiles the contours are drawn from, as a tile URL template (a TileJSON `url` is not supported here). The default is Mapterhorn."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Contour lines over the hillshade, under your data.",
+              "markdownDescription": "Contour lines over the hillshade, under your data.\n\n[Docs](https://conness-gis.com/widgets/basemap/#contours)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Basemap widget.",
+          "markdownDescription": "Basemap widget.\n\n[Docs](https://conness-gis.com/widgets/basemap/)"
+        },
+        "bookmarks": {
+          "type": "object",
+          "properties": {
+            "maxCount": {
+              "description": "Most bookmarks a user can keep. At the limit, saving is refused until one is deleted. 0 = no limit.",
+              "default": 35,
+              "label": "Bookmark limit",
+              "type": "number",
+              "markdownDescription": "Most bookmarks a user can keep. At the limit, saving is refused until one is deleted. 0 = no limit.\n\nDefault: `35`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Bookmarks widget.",
+          "markdownDescription": "Bookmarks widget.\n\n[Docs](https://conness-gis.com/widgets/bookmarks/)"
+        },
+        "draw": {
+          "type": "object",
+          "properties": {
+            "tools": {
+              "description": "Tools offered, in this order. Empty means all.",
+              "type": "array",
+              "items": { "type": "string", "enum": ["point", "line", "polygon", "text"] },
+              "markdownDescription": "Tools offered, in this order. Empty means all.\n\nDefault: all four"
+            },
+            "exportFormats": {
+              "description": "Formats Download offers, in this order (no CSV: drawings have no table). One format skips the choice. Empty means all.",
+              "type": "array",
+              "items": { "type": "string", "enum": ["geojson", "kml", "geoparquet"] },
+              "markdownDescription": "Formats Download offers, in this order (no CSV: drawings have no table). One format skips the choice. Empty means all.\n\nDefault: all three"
+            },
+            "maxCount": {
+              "description": "Most drawing sets a user can save. At the limit, saving is refused until one is deleted. 0 = no limit.",
+              "default": 50,
+              "label": "Saved set limit",
+              "type": "number",
+              "markdownDescription": "Most drawing sets a user can save. At the limit, saving is refused until one is deleted. 0 = no limit.\n\nDefault: `50`"
+            },
+            "defaultStyle": {
+              "description": "Style for new drawings. Users can restyle each one after.",
+              "advanced": true,
+              "type": "object",
+              "properties": {
+                "width": {
+                  "description": "Line and border width.",
+                  "default": 2.5,
+                  "label": "Line width",
+                  "type": "number",
+                  "markdownDescription": "Line and border width.\n\nDefault: `2.5`"
+                },
+                "radius": {
+                  "description": "Point radius.",
+                  "default": 6,
+                  "label": "Point radius",
+                  "type": "number",
+                  "markdownDescription": "Point radius.\n\nDefault: `6`"
+                },
+                "strokeColor": {
+                  "description": "Point ring and text halo color.",
+                  "default": "#ffffff",
+                  "label": "Stroke color",
+                  "type": "string",
+                  "markdownDescription": "Point ring and text halo color.\n\nDefault: `\"#ffffff\"`"
+                },
+                "strokeWidth": {
+                  "description": "Point ring and text halo width.",
+                  "default": 2,
+                  "label": "Stroke width",
+                  "type": "number",
+                  "markdownDescription": "Point ring and text halo width.\n\nDefault: `2`"
+                },
+                "fillOpacity": {
+                  "description": "Polygon fill opacity, 0 to 1.",
+                  "default": 0.2,
+                  "label": "Fill opacity",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "markdownDescription": "Polygon fill opacity, 0 to 1.\n\nDefault: `0.2`"
+                },
+                "boundaryOpacity": {
+                  "description": "Polygon border opacity, 0 to 1.",
+                  "default": 1,
+                  "label": "Border opacity",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "markdownDescription": "Polygon border opacity, 0 to 1.\n\nDefault: `1`"
+                },
+                "shadow": {
+                  "description": "Drop shadow under lines and polygon borders.",
+                  "default": false,
+                  "label": "Drop shadow",
+                  "type": "boolean",
+                  "markdownDescription": "Drop shadow under lines and polygon borders.\n\nDefault: `false`"
+                },
+                "shadowIntensity": {
+                  "description": "Drop shadow strength, 0 to 1.",
+                  "default": 0.5,
+                  "label": "Shadow strength",
+                  "dependsOn": { "path": "defaultStyle.shadow" },
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "markdownDescription": "Drop shadow strength, 0 to 1.\n\nDefault: `0.5`"
+                },
+                "fontSize": {
+                  "description": "Text size in px.",
+                  "default": 20,
+                  "label": "Text size",
+                  "type": "number",
+                  "markdownDescription": "Text size in px.\n\nDefault: `20`"
+                }
+              },
+              "additionalProperties": false,
+              "markdownDescription": "Style for new drawings. Users can restyle each one after."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Draw widget.",
+          "markdownDescription": "Draw widget.\n\n[Docs](https://conness-gis.com/widgets/draw/)"
+        },
+        "layer-list": {
+          "type": "object",
+          "properties": {
+            "toggleStyle": {
+              "description": "Layer toggle look.",
+              "default": "eye",
+              "type": "string",
+              "enum": ["eye", "checkbox"],
+              "markdownDescription": "Layer toggle look.\n\nDefault: `\"eye\"`"
+            },
+            "actions": {
+              "description": "Which row-menu items show. Layers can override.",
+              "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+              "markdownDescription": "Which row-menu items show. Layers can override."
+            },
+            "rowClickToggle": {
+              "description": "Clicking anywhere on a layer row toggles it. Group rows still need their toggle.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Clicking anywhere on a layer row toggles it. Group rows still need their toggle.\n\nDefault: `true`"
+            },
+            "groupsCollapsedByDefault": {
+              "description": "Start every group collapsed. Override per group in `layerGroups`.",
+              "default": true,
+              "advanced": true,
+              "type": "boolean",
+              "markdownDescription": "Start every group collapsed. Override per group in `layerGroups`.\n\nDefault: `true`"
+            },
+            "exportFormats": {
+              "description": "Formats Export Data offers, in this order. One format skips the choice. Empty means all.",
+              "advanced": true,
+              "dependsOn": { "path": "actions.export" },
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["geojson", "kml", "geoparquet", "csv"],
+                "description": "A download format. KML keeps colors only for `simple` symbology. CSV is layer list only.",
+                "markdownDescription": "A download format. KML keeps colors only for `simple` symbology. CSV is layer list only."
+              },
+              "markdownDescription": "Formats Export Data offers, in this order. One format skips the choice. Empty means all.\n\nDefault: all four"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Layer List widget.",
+          "markdownDescription": "Layer List widget.\n\n[Docs](https://conness-gis.com/widgets/layer-list/)"
+        },
+        "measure": {
+          "type": "object",
+          "properties": {
+            "defaultLinearUnit": {
+              "default": "kilometers",
+              "type": "string",
+              "enum": ["miles", "kilometers", "meters", "feet", "yards"],
+              "markdownDescription": "Default: `\"kilometers\"`"
+            },
+            "defaultAreaUnit": {
+              "default": "square-kilometers",
+              "type": "string",
+              "enum": [
+                "acres",
+                "square-miles",
+                "square-kilometers",
+                "square-meters",
+                "square-feet",
+                "hectares"
+              ],
+              "markdownDescription": "Default: `\"square-kilometers\"`"
+            },
+            "showTotal": {
+              "description": "Total length or area label.",
+              "default": true,
+              "advanced": true,
+              "type": "boolean",
+              "markdownDescription": "Total length or area label.\n\nDefault: `true`"
+            },
+            "persistOnClose": {
+              "description": "Keep measurements on the map after the widget closes.",
+              "default": false,
+              "advanced": true,
+              "type": "boolean",
+              "markdownDescription": "Keep measurements on the map after the widget closes.\n\nDefault: `false`"
+            },
+            "showEdgeLabels": {
+              "description": "Length label on each segment.",
+              "default": false,
+              "advanced": true,
+              "type": "boolean",
+              "markdownDescription": "Length label on each segment.\n\nDefault: `false`"
+            },
+            "precision": {
+              "description": "Decimal places.",
+              "default": 2,
+              "advanced": true,
+              "type": "number",
+              "markdownDescription": "Decimal places.\n\nDefault: `2`"
+            },
+            "linearUnits": {
+              "description": "Distance units offered, in this order.",
+              "advanced": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["miles", "kilometers", "meters", "feet", "yards"]
+              },
+              "markdownDescription": "Distance units offered, in this order.\n\nDefault: all"
+            },
+            "areaUnits": {
+              "description": "Area units offered, in this order.",
+              "advanced": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "acres",
+                  "square-miles",
+                  "square-kilometers",
+                  "square-meters",
+                  "square-feet",
+                  "hectares"
+                ]
+              },
+              "markdownDescription": "Area units offered, in this order.\n\nDefault: all"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Measure widget. Each field sets a control's starting value. Users can change it, and it sticks until reload.",
+          "markdownDescription": "Measure widget. Each field sets a control's starting value. Users can change it, and it sticks until reload.\n\n[Docs](https://conness-gis.com/widgets/measure/)"
+        },
+        "search": {
+          "type": "object",
+          "properties": {
+            "placeholder": {
+              "description": "Search box placeholder.",
+              "default": "Search…",
+              "type": "string",
+              "markdownDescription": "Search box placeholder.\n\nDefault: `\"Search…\"`"
+            },
+            "geocoder": {
+              "type": "object",
+              "properties": {
+                "provider": {
+                  "type": "string",
+                  "enum": ["nominatim", "maptiler"],
+                  "description": "`\"nominatim\"`: free OpenStreetMap geocoder, light use only, not for commercial apps. `\"maptiler\"`: needs an `apiKey`.",
+                  "label": "Geocoder",
+                  "markdownDescription": "`\"nominatim\"`: free OpenStreetMap geocoder, light use only, not for commercial apps. `\"maptiler\"`: needs an `apiKey`."
+                },
+                "apiKey": {
+                  "description": "Required for `\"maptiler\"`. Visible to every visitor, so restrict it to your domain. Write `\"$env:VITE_MAPTILER_KEY\"` to read it from `app/.env` and keep it out of git.",
+                  "label": "Geocoder API key",
+                  "advanced": true,
+                  "dependsOn": { "path": "geocoder.provider", "equals": "maptiler" },
+                  "type": "string",
+                  "markdownDescription": "Required for `\"maptiler\"`. Visible to every visitor, so restrict it to your domain. Write `\"$env:VITE_MAPTILER_KEY\"` to read it from `app/.env` and keep it out of git.\n\n[Docs](https://conness-gis.com/guides/api-keys/)"
+                },
+                "endpoint": {
+                  "description": "Custom request URL, e.g. a self-hosted Nominatim.",
+                  "label": "Geocoder endpoint",
+                  "advanced": true,
+                  "type": "string",
+                  "markdownDescription": "Custom request URL, e.g. a self-hosted Nominatim."
+                },
+                "limit": {
+                  "description": "Max place results.",
+                  "default": 5,
+                  "label": "Geocoder result limit",
+                  "advanced": true,
+                  "type": "number",
+                  "markdownDescription": "Max place results.\n\nDefault: `5`"
+                }
+              },
+              "required": ["provider"],
+              "additionalProperties": false,
+              "description": "Place search.",
+              "markdownDescription": "Place search.\n\n[Docs](https://conness-gis.com/widgets/search/#geocoder-searchgeocoder)"
+            },
+            "layers": {
+              "description": "Layers to search.",
+              "label": "Searchable layers",
+              "editor": "search-layers",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "layerId": {
+                    "type": "string",
+                    "description": "Layer id from the project's `layers.json`.",
+                    "markdownDescription": "Layer id from the project's `layers.json`."
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Properties to match (case-insensitive).",
+                    "markdownDescription": "Properties to match (case-insensitive)."
+                  },
+                  "labelField": {
+                    "description": "Property shown as the result label.",
+                    "type": "string",
+                    "markdownDescription": "Property shown as the result label.\n\nDefault: the first of `fields`"
+                  },
+                  "limit": {
+                    "description": "Max results for this layer.",
+                    "default": 8,
+                    "type": "number",
+                    "markdownDescription": "Max results for this layer.\n\nDefault: `8`"
+                  },
+                  "pointZoom": {
+                    "description": "Zoom for point results from this layer.",
+                    "type": "number",
+                    "markdownDescription": "Zoom for point results from this layer.\n\nDefault: widgets.search.pointZoom"
+                  }
+                },
+                "required": ["layerId", "fields"],
+                "additionalProperties": false,
+                "description": "A layer searchable by its properties. GeoJSON layers only.",
+                "markdownDescription": "A layer searchable by its properties. GeoJSON layers only.\n\n[Docs](https://conness-gis.com/widgets/search/#searchable-layers-searchlayers)"
+              },
+              "markdownDescription": "Layers to search."
+            },
+            "openPopup": {
+              "description": "Open a layer result's popup when it's clicked.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "Open a layer result's popup when it's clicked.\n\nDefault: `true`"
+            },
+            "pointZoom": {
+              "description": "Zoom for point results. Other results fit their bounds.",
+              "default": 14,
+              "advanced": true,
+              "type": "number",
+              "markdownDescription": "Zoom for point results. Other results fit their bounds.\n\nDefault: `14`"
+            },
+            "sectionOrder": {
+              "default": "features-first",
+              "advanced": true,
+              "type": "string",
+              "enum": ["features-first", "places-first"],
+              "description": "Whether layer results or \"Places\" come first.",
+              "markdownDescription": "Whether layer results or \"Places\" come first.\n\nDefault: `\"features-first\"`"
+            },
+            "loadingText": {
+              "default": "Searching…",
+              "advanced": true,
+              "type": "string",
+              "markdownDescription": "Default: `\"Searching…\"`"
+            },
+            "noResultsText": {
+              "default": "No results.",
+              "advanced": true,
+              "type": "string",
+              "markdownDescription": "Default: `\"No results.\"`"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Search widget. Omit `geocoder` for layer search only, or `layers` for place search only.",
+          "markdownDescription": "Search widget. Omit `geocoder` for layer search only, or `layers` for place search only.\n\n[Docs](https://conness-gis.com/widgets/search/)"
+        }
+      },
+      "additionalProperties": false,
+      "markdownDescription": "Each widget's own settings, keyed by widget id: `\"measure\": { … }`."
+    },
+    "duckdb": {
+      "type": "object",
+      "properties": {
+        "bundleUrl": {
+          "description": "Folder holding `duckdb-base.wasm` and `duckdb-browser-base.worker.js`, from the same `@duckdb/duckdb-wasm` version the app installs.",
+          "type": "string",
+          "markdownDescription": "Folder holding `duckdb-base.wasm` and `duckdb-browser-base.worker.js`, from the same `@duckdb/duckdb-wasm` version the app installs.\n\nDefault: jsDelivr"
+        },
+        "extensionsUrl": {
+          "description": "Extension repository for `parquet`, `httpfs` and `spatial`.",
+          "type": "string",
+          "markdownDescription": "Extension repository for `parquet`, `httpfs` and `spatial`.\n\nDefault: DuckDB's own (extensions.duckdb.org)"
+        }
+      },
+      "additionalProperties": false,
+      "description": "DuckDB download locations. Used by GeoParquet layers and GeoJSON layers with `duckdb`. Point these at your own copies for offline or intranet deploys. Only used when a layer needs DuckDB.",
+      "markdownDescription": "DuckDB download locations. Used by GeoParquet layers and GeoJSON layers with `duckdb`. Point these at your own copies for offline or intranet deploys. Only used when a layer needs DuckDB.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#duckdb)"
+    },
+    "layerGroups": {
+      "description": "Per-group settings, keyed by group name.",
+      "type": "object",
+      "propertyNames": { "type": "string" },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "collapsed": {
+            "description": "Start collapsed.",
+            "type": "boolean",
+            "markdownDescription": "Start collapsed.\n\nDefault: widgets[\"layer-list\"].groupsCollapsedByDefault"
+          },
+          "position": {
+            "description": "Spot in the layer list's top level while the group has no layers. The editor keeps it up to date.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "markdownDescription": "Spot in the layer list's top level while the group has no layers. The editor keeps it up to date."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Per-group layer list settings.",
+        "markdownDescription": "Per-group layer list settings."
+      },
+      "markdownDescription": "Per-group settings, keyed by group name."
+    },
+    "topBarWidgets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "widgetName": {
+            "type": "string",
+            "description": "The widget's `id` (its folder name in `app/widgets/`).",
+            "markdownDescription": "The widget's `id` (its folder name in `app/widgets/`)."
+          },
+          "panelWidth": {
+            "description": "Panel width in px (top bar, floating). The side rail uses `ui.layout.sideRailPanelWidth`.",
+            "type": "number",
+            "markdownDescription": "Panel width in px (top bar, floating). The side rail uses `ui.layout.sideRailPanelWidth`."
+          },
+          "header": {
+            "description": "Title bar for this placement.",
+            "type": "object",
+            "properties": {
+              "showTitle": {
+                "description": "Show the widget's name.",
+                "default": true,
+                "type": "boolean",
+                "markdownDescription": "Show the widget's name.\n\nDefault: `true`"
+              },
+              "showDivider": {
+                "description": "Line under the title.",
+                "default": true,
+                "type": "boolean",
+                "markdownDescription": "Line under the title.\n\nDefault: `true`"
+              },
+              "titleColor": {
+                "description": "Title color.",
+                "type": "string",
+                "enum": ["primary", "text"],
+                "markdownDescription": "Title color.\n\nDefault: theme.widgetTitleColor"
+              }
+            },
+            "additionalProperties": false,
+            "markdownDescription": "Title bar for this placement.\n\nDefault: ui.widgetHeader\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#widget-header)"
+          },
+          "order": {
+            "description": "Floating only: order in its corner. Negative lifts it above the native controls.",
+            "default": 0,
+            "type": "number",
+            "markdownDescription": "Floating only: order in its corner. Negative lifts it above the native controls.\n\nDefault: `0`"
+          },
+          "stayOnMobile": {
+            "description": "Floating only: on phones, keep the widget's button over the map and open it there, instead of in the bottom sheet.",
+            "type": "boolean",
+            "markdownDescription": "Floating only: on phones, keep the widget's button over the map and open it there, instead of in the bottom sheet."
+          },
+          "opens": {
+            "description": "Floating only: which way the pop-out opens from its button: toward the middle of the map, or straight down (top corners) / up (bottom corners).",
+            "type": "string",
+            "enum": ["sideways", "vertically"],
+            "markdownDescription": "Floating only: which way the pop-out opens from its button: toward the middle of the map, or straight down (top corners) / up (bottom corners).\n\nDefault: manifest default, else \"sideways\" in a vertical corner and \"vertically\" in a horizontal one"
+          }
+        },
+        "required": ["widgetName"],
+        "additionalProperties": false,
+        "description": "Places a widget. Overrides its manifest defaults.",
+        "markdownDescription": "Places a widget. Overrides its manifest defaults.\n\n[Docs](https://conness-gis.com/guides/custom-widget/#placement-options)"
+      },
+      "description": "Widgets in the top bar.",
+      "markdownDescription": "Widgets in the top bar."
+    },
+    "sidePanelWidgets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "widgetName": {
+            "type": "string",
+            "description": "The widget's `id` (its folder name in `app/widgets/`).",
+            "markdownDescription": "The widget's `id` (its folder name in `app/widgets/`)."
+          },
+          "panelWidth": {
+            "description": "Panel width in px (top bar, floating). The side rail uses `ui.layout.sideRailPanelWidth`.",
+            "type": "number",
+            "markdownDescription": "Panel width in px (top bar, floating). The side rail uses `ui.layout.sideRailPanelWidth`."
+          },
+          "header": {
+            "description": "Title bar for this placement.",
+            "type": "object",
+            "properties": {
+              "showTitle": {
+                "description": "Show the widget's name.",
+                "default": true,
+                "type": "boolean",
+                "markdownDescription": "Show the widget's name.\n\nDefault: `true`"
+              },
+              "showDivider": {
+                "description": "Line under the title.",
+                "default": true,
+                "type": "boolean",
+                "markdownDescription": "Line under the title.\n\nDefault: `true`"
+              },
+              "titleColor": {
+                "description": "Title color.",
+                "type": "string",
+                "enum": ["primary", "text"],
+                "markdownDescription": "Title color.\n\nDefault: theme.widgetTitleColor"
+              }
+            },
+            "additionalProperties": false,
+            "markdownDescription": "Title bar for this placement.\n\nDefault: ui.widgetHeader\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#widget-header)"
+          },
+          "order": {
+            "description": "Floating only: order in its corner. Negative lifts it above the native controls.",
+            "default": 0,
+            "type": "number",
+            "markdownDescription": "Floating only: order in its corner. Negative lifts it above the native controls.\n\nDefault: `0`"
+          },
+          "stayOnMobile": {
+            "description": "Floating only: on phones, keep the widget's button over the map and open it there, instead of in the bottom sheet.",
+            "type": "boolean",
+            "markdownDescription": "Floating only: on phones, keep the widget's button over the map and open it there, instead of in the bottom sheet."
+          },
+          "opens": {
+            "description": "Floating only: which way the pop-out opens from its button: toward the middle of the map, or straight down (top corners) / up (bottom corners).",
+            "type": "string",
+            "enum": ["sideways", "vertically"],
+            "markdownDescription": "Floating only: which way the pop-out opens from its button: toward the middle of the map, or straight down (top corners) / up (bottom corners).\n\nDefault: manifest default, else \"sideways\" in a vertical corner and \"vertically\" in a horizontal one"
+          }
+        },
+        "required": ["widgetName"],
+        "additionalProperties": false,
+        "description": "Places a widget. Overrides its manifest defaults.",
+        "markdownDescription": "Places a widget. Overrides its manifest defaults.\n\n[Docs](https://conness-gis.com/guides/custom-widget/#placement-options)"
+      },
+      "description": "Widgets in the side rail.",
+      "markdownDescription": "Widgets in the side rail."
+    },
+    "floatingWidgets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slot": {
+            "type": "string",
+            "enum": ["top-left", "top-right", "bottom-left", "bottom-right"]
+          },
+          "widgets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "widgetName": {
+                  "type": "string",
+                  "description": "The widget's `id` (its folder name in `app/widgets/`).",
+                  "markdownDescription": "The widget's `id` (its folder name in `app/widgets/`)."
+                },
+                "panelWidth": {
+                  "description": "Panel width in px (top bar, floating). The side rail uses `ui.layout.sideRailPanelWidth`.",
+                  "type": "number",
+                  "markdownDescription": "Panel width in px (top bar, floating). The side rail uses `ui.layout.sideRailPanelWidth`."
+                },
+                "header": {
+                  "description": "Title bar for this placement.",
+                  "type": "object",
+                  "properties": {
+                    "showTitle": {
+                      "description": "Show the widget's name.",
+                      "default": true,
+                      "type": "boolean",
+                      "markdownDescription": "Show the widget's name.\n\nDefault: `true`"
+                    },
+                    "showDivider": {
+                      "description": "Line under the title.",
+                      "default": true,
+                      "type": "boolean",
+                      "markdownDescription": "Line under the title.\n\nDefault: `true`"
+                    },
+                    "titleColor": {
+                      "description": "Title color.",
+                      "type": "string",
+                      "enum": ["primary", "text"],
+                      "markdownDescription": "Title color.\n\nDefault: theme.widgetTitleColor"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "markdownDescription": "Title bar for this placement.\n\nDefault: ui.widgetHeader\n\n[Docs](https://conness-gis.com/configuration/ui-layout/#widget-header)"
+                },
+                "order": {
+                  "description": "Floating only: order in its corner. Negative lifts it above the native controls.",
+                  "default": 0,
+                  "type": "number",
+                  "markdownDescription": "Floating only: order in its corner. Negative lifts it above the native controls.\n\nDefault: `0`"
+                },
+                "stayOnMobile": {
+                  "description": "Floating only: on phones, keep the widget's button over the map and open it there, instead of in the bottom sheet.",
+                  "type": "boolean",
+                  "markdownDescription": "Floating only: on phones, keep the widget's button over the map and open it there, instead of in the bottom sheet."
+                },
+                "opens": {
+                  "description": "Floating only: which way the pop-out opens from its button: toward the middle of the map, or straight down (top corners) / up (bottom corners).",
+                  "type": "string",
+                  "enum": ["sideways", "vertically"],
+                  "markdownDescription": "Floating only: which way the pop-out opens from its button: toward the middle of the map, or straight down (top corners) / up (bottom corners).\n\nDefault: manifest default, else \"sideways\" in a vertical corner and \"vertically\" in a horizontal one"
+                }
+              },
+              "required": ["widgetName"],
+              "additionalProperties": false,
+              "description": "Places a widget. Overrides its manifest defaults.",
+              "markdownDescription": "Places a widget. Overrides its manifest defaults.\n\n[Docs](https://conness-gis.com/guides/custom-widget/#placement-options)"
+            }
+          },
+          "direction": {
+            "description": "`\"horizontal\"` lays the widgets out in one row. Pop-outs then open below (top corners) or above (bottom corners).",
+            "default": "vertical",
+            "type": "string",
+            "enum": ["vertical", "horizontal"],
+            "markdownDescription": "`\"horizontal\"` lays the widgets out in one row. Pop-outs then open below (top corners) or above (bottom corners).\n\nDefault: `\"vertical\"`"
+          }
+        },
+        "required": ["slot", "widgets"],
+        "additionalProperties": false,
+        "description": "Widgets floating in one map corner.",
+        "markdownDescription": "Widgets floating in one map corner.\n\n[Docs](https://conness-gis.com/guides/custom-widget/#floating-placement)"
+      },
+      "description": "Widgets floating in map corners.",
+      "markdownDescription": "Widgets floating in map corners."
+    },
+    "mobileWidgets": {
+      "description": "Widgets in the mobile carousel, in order. On mobile it's the only way to open top-bar and side-panel widgets. Floating widgets keep their map-corner buttons.",
+      "type": "array",
+      "items": { "type": "string" },
+      "markdownDescription": "Widgets in the mobile carousel, in order. On mobile it's the only way to open top-bar and side-panel widgets. Floating widgets keep their map-corner buttons."
+    }
+  },
+  "required": ["branding", "map", "topBarWidgets", "sidePanelWidgets", "floatingWidgets"],
+  "additionalProperties": false,
+  "definitions": {
+    "layerListActions": {
+      "type": "object",
+      "properties": {
+        "opacity": {
+          "description": "Turns Adjust Transparency on or off in the layer's menu in the Layer List.",
+          "default": true,
+          "label": "Transparency action",
+          "type": "boolean",
+          "markdownDescription": "Turns Adjust Transparency on or off in the layer's menu in the Layer List.\n\nDefault: `true`"
+        },
+        "labels": {
+          "description": "Turns the Labels on/off item on or off in the layer's menu in the Layer List. Only on layers with a `label`.",
+          "default": true,
+          "label": "Labels action",
+          "type": "boolean",
+          "markdownDescription": "Turns the Labels on/off item on or off in the layer's menu in the Layer List. Only on layers with a `label`.\n\nDefault: `true`"
+        },
+        "zoomToExtent": {
+          "description": "Turns Zoom to Extent on or off in the layer's menu in the Layer List.",
+          "default": true,
+          "label": "Zoom to extent action",
+          "type": "boolean",
+          "markdownDescription": "Turns Zoom to Extent on or off in the layer's menu in the Layer List.\n\nDefault: `true`"
+        },
+        "filter": {
+          "description": "Turns Filter on or off in the layer's menu in the Layer List. Only on layers with `filters`.",
+          "default": true,
+          "label": "Filter action",
+          "type": "boolean",
+          "markdownDescription": "Turns Filter on or off in the layer's menu in the Layer List. Only on layers with `filters`.\n\nDefault: `true`"
+        },
+        "export": {
+          "description": "Turns Export Data on or off in the layer's menu in the Layer List (formats set by `exportFormats`). Only on GeoJSON and GeoParquet layers.",
+          "default": true,
+          "label": "Export action",
+          "type": "boolean",
+          "markdownDescription": "Turns Export Data on or off in the layer's menu in the Layer List (formats set by `exportFormats`). Only on GeoJSON and GeoParquet layers.\n\nDefault: `true`"
+        },
+        "visibilityZoom": {
+          "description": "Turns Zoom Range on or off in the layer's menu in the Layer List: a slider that changes the zooms the layer shows at until the page reloads. Only on layers with a `minZoom` or `maxZoom`.",
+          "default": false,
+          "label": "Zoom range action",
+          "type": "boolean",
+          "markdownDescription": "Turns Zoom Range on or off in the layer's menu in the Layer List: a slider that changes the zooms the layer shows at until the page reloads. Only on layers with a `minZoom` or `maxZoom`.\n\nDefault: `false`"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Which items each layer row's menu offers.",
+      "markdownDescription": "Which items each layer row's menu offers.\n\n[Docs](https://conness-gis.com/widgets/layer-list/)"
+    }
+  }
+}

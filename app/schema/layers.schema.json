@@ -1,0 +1,1507 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "This file's JSON Schema, for editor hover help.",
+      "markdownDescription": "This file's JSON Schema, for editor hover help."
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique id.",
+                "markdownDescription": "Unique id."
+              },
+              "name": {
+                "type": "string",
+                "description": "Name in the layer list and legend.",
+                "markdownDescription": "Name in the layer list and legend."
+              },
+              "group": {
+                "description": "Groups layers under one header in the layer list.",
+                "type": "string",
+                "markdownDescription": "Groups layers under one header in the layer list."
+              },
+              "visible": {
+                "description": "Visible on load.",
+                "default": true,
+                "type": "boolean",
+                "markdownDescription": "Visible on load.\n\nDefault: `true`"
+              },
+              "minZoom": {
+                "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                "type": "number",
+                "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+              },
+              "maxZoom": {
+                "description": "Zoom at which the layer stops drawing.",
+                "type": "number",
+                "markdownDescription": "Zoom at which the layer stops drawing."
+              },
+              "symbology": { "$ref": "#/definitions/symbology" },
+              "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+              "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+              "actions": {
+                "description": "Override which row-menu items this layer shows.",
+                "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+              },
+              "geometryType": {
+                "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                "type": "string",
+                "enum": ["point", "line", "polygon"],
+                "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+              },
+              "hideFromLegend": {
+                "description": "Keep it on the map and in the layer list, but out of the legend.",
+                "default": false,
+                "type": "boolean",
+                "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+              },
+              "legend": {
+                "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                "allOf": [{ "$ref": "#/definitions/legend" }],
+                "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+              },
+              "type": { "type": "string", "const": "geojson" },
+              "url": {
+                "type": "string",
+                "description": "`\"./layers/<file>.geojson\"` or a remote URL.",
+                "markdownDescription": "`\"./layers/<file>.geojson\"` or a remote URL."
+              },
+              "filters": {
+                "description": "Columns users can filter by.",
+                "type": "array",
+                "items": { "$ref": "#/definitions/filters" },
+                "markdownDescription": "Columns users can filter by."
+              },
+              "duckdb": {
+                "description": "Read the file with DuckDB instead of MapLibre. On its own it isn't faster. Use it to query the layer with SQL, or with `{ \"mvt\": true }` to draw a large file as vector tiles cut on demand (see the GeoParquet `mvt` field). Downloads DuckDB (about 11.5 MB) at startup.",
+                "default": false,
+                "anyOf": [
+                  { "type": "boolean" },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "mvt": {
+                        "description": "Draw as vector tiles cut on demand from an in-memory table.",
+                        "default": false,
+                        "type": "boolean",
+                        "markdownDescription": "Draw as vector tiles cut on demand from an in-memory table.\n\nDefault: `false`"
+                      },
+                      "maxTileFeatures": {
+                        "description": "With `mvt`: most features per tile. The smallest are dropped first.",
+                        "default": 5000,
+                        "type": "number",
+                        "markdownDescription": "With `mvt`: most features per tile. The smallest are dropped first.\n\nDefault: `5000`"
+                      },
+                      "maxTileZoom": {
+                        "description": "With `mvt`: highest zoom tiles are cut at. MapLibre keeps drawing past it.",
+                        "default": 14,
+                        "type": "number",
+                        "markdownDescription": "With `mvt`: highest zoom tiles are cut at. MapLibre keeps drawing past it.\n\nDefault: `14`"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ],
+                "markdownDescription": "Read the file with DuckDB instead of MapLibre. On its own it isn't faster. Use it to query the layer with SQL, or with `{ \"mvt\": true }` to draw a large file as vector tiles cut on demand (see the GeoParquet `mvt` field). Downloads DuckDB (about 11.5 MB) at startup.\n\nDefault: `false`"
+              }
+            },
+            "required": ["id", "name", "symbology", "type", "url"],
+            "additionalProperties": false,
+            "description": "A GeoJSON file.",
+            "markdownDescription": "A GeoJSON file.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#geojson)"
+          },
+          {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique id.",
+                    "markdownDescription": "Unique id."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name in the layer list and legend.",
+                    "markdownDescription": "Name in the layer list and legend."
+                  },
+                  "group": {
+                    "description": "Groups layers under one header in the layer list.",
+                    "type": "string",
+                    "markdownDescription": "Groups layers under one header in the layer list."
+                  },
+                  "visible": {
+                    "description": "Visible on load.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Visible on load.\n\nDefault: `true`"
+                  },
+                  "minZoom": {
+                    "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+                  },
+                  "maxZoom": {
+                    "description": "Zoom at which the layer stops drawing.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer stops drawing."
+                  },
+                  "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+                  "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+                  "actions": {
+                    "description": "Override which row-menu items this layer shows.",
+                    "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                    "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+                  },
+                  "geometryType": {
+                    "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                    "type": "string",
+                    "enum": ["point", "line", "polygon"],
+                    "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+                  },
+                  "hideFromLegend": {
+                    "description": "Keep it on the map and in the layer list, but out of the legend.",
+                    "default": false,
+                    "type": "boolean",
+                    "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+                  },
+                  "legend": {
+                    "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                    "allOf": [{ "$ref": "#/definitions/legend" }],
+                    "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+                  },
+                  "raster": {
+                    "description": "Vector tiles (the default). Set `true` for image tiles.",
+                    "type": "boolean",
+                    "const": false,
+                    "markdownDescription": "Vector tiles (the default). Set `true` for image tiles."
+                  },
+                  "sourceLayers": {
+                    "description": "Which source layers to draw, in draw order (first on top), each with its own style. Omit (or `[]`) to draw every source layer the tiles list, in automatic colors. One entry shows as a normal layer under the layer's name. Two or more show as an expandable row in the layer list.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sourceLayer": {
+                          "type": "string",
+                          "description": "Layer name inside the archive (tippecanoe's `-l`).",
+                          "markdownDescription": "Layer name inside the archive (tippecanoe's `-l`)."
+                        },
+                        "name": {
+                          "description": "Name in the layer list and legend.",
+                          "type": "string",
+                          "markdownDescription": "Name in the layer list and legend.\n\nDefault: sourceLayer"
+                        },
+                        "symbology": {
+                          "allOf": [{ "$ref": "#/definitions/symbology" }],
+                          "markdownDescription": "Default: an automatic color"
+                        },
+                        "geometryType": {
+                          "description": "Legend shape and which sublayers are built. Detected from tilestats when omitted.",
+                          "type": "string",
+                          "enum": ["point", "line", "polygon"],
+                          "markdownDescription": "Legend shape and which sublayers are built. Detected from tilestats when omitted."
+                        },
+                        "legend": {
+                          "description": "How it shows in the legend. Not inherited from the archive layer.",
+                          "allOf": [{ "$ref": "#/definitions/legend" }],
+                          "markdownDescription": "How it shows in the legend. Not inherited from the archive layer.\n\nDefault: derived from the symbology"
+                        },
+                        "label": {
+                          "description": "Text labels.",
+                          "allOf": [{ "$ref": "#/definitions/label" }],
+                          "markdownDescription": "Text labels.\n\nDefault: the archive layer's label"
+                        },
+                        "popup": {
+                          "description": "Feature popups.",
+                          "allOf": [{ "$ref": "#/definitions/popup" }],
+                          "markdownDescription": "Feature popups.\n\nDefault: the archive layer's popup"
+                        },
+                        "visible": {
+                          "description": "Visible on load.",
+                          "type": "boolean",
+                          "markdownDescription": "Visible on load.\n\nDefault: the archive layer's visible"
+                        },
+                        "minZoom": {
+                          "type": "number",
+                          "markdownDescription": "Default: the archive's own zoom range for this layer"
+                        },
+                        "maxZoom": {
+                          "type": "number",
+                          "markdownDescription": "Default: the archive's own zoom range for this layer"
+                        }
+                      },
+                      "required": ["sourceLayer"],
+                      "additionalProperties": false,
+                      "description": "One layer inside a tile source. Unset labels and popup fall back to the archive layer's own, and an unset `symbology` draws an automatic color.",
+                      "markdownDescription": "One layer inside a tile source. Unset labels and popup fall back to the archive layer's own, and an unset `symbology` draws an automatic color.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#pmtiles)"
+                    },
+                    "markdownDescription": "Which source layers to draw, in draw order (first on top), each with its own style. Omit (or `[]`) to draw every source layer the tiles list, in automatic colors. One entry shows as a normal layer under the layer's name. Two or more show as an expandable row in the layer list.\n\nDefault: every source layer"
+                  },
+                  "collapsed": {
+                    "description": "Start the expandable row collapsed in the layer list. Only with 2+ source layers.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Start the expandable row collapsed in the layer list. Only with 2+ source layers.\n\nDefault: `true`"
+                  },
+                  "encoding": {
+                    "description": "Tile format. `\"mlt\"` is MapLibre Tiles.",
+                    "type": "string",
+                    "enum": ["mvt", "mlt"],
+                    "markdownDescription": "Tile format. `\"mlt\"` is MapLibre Tiles.\n\nDefault: \"mvt\" (or what a TileJSON says)"
+                  },
+                  "type": { "type": "string", "const": "pmtiles" },
+                  "url": {
+                    "type": "string",
+                    "description": "`\"./layers/<file>.pmtiles\"` or a remote URL.",
+                    "markdownDescription": "`\"./layers/<file>.pmtiles\"` or a remote URL."
+                  }
+                },
+                "required": ["id", "name", "type", "url"],
+                "additionalProperties": false,
+                "description": "A PMTiles archive of vector tiles.",
+                "markdownDescription": "A PMTiles archive of vector tiles.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#pmtiles)"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique id.",
+                    "markdownDescription": "Unique id."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name in the layer list and legend.",
+                    "markdownDescription": "Name in the layer list and legend."
+                  },
+                  "group": {
+                    "description": "Groups layers under one header in the layer list.",
+                    "type": "string",
+                    "markdownDescription": "Groups layers under one header in the layer list."
+                  },
+                  "visible": {
+                    "description": "Visible on load.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Visible on load.\n\nDefault: `true`"
+                  },
+                  "minZoom": {
+                    "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+                  },
+                  "maxZoom": {
+                    "description": "Zoom at which the layer stops drawing.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer stops drawing."
+                  },
+                  "actions": {
+                    "description": "Override which row-menu items this layer shows.",
+                    "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                    "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+                  },
+                  "hideFromLegend": {
+                    "description": "Keep it on the map and in the layer list, but out of the legend.",
+                    "default": false,
+                    "type": "boolean",
+                    "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+                  },
+                  "legend": {
+                    "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                    "allOf": [{ "$ref": "#/definitions/legend" }],
+                    "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+                  },
+                  "raster": {
+                    "type": "boolean",
+                    "const": true,
+                    "description": "Marks the tiles as images.",
+                    "markdownDescription": "Marks the tiles as images."
+                  },
+                  "rasterOpacity": {
+                    "description": "Starting opacity, 0 to 1 (a raster has no symbology to hold it).",
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "markdownDescription": "Starting opacity, 0 to 1 (a raster has no symbology to hold it).\n\nDefault: `1`"
+                  },
+                  "tileSize": {
+                    "description": "Tile size in pixels. It isn't recorded with the tiles. Most use 512, some 256.",
+                    "default": 512,
+                    "anyOf": [
+                      { "type": "number", "const": 256 },
+                      { "type": "number", "const": 512 }
+                    ],
+                    "markdownDescription": "Tile size in pixels. It isn't recorded with the tiles. Most use 512, some 256.\n\nDefault: `512`"
+                  },
+                  "type": { "type": "string", "const": "pmtiles" },
+                  "url": {
+                    "type": "string",
+                    "description": "`\"./layers/<file>.pmtiles\"` or a remote URL.",
+                    "markdownDescription": "`\"./layers/<file>.pmtiles\"` or a remote URL."
+                  }
+                },
+                "required": ["id", "name", "raster", "type", "url"],
+                "additionalProperties": false,
+                "description": "A PMTiles archive of image tiles (imagery, scanned maps). Draws below every vector layer. Visibility, transparency and zoom to extent only (no symbology, popups or legend entry).",
+                "markdownDescription": "A PMTiles archive of image tiles (imagery, scanned maps). Draws below every vector layer. Visibility, transparency and zoom to extent only (no symbology, popups or legend entry).\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#raster-pmtiles)"
+              }
+            ],
+            "description": "A PMTiles archive: vector tiles (default) or image tiles (`\"raster\": true`).",
+            "markdownDescription": "A PMTiles archive: vector tiles (default) or image tiles (`\"raster\": true`)."
+          },
+          {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique id.",
+                    "markdownDescription": "Unique id."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name in the layer list and legend.",
+                    "markdownDescription": "Name in the layer list and legend."
+                  },
+                  "group": {
+                    "description": "Groups layers under one header in the layer list.",
+                    "type": "string",
+                    "markdownDescription": "Groups layers under one header in the layer list."
+                  },
+                  "visible": {
+                    "description": "Visible on load.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Visible on load.\n\nDefault: `true`"
+                  },
+                  "minZoom": {
+                    "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+                  },
+                  "maxZoom": {
+                    "description": "Zoom at which the layer stops drawing.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer stops drawing."
+                  },
+                  "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+                  "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+                  "actions": {
+                    "description": "Override which row-menu items this layer shows.",
+                    "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                    "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+                  },
+                  "geometryType": {
+                    "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                    "type": "string",
+                    "enum": ["point", "line", "polygon"],
+                    "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+                  },
+                  "hideFromLegend": {
+                    "description": "Keep it on the map and in the layer list, but out of the legend.",
+                    "default": false,
+                    "type": "boolean",
+                    "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+                  },
+                  "legend": {
+                    "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                    "allOf": [{ "$ref": "#/definitions/legend" }],
+                    "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+                  },
+                  "raster": {
+                    "description": "Vector tiles (the default). Set `true` for image tiles.",
+                    "type": "boolean",
+                    "const": false,
+                    "markdownDescription": "Vector tiles (the default). Set `true` for image tiles."
+                  },
+                  "sourceLayers": {
+                    "description": "Which source layers to draw, in draw order (first on top), each with its own style. Omit (or `[]`) to draw every source layer the tiles list, in automatic colors. One entry shows as a normal layer under the layer's name. Two or more show as an expandable row in the layer list.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "sourceLayer": {
+                          "type": "string",
+                          "description": "Layer name inside the archive (tippecanoe's `-l`).",
+                          "markdownDescription": "Layer name inside the archive (tippecanoe's `-l`)."
+                        },
+                        "name": {
+                          "description": "Name in the layer list and legend.",
+                          "type": "string",
+                          "markdownDescription": "Name in the layer list and legend.\n\nDefault: sourceLayer"
+                        },
+                        "symbology": {
+                          "allOf": [{ "$ref": "#/definitions/symbology" }],
+                          "markdownDescription": "Default: an automatic color"
+                        },
+                        "geometryType": {
+                          "description": "Legend shape and which sublayers are built. Detected from tilestats when omitted.",
+                          "type": "string",
+                          "enum": ["point", "line", "polygon"],
+                          "markdownDescription": "Legend shape and which sublayers are built. Detected from tilestats when omitted."
+                        },
+                        "legend": {
+                          "description": "How it shows in the legend. Not inherited from the archive layer.",
+                          "allOf": [{ "$ref": "#/definitions/legend" }],
+                          "markdownDescription": "How it shows in the legend. Not inherited from the archive layer.\n\nDefault: derived from the symbology"
+                        },
+                        "label": {
+                          "description": "Text labels.",
+                          "allOf": [{ "$ref": "#/definitions/label" }],
+                          "markdownDescription": "Text labels.\n\nDefault: the archive layer's label"
+                        },
+                        "popup": {
+                          "description": "Feature popups.",
+                          "allOf": [{ "$ref": "#/definitions/popup" }],
+                          "markdownDescription": "Feature popups.\n\nDefault: the archive layer's popup"
+                        },
+                        "visible": {
+                          "description": "Visible on load.",
+                          "type": "boolean",
+                          "markdownDescription": "Visible on load.\n\nDefault: the archive layer's visible"
+                        },
+                        "minZoom": {
+                          "type": "number",
+                          "markdownDescription": "Default: the archive's own zoom range for this layer"
+                        },
+                        "maxZoom": {
+                          "type": "number",
+                          "markdownDescription": "Default: the archive's own zoom range for this layer"
+                        }
+                      },
+                      "required": ["sourceLayer"],
+                      "additionalProperties": false,
+                      "description": "One layer inside a tile source. Unset labels and popup fall back to the archive layer's own, and an unset `symbology` draws an automatic color.",
+                      "markdownDescription": "One layer inside a tile source. Unset labels and popup fall back to the archive layer's own, and an unset `symbology` draws an automatic color.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#pmtiles)"
+                    },
+                    "markdownDescription": "Which source layers to draw, in draw order (first on top), each with its own style. Omit (or `[]`) to draw every source layer the tiles list, in automatic colors. One entry shows as a normal layer under the layer's name. Two or more show as an expandable row in the layer list.\n\nDefault: every source layer"
+                  },
+                  "collapsed": {
+                    "description": "Start the expandable row collapsed in the layer list. Only with 2+ source layers.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Start the expandable row collapsed in the layer list. Only with 2+ source layers.\n\nDefault: `true`"
+                  },
+                  "encoding": {
+                    "description": "Tile format. `\"mlt\"` is MapLibre Tiles.",
+                    "type": "string",
+                    "enum": ["mvt", "mlt"],
+                    "markdownDescription": "Tile format. `\"mlt\"` is MapLibre Tiles.\n\nDefault: \"mvt\" (or what a TileJSON says)"
+                  },
+                  "type": { "type": "string", "const": "tiles" },
+                  "url": {
+                    "type": "string",
+                    "description": "A TileJSON URL, or a template with `{z}`, `{x}` and `{y}`. Used as is (remote only).",
+                    "markdownDescription": "A TileJSON URL, or a template with `{z}`, `{x}` and `{y}`. Used as is (remote only)."
+                  },
+                  "minTileZoom": {
+                    "description": "Templates only: lowest zoom the server has tiles for. A TileJSON says this itself.",
+                    "default": 0,
+                    "type": "number",
+                    "markdownDescription": "Templates only: lowest zoom the server has tiles for. A TileJSON says this itself.\n\nDefault: `0`"
+                  },
+                  "maxTileZoom": {
+                    "description": "Templates only: highest zoom the server has tiles for. MapLibre overzooms past it.",
+                    "default": 14,
+                    "type": "number",
+                    "markdownDescription": "Templates only: highest zoom the server has tiles for. MapLibre overzooms past it.\n\nDefault: `14`"
+                  },
+                  "attribution": {
+                    "description": "Templates only: attribution text or HTML. A TileJSON says this itself.",
+                    "type": "string",
+                    "markdownDescription": "Templates only: attribution text or HTML. A TileJSON says this itself."
+                  }
+                },
+                "required": ["id", "name", "type", "url"],
+                "additionalProperties": false,
+                "description": "Vector tiles from a tile server (Martin, pg_tileserv, GeoServer, MapTiler…).",
+                "markdownDescription": "Vector tiles from a tile server (Martin, pg_tileserv, GeoServer, MapTiler…).\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#tiles)"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique id.",
+                    "markdownDescription": "Unique id."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name in the layer list and legend.",
+                    "markdownDescription": "Name in the layer list and legend."
+                  },
+                  "group": {
+                    "description": "Groups layers under one header in the layer list.",
+                    "type": "string",
+                    "markdownDescription": "Groups layers under one header in the layer list."
+                  },
+                  "visible": {
+                    "description": "Visible on load.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Visible on load.\n\nDefault: `true`"
+                  },
+                  "minZoom": {
+                    "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+                  },
+                  "maxZoom": {
+                    "description": "Zoom at which the layer stops drawing.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer stops drawing."
+                  },
+                  "actions": {
+                    "description": "Override which row-menu items this layer shows.",
+                    "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                    "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+                  },
+                  "hideFromLegend": {
+                    "description": "Keep it on the map and in the layer list, but out of the legend.",
+                    "default": false,
+                    "type": "boolean",
+                    "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+                  },
+                  "legend": {
+                    "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                    "allOf": [{ "$ref": "#/definitions/legend" }],
+                    "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+                  },
+                  "raster": {
+                    "type": "boolean",
+                    "const": true,
+                    "description": "Marks the tiles as images.",
+                    "markdownDescription": "Marks the tiles as images."
+                  },
+                  "rasterOpacity": {
+                    "description": "Starting opacity, 0 to 1 (a raster has no symbology to hold it).",
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "markdownDescription": "Starting opacity, 0 to 1 (a raster has no symbology to hold it).\n\nDefault: `1`"
+                  },
+                  "tileSize": {
+                    "description": "Tile size in pixels. It isn't recorded with the tiles. Most use 512, some 256.",
+                    "default": 512,
+                    "anyOf": [
+                      { "type": "number", "const": 256 },
+                      { "type": "number", "const": 512 }
+                    ],
+                    "markdownDescription": "Tile size in pixels. It isn't recorded with the tiles. Most use 512, some 256.\n\nDefault: `512`"
+                  },
+                  "type": { "type": "string", "const": "tiles" },
+                  "url": {
+                    "type": "string",
+                    "description": "A TileJSON URL, or a template with `{z}`, `{x}` and `{y}`. Used as is (remote only).",
+                    "markdownDescription": "A TileJSON URL, or a template with `{z}`, `{x}` and `{y}`. Used as is (remote only)."
+                  },
+                  "minTileZoom": {
+                    "description": "Templates only: lowest zoom the server has tiles for. A TileJSON says this itself.",
+                    "default": 0,
+                    "type": "number",
+                    "markdownDescription": "Templates only: lowest zoom the server has tiles for. A TileJSON says this itself.\n\nDefault: `0`"
+                  },
+                  "maxTileZoom": {
+                    "description": "Templates only: highest zoom the server has tiles for. MapLibre overzooms past it.",
+                    "default": 14,
+                    "type": "number",
+                    "markdownDescription": "Templates only: highest zoom the server has tiles for. MapLibre overzooms past it.\n\nDefault: `14`"
+                  },
+                  "attribution": {
+                    "description": "Templates only: attribution text or HTML. A TileJSON says this itself.",
+                    "type": "string",
+                    "markdownDescription": "Templates only: attribution text or HTML. A TileJSON says this itself."
+                  }
+                },
+                "required": ["id", "name", "raster", "type", "url"],
+                "additionalProperties": false,
+                "description": "Image tiles from a tile server (hillshade, imagery). Draws below every vector layer.",
+                "markdownDescription": "Image tiles from a tile server (hillshade, imagery). Draws below every vector layer.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#tiles)"
+              }
+            ],
+            "description": "A tile server: vector tiles (default) or image tiles (`\"raster\": true`).",
+            "markdownDescription": "A tile server: vector tiles (default) or image tiles (`\"raster\": true`)."
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique id.",
+                "markdownDescription": "Unique id."
+              },
+              "name": {
+                "type": "string",
+                "description": "Name in the layer list and legend.",
+                "markdownDescription": "Name in the layer list and legend."
+              },
+              "group": {
+                "description": "Groups layers under one header in the layer list.",
+                "type": "string",
+                "markdownDescription": "Groups layers under one header in the layer list."
+              },
+              "visible": {
+                "description": "Visible on load.",
+                "default": true,
+                "type": "boolean",
+                "markdownDescription": "Visible on load.\n\nDefault: `true`"
+              },
+              "minZoom": {
+                "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                "type": "number",
+                "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+              },
+              "maxZoom": {
+                "description": "Zoom at which the layer stops drawing.",
+                "type": "number",
+                "markdownDescription": "Zoom at which the layer stops drawing."
+              },
+              "symbology": { "$ref": "#/definitions/symbology" },
+              "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+              "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+              "actions": {
+                "description": "Override which row-menu items this layer shows.",
+                "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+              },
+              "geometryType": {
+                "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                "type": "string",
+                "enum": ["point", "line", "polygon"],
+                "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+              },
+              "hideFromLegend": {
+                "description": "Keep it on the map and in the layer list, but out of the legend.",
+                "default": false,
+                "type": "boolean",
+                "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+              },
+              "legend": {
+                "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                "allOf": [{ "$ref": "#/definitions/legend" }],
+                "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+              },
+              "type": { "type": "string", "const": "flatgeobuf" },
+              "url": {
+                "type": "string",
+                "description": "`\"./layers/<file>.fgb\"` or a remote URL.",
+                "markdownDescription": "`\"./layers/<file>.fgb\"` or a remote URL."
+              },
+              "bbox": {
+                "description": "`\"all\"` loads the whole file once. `\"dynamic\"` fetches only what's in view. The host must serve the file uncompressed with Range requests.",
+                "default": "all",
+                "type": "string",
+                "enum": ["all", "dynamic"],
+                "markdownDescription": "`\"all\"` loads the whole file once. `\"dynamic\"` fetches only what's in view. The host must serve the file uncompressed with Range requests.\n\nDefault: `\"all\"`"
+              }
+            },
+            "required": ["id", "name", "symbology", "type", "url"],
+            "additionalProperties": false,
+            "description": "A FlatGeobuf file.",
+            "markdownDescription": "A FlatGeobuf file.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#flatgeobuf)"
+          },
+          {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique id.",
+                    "markdownDescription": "Unique id."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name in the layer list and legend.",
+                    "markdownDescription": "Name in the layer list and legend."
+                  },
+                  "group": {
+                    "description": "Groups layers under one header in the layer list.",
+                    "type": "string",
+                    "markdownDescription": "Groups layers under one header in the layer list."
+                  },
+                  "visible": {
+                    "description": "Visible on load.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Visible on load.\n\nDefault: `true`"
+                  },
+                  "minZoom": {
+                    "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+                  },
+                  "maxZoom": {
+                    "description": "Zoom at which the layer stops drawing.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer stops drawing."
+                  },
+                  "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+                  "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+                  "actions": {
+                    "description": "Override which row-menu items this layer shows.",
+                    "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                    "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+                  },
+                  "geometryType": {
+                    "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                    "type": "string",
+                    "enum": ["point", "line", "polygon"],
+                    "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+                  },
+                  "hideFromLegend": {
+                    "description": "Keep it on the map and in the layer list, but out of the legend.",
+                    "default": false,
+                    "type": "boolean",
+                    "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+                  },
+                  "legend": {
+                    "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                    "allOf": [{ "$ref": "#/definitions/legend" }],
+                    "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+                  },
+                  "type": { "type": "string", "const": "esri" },
+                  "symbology": {
+                    "description": "Kit styling. Omit to use the service's own renderer. Ignored by raster services.",
+                    "allOf": [{ "$ref": "#/definitions/symbology" }],
+                    "markdownDescription": "Kit styling. Omit to use the service's own renderer. Ignored by raster services."
+                  },
+                  "esriOpacity": {
+                    "description": "Starting opacity, 0 to 1, for raster services and service-styled feature layers (no kit symbology to hold it). With kit `symbology`, use its `opacity` / `strokeOpacity` instead.",
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "markdownDescription": "Starting opacity, 0 to 1, for raster services and service-styled feature layers (no kit symbology to hold it). With kit `symbology`, use its `opacity` / `strokeOpacity` instead.\n\nDefault: `1`"
+                  },
+                  "service": { "type": "string", "const": "feature" },
+                  "url": {
+                    "type": "string",
+                    "description": "FeatureServer URL with the layer index, e.g. `.../FeatureServer/0`.",
+                    "markdownDescription": "FeatureServer URL with the layer index, e.g. `.../FeatureServer/0`."
+                  },
+                  "where": {
+                    "description": "ArcGIS where clause.",
+                    "default": "1=1",
+                    "type": "string",
+                    "markdownDescription": "ArcGIS where clause.\n\nDefault: `\"1=1\"`"
+                  },
+                  "filters": {
+                    "description": "Columns users can filter by. Combined with `where` on the server.",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/filters" },
+                    "markdownDescription": "Columns users can filter by. Combined with `where` on the server."
+                  }
+                },
+                "required": ["id", "name", "type", "service", "url"],
+                "additionalProperties": false,
+                "description": "ArcGIS feature service: styled, with popups and legend.",
+                "markdownDescription": "ArcGIS feature service: styled, with popups and legend.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#esri)"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique id.",
+                    "markdownDescription": "Unique id."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name in the layer list and legend.",
+                    "markdownDescription": "Name in the layer list and legend."
+                  },
+                  "group": {
+                    "description": "Groups layers under one header in the layer list.",
+                    "type": "string",
+                    "markdownDescription": "Groups layers under one header in the layer list."
+                  },
+                  "visible": {
+                    "description": "Visible on load.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Visible on load.\n\nDefault: `true`"
+                  },
+                  "minZoom": {
+                    "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+                  },
+                  "maxZoom": {
+                    "description": "Zoom at which the layer stops drawing.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer stops drawing."
+                  },
+                  "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+                  "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+                  "actions": {
+                    "description": "Override which row-menu items this layer shows.",
+                    "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                    "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+                  },
+                  "geometryType": {
+                    "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                    "type": "string",
+                    "enum": ["point", "line", "polygon"],
+                    "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+                  },
+                  "hideFromLegend": {
+                    "description": "Keep it on the map and in the layer list, but out of the legend.",
+                    "default": false,
+                    "type": "boolean",
+                    "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+                  },
+                  "legend": {
+                    "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                    "allOf": [{ "$ref": "#/definitions/legend" }],
+                    "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+                  },
+                  "type": { "type": "string", "const": "esri" },
+                  "symbology": {
+                    "description": "Kit styling. Omit to use the service's own renderer. Ignored by raster services.",
+                    "allOf": [{ "$ref": "#/definitions/symbology" }],
+                    "markdownDescription": "Kit styling. Omit to use the service's own renderer. Ignored by raster services."
+                  },
+                  "esriOpacity": {
+                    "description": "Starting opacity, 0 to 1, for raster services and service-styled feature layers (no kit symbology to hold it). With kit `symbology`, use its `opacity` / `strokeOpacity` instead.",
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "markdownDescription": "Starting opacity, 0 to 1, for raster services and service-styled feature layers (no kit symbology to hold it). With kit `symbology`, use its `opacity` / `strokeOpacity` instead.\n\nDefault: `1`"
+                  },
+                  "service": { "type": "string", "const": "dynamic" },
+                  "url": {
+                    "type": "string",
+                    "description": "MapServer URL, no layer index.",
+                    "markdownDescription": "MapServer URL, no layer index."
+                  },
+                  "layers": {
+                    "description": "Sublayer ids to draw, e.g. `[2, 3]`.",
+                    "type": "array",
+                    "items": { "type": "number" },
+                    "markdownDescription": "Sublayer ids to draw, e.g. `[2, 3]`.\n\nDefault: all"
+                  }
+                },
+                "required": ["id", "name", "type", "service", "url"],
+                "additionalProperties": false,
+                "description": "ArcGIS dynamic map service: a server-rendered image. Visibility and opacity only.",
+                "markdownDescription": "ArcGIS dynamic map service: a server-rendered image. Visibility and opacity only.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#esri)"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique id.",
+                    "markdownDescription": "Unique id."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name in the layer list and legend.",
+                    "markdownDescription": "Name in the layer list and legend."
+                  },
+                  "group": {
+                    "description": "Groups layers under one header in the layer list.",
+                    "type": "string",
+                    "markdownDescription": "Groups layers under one header in the layer list."
+                  },
+                  "visible": {
+                    "description": "Visible on load.",
+                    "default": true,
+                    "type": "boolean",
+                    "markdownDescription": "Visible on load.\n\nDefault: `true`"
+                  },
+                  "minZoom": {
+                    "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+                  },
+                  "maxZoom": {
+                    "description": "Zoom at which the layer stops drawing.",
+                    "type": "number",
+                    "markdownDescription": "Zoom at which the layer stops drawing."
+                  },
+                  "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+                  "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+                  "actions": {
+                    "description": "Override which row-menu items this layer shows.",
+                    "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                    "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+                  },
+                  "geometryType": {
+                    "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                    "type": "string",
+                    "enum": ["point", "line", "polygon"],
+                    "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+                  },
+                  "hideFromLegend": {
+                    "description": "Keep it on the map and in the layer list, but out of the legend.",
+                    "default": false,
+                    "type": "boolean",
+                    "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+                  },
+                  "legend": {
+                    "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                    "allOf": [{ "$ref": "#/definitions/legend" }],
+                    "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+                  },
+                  "type": { "type": "string", "const": "esri" },
+                  "symbology": {
+                    "description": "Kit styling. Omit to use the service's own renderer. Ignored by raster services.",
+                    "allOf": [{ "$ref": "#/definitions/symbology" }],
+                    "markdownDescription": "Kit styling. Omit to use the service's own renderer. Ignored by raster services."
+                  },
+                  "esriOpacity": {
+                    "description": "Starting opacity, 0 to 1, for raster services and service-styled feature layers (no kit symbology to hold it). With kit `symbology`, use its `opacity` / `strokeOpacity` instead.",
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "markdownDescription": "Starting opacity, 0 to 1, for raster services and service-styled feature layers (no kit symbology to hold it). With kit `symbology`, use its `opacity` / `strokeOpacity` instead.\n\nDefault: `1`"
+                  },
+                  "service": { "type": "string", "const": "tiled" },
+                  "url": {
+                    "type": "string",
+                    "description": "Tiled MapServer URL.",
+                    "markdownDescription": "Tiled MapServer URL."
+                  }
+                },
+                "required": ["id", "name", "type", "service", "url"],
+                "additionalProperties": false,
+                "description": "ArcGIS tiled map service: cached raster tiles. Visibility and opacity only.",
+                "markdownDescription": "ArcGIS tiled map service: cached raster tiles. Visibility and opacity only.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#esri)"
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique id.",
+                "markdownDescription": "Unique id."
+              },
+              "name": {
+                "type": "string",
+                "description": "Name in the layer list and legend.",
+                "markdownDescription": "Name in the layer list and legend."
+              },
+              "group": {
+                "description": "Groups layers under one header in the layer list.",
+                "type": "string",
+                "markdownDescription": "Groups layers under one header in the layer list."
+              },
+              "visible": {
+                "description": "Visible on load.",
+                "default": true,
+                "type": "boolean",
+                "markdownDescription": "Visible on load.\n\nDefault: `true`"
+              },
+              "minZoom": {
+                "description": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`.",
+                "type": "number",
+                "markdownDescription": "Zoom at which the layer starts to draw. Not the camera's `map.minZoom`."
+              },
+              "maxZoom": {
+                "description": "Zoom at which the layer stops drawing.",
+                "type": "number",
+                "markdownDescription": "Zoom at which the layer stops drawing."
+              },
+              "symbology": { "$ref": "#/definitions/symbology" },
+              "label": { "allOf": [{ "$ref": "#/definitions/label" }] },
+              "popup": { "allOf": [{ "$ref": "#/definitions/popup" }] },
+              "actions": {
+                "description": "Override which row-menu items this layer shows.",
+                "allOf": [{ "$ref": "#/definitions/layerListActions" }],
+                "markdownDescription": "Override which row-menu items this layer shows.\n\nDefault: widgets[\"layer-list\"].actions"
+              },
+              "geometryType": {
+                "description": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted.",
+                "type": "string",
+                "enum": ["point", "line", "polygon"],
+                "markdownDescription": "Sets the legend swatch shape and which sublayers are built. Omit for mixed geometry. PMTiles detects it from the archive's tilestats when omitted."
+              },
+              "hideFromLegend": {
+                "description": "Keep it on the map and in the layer list, but out of the legend.",
+                "default": false,
+                "type": "boolean",
+                "markdownDescription": "Keep it on the map and in the layer list, but out of the legend.\n\nDefault: `false`"
+              },
+              "legend": {
+                "description": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.",
+                "allOf": [{ "$ref": "#/definitions/legend" }],
+                "markdownDescription": "How it shows in the legend. Wins over a raw symbology's `legend`, and lets layers with no kit symbology (rasters, service-styled Esri) appear.\n\nDefault: derived from the symbology"
+              },
+              "type": { "type": "string", "const": "geoparquet" },
+              "url": {
+                "type": "string",
+                "description": "`\"./layers/<file>.parquet\"` or a CORS-enabled URL.",
+                "markdownDescription": "`\"./layers/<file>.parquet\"` or a CORS-enabled URL."
+              },
+              "limit": {
+                "description": "Stop after this many features. There's no viewport filtering, so use it on big files.",
+                "type": "number",
+                "markdownDescription": "Stop after this many features. There's no viewport filtering, so use it on big files.\n\nDefault: no limit"
+              },
+              "filters": {
+                "description": "Columns users can filter by.",
+                "type": "array",
+                "items": { "$ref": "#/definitions/filters" },
+                "markdownDescription": "Columns users can filter by."
+              },
+              "mvt": {
+                "description": "Draw as vector tiles cut on demand by DuckDB from an in-memory copy, instead of one GeoJSON source. For large files. Starts at zoom 10 unless `minZoom` says otherwise.",
+                "default": false,
+                "type": "boolean",
+                "markdownDescription": "Draw as vector tiles cut on demand by DuckDB from an in-memory copy, instead of one GeoJSON source. For large files. Starts at zoom 10 unless `minZoom` says otherwise.\n\nDefault: `false`"
+              },
+              "maxTileFeatures": {
+                "description": "With `mvt`: most features per tile. The smallest are dropped first.",
+                "default": 5000,
+                "type": "number",
+                "markdownDescription": "With `mvt`: most features per tile. The smallest are dropped first.\n\nDefault: `5000`"
+              },
+              "maxTileZoom": {
+                "description": "With `mvt`: highest zoom tiles are cut at. MapLibre keeps drawing past it. Raise it for very dense data that's still thinned at 14. Lower it for coarse data.",
+                "default": 14,
+                "type": "number",
+                "markdownDescription": "With `mvt`: highest zoom tiles are cut at. MapLibre keeps drawing past it. Raise it for very dense data that's still thinned at 14. Lower it for coarse data.\n\nDefault: `14`"
+              }
+            },
+            "required": ["id", "name", "symbology", "type", "url"],
+            "additionalProperties": false,
+            "description": "A GeoParquet file.",
+            "markdownDescription": "A GeoParquet file.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#geoparquet)"
+          }
+        ],
+        "description": "One data layer. `type` picks the loader.",
+        "markdownDescription": "One data layer. `type` picks the loader.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/)"
+      },
+      "description": "The project's data layers (`layers.json`). Array order is draw order: first on top.",
+      "markdownDescription": "The project's data layers (`layers.json`). Array order is draw order: first on top.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/)"
+    }
+  },
+  "required": ["layers"],
+  "additionalProperties": false,
+  "definitions": {
+    "symbology": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "const": "simple" },
+            "color": {
+              "type": "string",
+              "description": "Dot, line or fill color.",
+              "markdownDescription": "Dot, line or fill color."
+            },
+            "width": {
+              "description": "Line width.",
+              "default": 2,
+              "type": "number",
+              "markdownDescription": "Line width.\n\nDefault: `2`"
+            },
+            "radius": {
+              "description": "Dot radius.",
+              "default": 5,
+              "type": "number",
+              "markdownDescription": "Dot radius.\n\nDefault: `5`"
+            },
+            "strokeColor": {
+              "description": "Dot ring or polygon border color.",
+              "default": "#ffffff",
+              "type": "string",
+              "markdownDescription": "Dot ring or polygon border color.\n\nDefault: `\"#ffffff\"`"
+            },
+            "strokeWidth": {
+              "description": "Dot ring or polygon border width. 0 = none.",
+              "type": "number",
+              "markdownDescription": "Dot ring or polygon border width. 0 = none.\n\nDefault: 1 for points, 0 for polygons"
+            },
+            "opacity": {
+              "description": "Opacity of `color` (polygon fill, dot fill, the line itself), 0 to 1.",
+              "default": 1,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "markdownDescription": "Opacity of `color` (polygon fill, dot fill, the line itself), 0 to 1.\n\nDefault: `1`"
+            },
+            "strokeOpacity": {
+              "description": "Opacity of `strokeColor` (dot ring, polygon border), 0 to 1. Lines have no stroke.",
+              "default": 1,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "markdownDescription": "Opacity of `strokeColor` (dot ring, polygon border), 0 to 1. Lines have no stroke.\n\nDefault: `1`"
+            }
+          },
+          "required": ["kind", "color"],
+          "additionalProperties": false,
+          "description": "One color plus a few paint options. Meaning depends on geometry: point = dot and ring, line = line, polygon = fill and border.",
+          "markdownDescription": "One color plus a few paint options. Meaning depends on geometry: point = dot and ring, line = line, polygon = fill and border.\n\n[Docs](https://conness-gis.com/configuration/symbology/#simple)"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "const": "raw" },
+            "paint": {
+              "description": "MapLibre paint properties, e.g. `\"circle-color\"`. Expressions allowed.",
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {},
+              "markdownDescription": "MapLibre paint properties, e.g. `\"circle-color\"`. Expressions allowed."
+            },
+            "layout": {
+              "description": "Extra MapLibre layout properties.",
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": {},
+              "markdownDescription": "Extra MapLibre layout properties."
+            },
+            "legend": {
+              "description": "Explicit legend. Omit to read it from `paint`.",
+              "allOf": [{ "$ref": "#/definitions/legend" }],
+              "markdownDescription": "Explicit legend. Omit to read it from `paint`."
+            },
+            "description": {
+              "description": "Muted note under the layer name in the legend, e.g. `\"Annual passengers\"`.",
+              "type": "string",
+              "markdownDescription": "Muted note under the layer name in the legend, e.g. `\"Annual passengers\"`."
+            }
+          },
+          "required": ["kind"],
+          "additionalProperties": false,
+          "description": "A raw MapLibre paint object, for categorized or graduated styling.",
+          "markdownDescription": "A raw MapLibre paint object, for categorized or graduated styling.\n\n[Docs](https://conness-gis.com/configuration/symbology/#raw)"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "const": "ref" },
+            "name": {
+              "type": "string",
+              "description": "Entry name in the project's `symbology.json`.",
+              "markdownDescription": "Entry name in the project's `symbology.json`."
+            }
+          },
+          "required": ["kind", "name"],
+          "additionalProperties": false,
+          "description": "Use a named entry from the project's `symbology.json`.",
+          "markdownDescription": "Use a named entry from the project's `symbology.json`.\n\n[Docs](https://conness-gis.com/configuration/symbology/#ref)"
+        }
+      ],
+      "description": "How to draw it.",
+      "markdownDescription": "How to draw it.\n\n[Docs](https://conness-gis.com/configuration/symbology/)"
+    },
+    "legend": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "const": "categories" },
+            "entries": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": { "type": "string" },
+                  "color": { "type": "string" },
+                  "radius": { "type": "number" },
+                  "strokeColor": { "type": "string" },
+                  "strokeWidth": { "type": "number" }
+                },
+                "required": ["label", "color"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["kind", "entries"],
+          "additionalProperties": false,
+          "description": "Discrete swatches.",
+          "markdownDescription": "Discrete swatches."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "const": "gradient" },
+            "stops": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": ["number", "string"] },
+                  "label": { "type": "string" },
+                  "color": { "type": "string" }
+                },
+                "required": ["value", "color"],
+                "additionalProperties": false
+              },
+              "description": "Low to high. The first and last labels mark the ends.",
+              "markdownDescription": "Low to high. The first and last labels mark the ends."
+            }
+          },
+          "required": ["kind", "stops"],
+          "additionalProperties": false,
+          "description": "A continuous bar.",
+          "markdownDescription": "A continuous bar."
+        },
+        {
+          "type": "object",
+          "properties": { "kind": { "type": "string", "const": "hidden" } },
+          "required": ["kind"],
+          "additionalProperties": false,
+          "description": "Leave this layer out of the legend.",
+          "markdownDescription": "Leave this layer out of the legend."
+        }
+      ],
+      "description": "Explicit legend, for paint the legend can't read on its own.",
+      "markdownDescription": "Explicit legend, for paint the legend can't read on its own.\n\n[Docs](https://conness-gis.com/configuration/symbology/#legend-overrides-raw-symbology-only)"
+    },
+    "label": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "description": "Column to label by.",
+          "type": "string",
+          "markdownDescription": "Column to label by."
+        },
+        "text": {
+          "description": "Custom Label: your own words with columns mixed in, each column name in braces, e.g. `\"{faa_id}: {name}, departures = {departures}\"`. A feature without one of the columns shows nothing in its place. Used instead of `field`.",
+          "type": "string",
+          "markdownDescription": "Custom Label: your own words with columns mixed in, each column name in braces, e.g. `\"{faa_id}: {name}, departures = {departures}\"`. A feature without one of the columns shows nothing in its place. Used instead of `field`."
+        },
+        "expression": {
+          "description": "MapLibre expression for the text. Wins over `field`. E.g. `[\"concat\", [\"get\", \"name\"], \" (\", [\"get\", \"code\"], \")\"]`.",
+          "markdownDescription": "MapLibre expression for the text. Wins over `field`. E.g. `[\"concat\", [\"get\", \"name\"], \" (\", [\"get\", \"code\"], \")\"]`."
+        },
+        "fontSize": {
+          "description": "Text size in px.",
+          "default": 12,
+          "type": "number",
+          "markdownDescription": "Text size in px.\n\nDefault: `12`"
+        },
+        "bold": {
+          "description": "Bold text (Noto Sans Bold instead of Regular).",
+          "default": false,
+          "type": "boolean",
+          "markdownDescription": "Bold text (Noto Sans Bold instead of Regular).\n\nDefault: `false`"
+        },
+        "color": {
+          "description": "Text color.",
+          "default": "#333333",
+          "type": "string",
+          "markdownDescription": "Text color.\n\nDefault: `\"#333333\"`"
+        },
+        "haloColor": {
+          "description": "Outline color for legibility.",
+          "default": "#ffffff",
+          "type": "string",
+          "markdownDescription": "Outline color for legibility.\n\nDefault: `\"#ffffff\"`"
+        },
+        "haloWidth": {
+          "description": "Outline width in px. 0 = none.",
+          "default": 1,
+          "type": "number",
+          "markdownDescription": "Outline width in px. 0 = none.\n\nDefault: `1`"
+        },
+        "minZoom": {
+          "description": "Zoom at which labels appear, so geometry can show first.",
+          "type": "number",
+          "markdownDescription": "Zoom at which labels appear, so geometry can show first.\n\nDefault: the layer's minZoom"
+        },
+        "anchor": {
+          "default": "center",
+          "type": "string",
+          "enum": ["center", "top-left", "top-right", "bottom-left", "bottom-right"],
+          "description": "Label position relative to its feature.",
+          "markdownDescription": "Label position relative to its feature.\n\nDefault: `\"center\"`"
+        },
+        "offset": {
+          "description": "How far a label at a corner sits from its feature, in px, across and up or down. Unset, it's as far as the text is tall. Has no effect when the label is centered.",
+          "type": "number",
+          "minimum": 0,
+          "markdownDescription": "How far a label at a corner sits from its feature, in px, across and up or down. Unset, it's as far as the text is tall. Has no effect when the label is centered."
+        },
+        "allowOverlap": {
+          "description": "Draw every label, even where they collide.",
+          "default": false,
+          "type": "boolean",
+          "markdownDescription": "Draw every label, even where they collide.\n\nDefault: `false`"
+        },
+        "spacing": {
+          "description": "Line layers only: px between repeats of the label along a line.",
+          "default": 500,
+          "type": "number",
+          "minimum": 1,
+          "markdownDescription": "Line layers only: px between repeats of the label along a line.\n\nDefault: `500`"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Text labels for this layer, in Noto Sans (served by the basemap's glyphs URL, as OpenFreeMap styles do).",
+      "markdownDescription": "Text labels for this layer, in Noto Sans (served by the basemap's glyphs URL, as OpenFreeMap styles do).\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#labels)"
+    },
+    "popup": {
+      "anyOf": [
+        { "type": "boolean", "const": false },
+        {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "`false` turns the popup off but keeps the config.",
+              "default": true,
+              "type": "boolean",
+              "markdownDescription": "`false` turns the popup off but keeps the config.\n\nDefault: `true`"
+            },
+            "trigger": {
+              "description": "Click or hover.",
+              "type": "string",
+              "enum": ["click", "hover"],
+              "markdownDescription": "Click or hover.\n\nDefault: ui.popups.trigger"
+            },
+            "position": {
+              "description": "Where the popup opens: a map corner, or `\"feature\"` next to the clicked spot.",
+              "type": "string",
+              "enum": ["top-left", "top-right", "bottom-left", "bottom-right", "feature"],
+              "markdownDescription": "Where the popup opens: a map corner, or `\"feature\"` next to the clicked spot.\n\nDefault: ui.popups.position"
+            },
+            "title": {
+              "description": "Column whose value is the popup's title, at the top of its content under the header bar (in templates that show one, as the standard ones do).",
+              "type": "string",
+              "markdownDescription": "Column whose value is the popup's title, at the top of its content under the header bar (in templates that show one, as the standard ones do)."
+            },
+            "header": {
+              "description": "Header bar text: your own words with columns mixed in, each column name in braces, e.g. `\"{city} Airport\"`, plus `{layerName}` and `{group}` for the layer's name and group. Without it, the header is the layer's name.",
+              "type": "string",
+              "markdownDescription": "Header bar text: your own words with columns mixed in, each column name in braces, e.g. `\"{city} Airport\"`, plus `{layerName}` and `{group}` for the layer's name and group. Without it, the header is the layer's name.\n\nDefault: the layer name"
+            },
+            "fields": {
+              "description": "`{ \"column\": \"Label\" }`, shown in this order. Omit to show every property with raw column names.",
+              "type": "object",
+              "propertyNames": { "type": "string" },
+              "additionalProperties": { "type": "string" },
+              "markdownDescription": "`{ \"column\": \"Label\" }`, shown in this order. Omit to show every property with raw column names."
+            },
+            "displayType": {
+              "description": "Template name from the project's `popups.tsx`.",
+              "type": "string",
+              "markdownDescription": "Template name from the project's `popups.tsx`.\n\nDefault: ui.popups.displayType"
+            },
+            "zoomToFeature": {
+              "description": "Zoom-to-feature button.",
+              "type": "boolean",
+              "markdownDescription": "Zoom-to-feature button.\n\nDefault: ui.popups.zoomToFeature"
+            },
+            "highlight": {
+              "description": "Outline the feature while its popup is open.",
+              "type": "boolean",
+              "markdownDescription": "Outline the feature while its popup is open.\n\nDefault: ui.popups.highlight"
+            },
+            "copyCoordinates": {
+              "description": "Copy-coordinates button.",
+              "type": "boolean",
+              "markdownDescription": "Copy-coordinates button.\n\nDefault: ui.popups.copyCoordinates"
+            },
+            "viewInGoogleMaps": {
+              "description": "View-in-Google-Maps button.",
+              "type": "boolean",
+              "markdownDescription": "View-in-Google-Maps button.\n\nDefault: ui.popups.viewInGoogleMaps"
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "description": "Feature popups for this layer. Omit or set `false` for none. `{}` uses the `ui.popups` defaults.",
+      "markdownDescription": "Feature popups for this layer. Omit or set `false` for none. `{}` uses the `ui.popups` defaults.\n\n[Docs](https://conness-gis.com/configuration/popups/#per-layer-layerpopup)"
+    },
+    "layerListActions": {
+      "type": "object",
+      "properties": {
+        "opacity": {
+          "description": "Turns Adjust Transparency on or off in the layer's menu in the Layer List.",
+          "default": true,
+          "label": "Transparency action",
+          "type": "boolean",
+          "markdownDescription": "Turns Adjust Transparency on or off in the layer's menu in the Layer List.\n\nDefault: `true`"
+        },
+        "labels": {
+          "description": "Turns the Labels on/off item on or off in the layer's menu in the Layer List. Only on layers with a `label`.",
+          "default": true,
+          "label": "Labels action",
+          "type": "boolean",
+          "markdownDescription": "Turns the Labels on/off item on or off in the layer's menu in the Layer List. Only on layers with a `label`.\n\nDefault: `true`"
+        },
+        "zoomToExtent": {
+          "description": "Turns Zoom to Extent on or off in the layer's menu in the Layer List.",
+          "default": true,
+          "label": "Zoom to extent action",
+          "type": "boolean",
+          "markdownDescription": "Turns Zoom to Extent on or off in the layer's menu in the Layer List.\n\nDefault: `true`"
+        },
+        "filter": {
+          "description": "Turns Filter on or off in the layer's menu in the Layer List. Only on layers with `filters`.",
+          "default": true,
+          "label": "Filter action",
+          "type": "boolean",
+          "markdownDescription": "Turns Filter on or off in the layer's menu in the Layer List. Only on layers with `filters`.\n\nDefault: `true`"
+        },
+        "export": {
+          "description": "Turns Export Data on or off in the layer's menu in the Layer List (formats set by `exportFormats`). Only on GeoJSON and GeoParquet layers.",
+          "default": true,
+          "label": "Export action",
+          "type": "boolean",
+          "markdownDescription": "Turns Export Data on or off in the layer's menu in the Layer List (formats set by `exportFormats`). Only on GeoJSON and GeoParquet layers.\n\nDefault: `true`"
+        },
+        "visibilityZoom": {
+          "description": "Turns Zoom Range on or off in the layer's menu in the Layer List: a slider that changes the zooms the layer shows at until the page reloads. Only on layers with a `minZoom` or `maxZoom`.",
+          "default": false,
+          "label": "Zoom range action",
+          "type": "boolean",
+          "markdownDescription": "Turns Zoom Range on or off in the layer's menu in the Layer List: a slider that changes the zooms the layer shows at until the page reloads. Only on layers with a `minZoom` or `maxZoom`.\n\nDefault: `false`"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Which items each layer row's menu offers.",
+      "markdownDescription": "Which items each layer row's menu offers.\n\n[Docs](https://conness-gis.com/widgets/layer-list/)"
+    },
+    "filters": {
+      "type": "object",
+      "properties": {
+        "column": {
+          "type": "string",
+          "description": "Feature property to filter on.",
+          "markdownDescription": "Feature property to filter on."
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["categorical", "numeric"],
+          "description": "`\"categorical\"`: a checklist of values. `\"numeric\"`: one typed condition.",
+          "markdownDescription": "`\"categorical\"`: a checklist of values. `\"numeric\"`: one typed condition."
+        },
+        "label": {
+          "description": "Name in the filter panel.",
+          "type": "string",
+          "markdownDescription": "Name in the filter panel.\n\nDefault: column"
+        }
+      },
+      "required": ["column", "kind"],
+      "additionalProperties": false,
+      "description": "A column users can filter by in the layer list.",
+      "markdownDescription": "A column users can filter by in the layer list.\n\n[Docs](https://conness-gis.com/configuration/adding-layers/#filtering)"
+    }
+  }
+}

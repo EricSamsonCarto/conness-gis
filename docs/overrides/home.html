@@ -1,0 +1,153 @@
+<!doctype html>
+<!-- the docs homepage (docs/index.md → template: home.html). a page of its own, without the docs chrome -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conness GIS</title>
+    <meta name="description" content="Full GIS web apps, built from a UI editor. Open source, on MapLibre." />
+    <link rel="icon" href="{{ config.theme.favicon | url }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..700&family=Public+Sans:wght@400;500;600&display=swap"
+    />
+    <!-- bump v when these change, the host caches them for 4 hours -->
+    <link rel="stylesheet" href="{{ 'assets/home/home.css' | url }}?v=3" />
+  </head>
+  <body>
+    <header class="band">
+      <div class="band__inner">
+        <h1 class="band__title">Conness GIS</h1>
+      </div>
+      <div class="ridge">
+        <!-- the source of these paths: app/editor/MountainBand.tsx mirrors them, static; keep the two in sync.
+             back to front: far and near ranges, the mountain, its hillshade, contours, snow. summit at (820, 12) -->
+        <svg aria-hidden="true" viewBox="0 0 1200 200" preserveAspectRatio="none">
+          <path class="ridge__range ridge__range--far" d="M0 120 L90 96 L180 104 L260 78 L340 92 L430 70 L520 88 L600 80 L700 96 L800 84 L900 98 L1000 92 L1080 74 L1150 96 L1200 88 L1200 200 L0 200 Z" />
+          <path class="ridge__range ridge__range--near" d="M0 140 L110 118 L200 128 L300 104 L380 116 L470 96 L560 110 L660 100 L760 112 L870 104 L980 112 L1060 98 L1130 120 L1200 112 L1200 200 L0 200 Z" />
+          <path class="ridge__fill" d="M0 177.6 L120 163.2 L240 170.4 L330 141.6 L420 148.8 L520 109.2 L600 116.4 L680 76.8 L740 69.6 L790 30 L820 12 L838 22.8 L870 51.6 L900 44.4 L940 91.2 L1010 123.6 L1080 116.4 L1140 152.4 L1200 166.8 L1200 200 L0 200 Z" />
+          <path class="ridge__shade" d="M820 12 L838 22.8 L870 51.6 L900 44.4 L940 91.2 L1010 123.6 L975 200 L905 200 L880 150 L852 96 L834 50 Z" />
+          <path class="ridge__shade" d="M520 109.2 L600 116.4 L612 200 L566 200 L548 156 Z" />
+          <path class="ridge__shade" d="M1080 116.4 L1140 152.4 L1152 200 L1104 200 L1092 160 Z" />
+          <path class="ridge__contour" vector-effect="non-scaling-stroke" d="M0 182.1 L120 170.6 L240 176.3 L330 153.3 L420 159 L520 127.4 L600 133.1 L680 101.4 L740 95.7 L790 64 L820 49.6 L838 58.2 L870 81.3 L900 75.5 L940 113 L1010 138.9 L1080 133.1 L1140 161.9 L1200 173.4" />
+          <path class="ridge__contour" vector-effect="non-scaling-stroke" d="M0 185.7 L120 176.4 L240 181.1 L330 162.6 L420 167.2 L520 141.9 L600 146.5 L680 121.2 L740 116.5 L790 91.2 L820 79.7 L838 86.6 L870 105 L900 100.4 L940 130.4 L1010 151.1 L1080 146.5 L1140 169.5 L1200 178.8" />
+          <path class="ridge__contour" vector-effect="non-scaling-stroke" d="M0 189.2 L120 182.3 L240 185.8 L330 172 L420 175.4 L520 156.4 L600 159.9 L680 140.9 L740 137.4 L790 118.4 L820 109.8 L838 114.9 L870 128.8 L900 125.3 L940 147.8 L1010 163.3 L1080 159.9 L1140 177.2 L1200 184.1" />
+          <path class="ridge__contour" vector-effect="non-scaling-stroke" d="M0 192.8 L120 188.2 L240 190.5 L330 181.3 L420 183.6 L520 170.9 L600 173.2 L680 160.6 L740 158.3 L790 145.6 L820 139.8 L838 143.3 L870 152.5 L900 150.2 L940 165.2 L1010 175.6 L1080 173.2 L1140 184.8 L1200 189.4" />
+          <path class="ridge__contour" vector-effect="non-scaling-stroke" d="M0 196 L120 193.4 L240 194.7 L330 189.5 L420 190.8 L520 183.7 L600 185 L680 177.8 L740 176.5 L790 169.4 L820 166.2 L838 168.1 L870 173.3 L900 172 L940 180.4 L1010 186.2 L1080 185 L1140 191.4 L1200 194" />
+          <path class="ridge__snow" d="M800 24 L820 12 L838 22.8 L852 35.4 L847 49 L841 43 L835 64 L829 47 L819 55 L813 40 L806 51 L803 36 Z" />
+          <path class="ridge__line" vector-effect="non-scaling-stroke" d="M0 177.6 L120 163.2 L240 170.4 L330 141.6 L420 148.8 L520 109.2 L600 116.4 L680 76.8 L740 69.6 L790 30 L820 12 L838 22.8 L870 51.6 L900 44.4 L940 91.2 L1010 123.6 L1080 116.4 L1140 152.4 L1200 166.8" />
+        </svg>
+        <span class="ridge__label">12,590 ft</span>
+      </div>
+    </header>
+
+    <main class="intro">
+      <div class="intro__text">
+        <h2 class="intro__tagline">Build production-ready GIS apps without writing a line of code.</h2>
+        <p class="intro__sub">Unless you want to. Open source. Built on MapLibre. Configure layers, widgets, and themes all visually from the editor. Bring your own data and make something cool.</p>
+        <div class="intro__actions">
+          <a class="btn btn--primary" href="{{ 'getting-started/quick-start/' | url }}">Quick Start</a>
+          <a class="btn btn--quiet" href="{{ 'getting-started/introduction/' | url }}">Introduction</a>
+          <a class="btn btn--quiet" href="{{ 'getting-started/examples/' | url }}">Examples</a>
+          <a class="btn btn--quiet" href="{{ 'getting-started/releases/' | url }}">Download Latest</a>
+        </div>
+      </div>
+      <div class="intro__video">
+        <video src="{{ 'assets/home/demo.mp4' | url }}" aria-label="The Conness editor building a map app, with a live preview of the app beside its settings" data-autoplay-after="1410" muted loop playsinline disablepictureinpicture disableremoteplayback></video>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <div class="foot__made">
+        <p><a href="{{ 'dedicated/' | url }}">dedicated to</a></p>
+        <p>made by <a href="https://ericsamson.com">ericsamson.com</a></p>
+      </div>
+      <nav class="foot__legal" aria-label="Legal">
+        <button type="button" data-dialog="disclaimer">disclaimer</button>
+        <button type="button" data-dialog="license">license &amp; credits</button>
+        <button type="button" data-dialog="privacy">privacy</button>
+        <button type="button" data-dialog="trademark">trademark</button>
+      </nav>
+    </footer>
+
+    <dialog id="disclaimer" aria-labelledby="disclaimer-title">
+      <h2 id="disclaimer-title">Disclaimer</h2>
+      <div class="dialog__body">
+        <p>
+          Conness GIS is provided "as is", without warranties or conditions of any kind, as set out in sections 7 and 8
+          of the Apache License 2.0. Its authors aren't liable for any damage that comes from using it.
+        </p>
+        <p>
+          Maps, data, measurements and search results shown in apps built with Conness GIS aren't guaranteed to be
+          accurate, complete or current. Don't rely on them for navigation, emergencies, or legal, safety or property
+          decisions.
+        </p>
+        <p>
+          Whoever builds and publishes an app is responsible for its data and for following the terms of the services
+          it uses, like basemaps, tile servers and geocoders.
+        </p>
+      </div>
+      <form method="dialog"><button class="btn btn--quiet">Close</button></form>
+    </dialog>
+
+    <dialog id="license" aria-labelledby="license-title">
+      <h2 id="license-title">License &amp; credits</h2>
+      <div class="dialog__body">
+        <p>
+          Conness GIS is licensed under the
+          <a href="https://github.com/ericsamsoncarto/conness-gis/blob/main/LICENSE.md">Apache License 2.0</a>. You
+          can use, change and share it freely, commercially too, as long as you keep its copyright and license notices.
+          The license includes a patent grant.
+        </p>
+        <p>
+          It's built on <a href="https://maplibre.org/">MapLibre GL JS</a>, with basemaps from
+          <a href="https://openfreemap.org/">OpenFreeMap</a> and map data &copy;
+          <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, plus the open-source
+          libraries listed in the <a href="{{ 'getting-started/introduction/' | url }}">Introduction</a>. Each keeps its
+          own license and attribution.
+        </p>
+        <p>The projects and companies named on this site aren't affiliated with Conness GIS and don't endorse it.</p>
+      </div>
+      <form method="dialog"><button class="btn btn--quiet">Close</button></form>
+    </dialog>
+
+    <dialog id="privacy" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">Privacy</h2>
+      <div class="dialog__body">
+        <p>
+          This site counts visits with Cloudflare Web Analytics, which sets no cookies and only reports totals, like
+          page views, without tracking or profiling anyone. Cloudflare, which hosts the site, also keeps standard
+          request logs.
+        </p>
+        <p>
+          The site's fonts load from Google Fonts, so your browser asks Google for them. There are no accounts, no
+          forms and no cookies. Your light or dark mode choice in the docs is saved in your own browser only.
+        </p>
+        <p>Conness GIS itself sends nothing about the apps you build with it, or their visitors, to anyone.</p>
+      </div>
+      <form method="dialog"><button class="btn btn--quiet">Close</button></form>
+    </dialog>
+
+    <dialog id="trademark" aria-labelledby="trademark-title">
+      <h2 id="trademark-title">Trademark</h2>
+      <div class="dialog__body">
+        <p>
+          The Conness GIS name belongs to Eric Samson. You're welcome to use the name to say an app is built with
+          Conness GIS (every app credits it in its map credits, plus a line on its info modal that can be turned off),
+          but not in a way that suggests it's made,
+          endorsed or supported by the project.
+        </p>
+        <p>
+          Conness GIS isn't affiliated with any company. It's named after
+          <a href="https://en.wikipedia.org/wiki/Mount_Conness">Mount Conness</a> in the Sierra Nevada.
+        </p>
+      </div>
+      <form method="dialog"><button class="btn btn--quiet">Close</button></form>
+    </dialog>
+
+    <script src="{{ 'javascripts/videos.js' | url }}?v=3"></script>
+    <script src="{{ 'assets/home/home.js' | url }}"></script>
+  </body>
+</html>

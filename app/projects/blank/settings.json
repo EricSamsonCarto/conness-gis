@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/settings.schema.json",
+  "connessVersion": "0.0.0",
+  "branding": {
+    "title": "Blank (Lighthouse Check)",
+    "description": "Conness GIS with no layers and every widget placed, to measure the engine on its own.",
+    "appId": "blank",
+    "logo": "/logo.svg"
+  },
+  "ui": { "layout": { "showInfo": true, "showBranding": true }, "info": { "autoOpen": true } },
+  "map": {
+    "style": "https://tiles.openfreemap.org/styles/positron",
+    "center": [-98.5, 39.5],
+    "zoom": 2.5
+  },
+  "commercialUse": false,
+  "mapControls": {
+    "navigation": { "position": "top-left" },
+    "geolocate": { "position": "top-right" },
+    "globe": { "position": "top-right" },
+    "scale": {}
+  },
+  "topBarWidgets": [],
+  "sidePanelWidgets": [
+    { "widgetName": "layer-list" },
+    { "widgetName": "legend" },
+    { "widgetName": "basemap" }
+  ],
+  "floatingWidgets": [
+    {
+      "slot": "top-left",
+      "widgets": [{ "widgetName": "search", "order": -1, "stayOnMobile": true }]
+    },
+    { "slot": "top-right", "widgets": [{ "widgetName": "coordinates" }] }
+  ],
+  "mobileWidgets": ["layer-list", "legend", "basemap"],
+  "widgets": { "search": { "geocoder": { "provider": "nominatim" } } }
+}

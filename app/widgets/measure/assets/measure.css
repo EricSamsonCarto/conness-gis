@@ -1,0 +1,150 @@
+.measure-widget {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-panelBg);
+  font-family: inherit;
+  /* anchors the ConfirmDialog overlay to the widget */
+  position: relative;
+}
+
+/* !important, Draw sets the canvas's inline cursor during its modes */
+.measure-drawing .maplibregl-canvas,
+.measure-vertex-hover .maplibregl-canvas {
+  cursor: crosshair !important;
+}
+
+/* !important, maplibre's touch-action selectors are more specific */
+.measure-freehand .maplibregl-canvas-container,
+.measure-freehand .maplibregl-canvas {
+  touch-action: none !important;
+}
+
+.measure-widget * {
+  font-family: inherit;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.measure-widget .widget-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.measure-widget .unit-selectors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-panelBorder);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.measure-widget .unit-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.measure-widget .unit-label {
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* a data URI can't use a CSS var, so a fixed gray the dark theme swaps */
+.measure-widget .unit-group select {
+  width: 100%;
+  padding: 0.3125rem 0.4375rem;
+  font-size: var(--text-medium);
+  border: 1px solid var(--color-panelBorder);
+  border-radius: 3px;
+  background: var(--color-panelBg);
+  color: var(--color-text);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.375rem center;
+  padding-right: 1.5rem;
+  cursor: pointer;
+}
+
+/* phones force 16px text in selects (index.css, else ios zooms in), so the
+   box drops its padding to stay near the buttons' height */
+@media (max-width: 499px) {
+  .measure-widget .unit-selectors {
+    padding: 0.375rem;
+    gap: 0.375rem;
+  }
+  .measure-widget .unit-group select {
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+    line-height: 1.25;
+  }
+}
+
+[data-theme='dark'] .measure-widget .unit-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+}
+
+.measure-widget .unit-group select:focus {
+  outline: none;
+  border-color: var(--color-dropdownHover);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+.measure-widget .current-alert {
+  padding: 0.5rem;
+  background: color-mix(in srgb, var(--color-primary) 12%, var(--color-panelBg));
+  border: 1px solid color-mix(in srgb, var(--color-primary) 40%, transparent);
+  border-radius: 4px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.measure-widget .current-alert strong {
+  display: block;
+  margin-bottom: 0.1875rem;
+  font-size: var(--text-large);
+}
+
+.measure-widget .live-measurement {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
+  padding: 0.375rem 0.5rem;
+  background: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+  border-radius: 3px;
+  animation: measure-pulse 2s ease-in-out infinite;
+}
+
+.measure-widget .live-measurement strong {
+  margin: 0;
+  font-size: var(--text-large);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+@keyframes measure-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.measure-widget .measurements-list {
+  flex: 1;
+  min-height: 7.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+

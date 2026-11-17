@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* Tailwind only emits the variables a class uses, so the color picker's
+   whole palette is listed, as the app's index.css does */
+@source inline("bg-{slate,gray,zinc,neutral,stone,red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}");
+
+/* the editor's own look, separate from the app theme (core/theme/theme.ts) */
+@theme {
+  --color-granite: #e9ecea;
+  --color-sheet: #ffffff;
+  --color-ink: #1d2b33;
+  --color-lichen: #5e6b66;
+  --color-glacier: #2e6e8e;
+  --color-glacier-deep: #24576f;
+  --color-alarm: #b4363a;
+  --color-alarm-deep: #962c30;
+  --color-hairline: #d5dbd8;
+  --color-glacier-light: #8cc3dd;
+
+  /* text tokens read at AA on surface-raised. fg-faint is only for
+     things that aren't read, like drag handles */
+  --color-surface: #1d2b33;
+  --color-surface-raised: #263843;
+  --color-field: rgb(255 255 255 / 0.07);
+  --color-line: rgb(255 255 255 / 0.12);
+  --color-line-soft: rgb(255 255 255 / 0.06);
+  --color-fg: #ffffff;
+  --color-fg-muted: rgb(255 255 255 / 0.78);
+  --color-fg-subtle: rgb(255 255 255 / 0.62);
+  --color-fg-faint: rgb(255 255 255 / 0.42);
+  /* paler than the action blue, so headings don't read as clickable */
+  --color-heading: #b4cfdc;
+  /* problem text, alarm itself is too dark to read on the sidebar */
+  --color-problem: #f4a6a3;
+  /* the row whose pop-out is open */
+  --color-larch: #d9a441;
+
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-granite);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+dialog::backdrop {
+  background: rgb(29 43 51 / 0.45);
+}
+
+/* always-visible scrollbars, macOS hides them until you scroll. chromium
+   ignores ::-webkit-scrollbar once scrollbar-width is set, so firefox only */
+.scroll-visible::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-visible::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-visible::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: rgb(255 255 255 / 0.25);
+}
+.scroll-visible::-webkit-scrollbar-thumb:hover {
+  background: rgb(255 255 255 / 0.4);
+}
+@supports not selector(::-webkit-scrollbar) {
+  .scroll-visible {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.25) transparent;
+  }
+}
+
+/* a search result's row gets a fill that fades, no border */
+@keyframes reveal-flash {
+  from {
+    background-color: rgb(217 164 65 / 0.35);
+  }
+}
+.reveal-flash {
+  border-radius: 0.375rem;
+  animation: reveal-flash 1.6s ease-out;
+}

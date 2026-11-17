@@ -1,0 +1,56 @@
+{
+  "$schema": "../../schema/settings.schema.json",
+  "connessVersion": "0.0.0",
+  "branding": {
+    "title": "Global Earthquakes",
+    "appId": "global-earthquakes",
+    "logo": "/earth-svgrepo-com.svg",
+    "favicon": "/earth-svgrepo-com.svg",
+    "description": "global earthquakes on connes gis"
+  },
+  "ui": {
+    "layout": {
+      "showInfo": true,
+      "showBranding": true,
+      "sideRailIconSize": 20,
+      "sideRailChevronSize": 16,
+      "showTopBar": true,
+      "showSideRail": true,
+      "sideRailShadow": { "enabled": true },
+      "sideRailOpenOnLoad": "layer-list",
+      "sideRailPanelWidth": 235
+    },
+    "info": { "autoOpen": false },
+    "topBar": { "iconSize": 20, "logoSize": 32, "shadow": { "enabled": true, "strength": 0.4 } },
+    "floatingControls": { "iconSize": 25 },
+    "popups": {
+      "displayType": "standard",
+      "trigger": "click",
+      "copyCoordinates": true,
+      "resizable": true,
+      "height": 350
+    }
+  },
+  "map": {
+    "style": "https://tiles.versatiles.org/assets/styles/gray-dark/style.json",
+    "center": [77.00363, 32.42485],
+    "zoom": 2.5,
+    "globe": {
+      "enabled": true,
+      "stars": true,
+      "comets": true,
+      "spin": { "direction": "west", "speed": 2, "continuous": true }
+    }
+  },
+  "commercialUse": false,
+  "mapControls": {
+    "navigation": { "position": "top-left", "order": 30 },
+    "spin": { "position": "top-left", "order": 20 }
+  },
+  "topBarWidgets": [],
+  "sidePanelWidgets": [{ "widgetName": "layer-list" }, { "widgetName": "legend" }],
+  "floatingWidgets": [{ "slot": "top-left", "widgets": [{ "widgetName": "search", "order": 10 }] }],
+  "mobileWidgets": ["layer-list", "legend"],
+  "contextMenu": { "enabled": true, "centerHere": true, "googleMaps": true },
+  "widgets": { "search": { "geocoder": { "provider": "nominatim" } } }
+}

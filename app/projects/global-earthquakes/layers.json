@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schema/layers.schema.json",
+  "layers": [
+    {
+      "id": "global-earthquakes",
+      "name": "Global Earthquakes",
+      "type": "pmtiles",
+      "url": "./layers/earthquakes.pmtiles",
+      "geometryType": "point",
+      "popup": {
+        "displayType": "featureHighlights",
+        "fields": {
+          "eq_magnitude": "Magnitude",
+          "eq_magnitude_rank": "Magnitude Rank",
+          "intensity": "Intensity",
+          "location_name": "Location",
+          "region": "Region",
+          "country": "Country",
+          "date_string": "Date",
+          "damage_description": "Damage"
+        }
+      },
+      "sourceLayers": [
+        {
+          "sourceLayer": "earthquakes",
+          "symbology": { "kind": "ref", "name": "earthquake-magnitude" }
+        }
+      ]
+    },
+    {
+      "id": "plate-boundaries",
+      "name": "Plate Boundaries",
+      "type": "geojson",
+      "url": "./layers/plate-boundaries.geojson",
+      "symbology": {
+        "kind": "simple",
+        "color": "#3aa8ee",
+        "strokeColor": "#ffffff",
+        "strokeWidth": 1,
+        "width": 3
+      },
+      "geometryType": "line"
+    }
+  ]
+}

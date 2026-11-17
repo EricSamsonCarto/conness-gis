@@ -1,0 +1,87 @@
+{
+  "$schema": "../../schema/settings.schema.json",
+  "connessVersion": "0.0.0",
+  "branding": {
+    "title": "Yosemite Trails",
+    "appId": "yosemite-trails",
+    "logo": "/hiking-svgrepo-com.svg",
+    "favicon": "/hiking-svgrepo-com.svg",
+    "description": "trails throughout greater Yosemite area in California, using connes gis for 3d visualization"
+  },
+  "ui": {
+    "layout": { "showInfo": true, "showBranding": true, "sideRailOpenOnLoad": "legend" },
+    "info": { "autoOpen": true },
+    "topBar": { "shadow": { "enabled": true, "strength": 0.3 } },
+    "popups": {
+      "trigger": "click",
+      "zoomToFeature": true,
+      "width": 250,
+      "maxWidth": 400,
+      "height": 220
+    }
+  },
+  "map": {
+    "style": "https://tiles.versatiles.org/assets/styles/natural/style.json",
+    "center": [-119.29864, 37.97974],
+    "zoom": 12.53,
+    "maxBounds": [[-120.281, 37.36375], [-118.74919, 38.27982]],
+    "globe": { "atmosphere": false },
+    "minZoom": 9.5,
+    "maxZoom": 14,
+    "bearing": -155.2,
+    "pitch": 60
+  },
+  "commercialUse": false,
+  "mapControls": {
+    "navigation": { "position": "top-right", "order": 10 },
+    "terrain": { "position": "top-right", "exaggeration": 1.5, "enabled": true, "order": 30 },
+    "geolocate": { "position": "top-right", "trackUserLocation": true, "order": 20 },
+    "scale": { "position": "bottom-left", "unit": "imperial" }
+  },
+  "topBarWidgets": [{ "widgetName": "bookmarks" }, { "widgetName": "measure" }],
+  "sidePanelWidgets": [
+    { "widgetName": "layer-list" },
+    { "widgetName": "legend" },
+    { "widgetName": "basemap" }
+  ],
+  "floatingWidgets": [
+    { "slot": "top-left", "widgets": [{ "widgetName": "search", "stayOnMobile": true }] },
+    { "slot": "top-right", "widgets": [{ "widgetName": "coordinates", "order": 40 }] }
+  ],
+  "mobileWidgets": ["layer-list", "legend", "measure", "bookmarks", "basemap"],
+  "widgets": {
+    "basemap": {
+      "hillshade": { "enabled": true, "opacity": 0.5, "exaggeration": 0.5, "method": "standard" },
+      "contours": {
+        "lineColor": "#969696",
+        "labelColor": "#6d6d6d",
+        "labels": true,
+        "unit": "feet",
+        "enabled": true
+      }
+    },
+    "search": {
+      "geocoder": { "provider": "nominatim", "limit": 3 },
+      "layers": [
+        {
+          "layerId": "peaks",
+          "fields": ["name"],
+          "labelField": "name",
+          "limit": 4,
+          "pointZoom": 13
+        },
+        { "layerId": "trails", "fields": ["name"], "labelField": "name", "limit": 4 },
+        {
+          "layerId": "trailheads",
+          "fields": ["name"],
+          "labelField": "name",
+          "limit": 3,
+          "pointZoom": 15
+        }
+      ],
+      "placeholder": "Search peaks, trails or trailheads…"
+    },
+    "measure": { "defaultLinearUnit": "miles", "defaultAreaUnit": "acres", "showTotal": true },
+    "layer-list": { "exportFormats": ["geojson", "csv"] }
+  }
+}

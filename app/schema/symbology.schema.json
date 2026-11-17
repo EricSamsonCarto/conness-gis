@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "propertyNames": { "type": "string" },
+  "additionalProperties": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "kind": { "type": "string", "const": "simple" },
+          "color": {
+            "type": "string",
+            "description": "Dot, line or fill color.",
+            "markdownDescription": "Dot, line or fill color."
+          },
+          "width": {
+            "description": "Line width.",
+            "default": 2,
+            "type": "number",
+            "markdownDescription": "Line width.\n\nDefault: `2`"
+          },
+          "radius": {
+            "description": "Dot radius.",
+            "default": 5,
+            "type": "number",
+            "markdownDescription": "Dot radius.\n\nDefault: `5`"
+          },
+          "strokeColor": {
+            "description": "Dot ring or polygon border color.",
+            "default": "#ffffff",
+            "type": "string",
+            "markdownDescription": "Dot ring or polygon border color.\n\nDefault: `\"#ffffff\"`"
+          },
+          "strokeWidth": {
+            "description": "Dot ring or polygon border width. 0 = none.",
+            "type": "number",
+            "markdownDescription": "Dot ring or polygon border width. 0 = none.\n\nDefault: 1 for points, 0 for polygons"
+          },
+          "opacity": {
+            "description": "Opacity of `color` (polygon fill, dot fill, the line itself), 0 to 1.",
+            "default": 1,
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "markdownDescription": "Opacity of `color` (polygon fill, dot fill, the line itself), 0 to 1.\n\nDefault: `1`"
+          },
+          "strokeOpacity": {
+            "description": "Opacity of `strokeColor` (dot ring, polygon border), 0 to 1. Lines have no stroke.",
+            "default": 1,
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "markdownDescription": "Opacity of `strokeColor` (dot ring, polygon border), 0 to 1. Lines have no stroke.\n\nDefault: `1`"
+          }
+        },
+        "required": ["kind", "color"],
+        "additionalProperties": false,
+        "description": "One color plus a few paint options. Meaning depends on geometry: point = dot and ring, line = line, polygon = fill and border.",
+        "markdownDescription": "One color plus a few paint options. Meaning depends on geometry: point = dot and ring, line = line, polygon = fill and border.\n\n[Docs](https://conness-gis.com/configuration/symbology/#simple)"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "kind": { "type": "string", "const": "raw" },
+          "paint": {
+            "description": "MapLibre paint properties, e.g. `\"circle-color\"`. Expressions allowed.",
+            "type": "object",
+            "propertyNames": { "type": "string" },
+            "additionalProperties": {},
+            "markdownDescription": "MapLibre paint properties, e.g. `\"circle-color\"`. Expressions allowed."
+          },
+          "layout": {
+            "description": "Extra MapLibre layout properties.",
+            "type": "object",
+            "propertyNames": { "type": "string" },
+            "additionalProperties": {},
+            "markdownDescription": "Extra MapLibre layout properties."
+          },
+          "legend": {
+            "description": "Explicit legend. Omit to read it from `paint`.",
+            "allOf": [{ "$ref": "#/definitions/legend" }],
+            "markdownDescription": "Explicit legend. Omit to read it from `paint`."
+          },
+          "description": {
+            "description": "Muted note under the layer name in the legend, e.g. `\"Annual passengers\"`.",
+            "type": "string",
+            "markdownDescription": "Muted note under the layer name in the legend, e.g. `\"Annual passengers\"`."
+          }
+        },
+        "required": ["kind"],
+        "additionalProperties": false,
+        "description": "A raw MapLibre paint object, for categorized or graduated styling.",
+        "markdownDescription": "A raw MapLibre paint object, for categorized or graduated styling.\n\n[Docs](https://conness-gis.com/configuration/symbology/#raw)"
+      }
+    ]
+  },
+  "description": "Named symbologies (`symbology.json`), used from a layer with `{ \"kind\": \"ref\", \"name\": \"…\" }`.",
+  "definitions": {
+    "legend": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "const": "categories" },
+            "entries": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": { "type": "string" },
+                  "color": { "type": "string" },
+                  "radius": { "type": "number" },
+                  "strokeColor": { "type": "string" },
+                  "strokeWidth": { "type": "number" }
+                },
+                "required": ["label", "color"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["kind", "entries"],
+          "additionalProperties": false,
+          "description": "Discrete swatches.",
+          "markdownDescription": "Discrete swatches."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string", "const": "gradient" },
+            "stops": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": { "type": ["number", "string"] },
+                  "label": { "type": "string" },
+                  "color": { "type": "string" }
+                },
+                "required": ["value", "color"],
+                "additionalProperties": false
+              },
+              "description": "Low to high. The first and last labels mark the ends.",
+              "markdownDescription": "Low to high. The first and last labels mark the ends."
+            }
+          },
+          "required": ["kind", "stops"],
+          "additionalProperties": false,
+          "description": "A continuous bar.",
+          "markdownDescription": "A continuous bar."
+        },
+        {
+          "type": "object",
+          "properties": { "kind": { "type": "string", "const": "hidden" } },
+          "required": ["kind"],
+          "additionalProperties": false,
+          "description": "Leave this layer out of the legend.",
+          "markdownDescription": "Leave this layer out of the legend."
+        }
+      ],
+      "description": "Explicit legend, for paint the legend can't read on its own.",
+      "markdownDescription": "Explicit legend, for paint the legend can't read on its own.\n\n[Docs](https://conness-gis.com/configuration/symbology/#legend-overrides-raw-symbology-only)"
+    }
+  },
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "This file's JSON Schema, for editor hover help.",
+      "markdownDescription": "This file's JSON Schema, for editor hover help."
+    }
+  },
+  "markdownDescription": "Named symbologies (`symbology.json`), used from a layer with `{ \"kind\": \"ref\", \"name\": \"…\" }`.\n\n[Docs](https://conness-gis.com/configuration/symbology/)"
+}

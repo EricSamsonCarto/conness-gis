@@ -1,0 +1,49 @@
+{
+  "$schema": "../../schema/symbology.schema.json",
+  "trail-type": {
+    "kind": "raw",
+    "description": "Trail type",
+    "paint": {
+      "line-color": [
+        "match",
+        ["get", "type"],
+        "Trail", "#b45309",
+        "Footpath", "#7c3aed",
+        "Dirt road", "#78716c",
+        "Horse trail", "#0f766e",
+        "#a8a29e"
+      ],
+      "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.2, 14, 3]
+    }
+  },
+  "peak-elevation": {
+    "kind": "raw",
+    "description": "Elevation (ft)",
+    "paint": {
+      "circle-color": [
+        "interpolate",
+        ["linear"],
+        ["coalesce", ["get", "elevation_ft"], 0],
+        6000, "#d6d3d1",
+        9000, "#a8a29e",
+        11000, "#57534e",
+        13000, "#1c1917"
+      ],
+      "circle-radius": 4.5,
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": 1
+    },
+    "layout": { "circle-sort-key": ["coalesce", ["get", "elevation_ft"], 0] }
+  },
+  "land-designation": {
+    "kind": "raw",
+    "description": "Public lands",
+    "paint": {
+      "fill-color": ["match", ["get", "designation"], "National Park", "#15803d", "#a16207"],
+      "fill-opacity": 0.12,
+      "line-color": ["match", ["get", "designation"], "National Park", "#15803d", "#a16207"],
+      "line-width": 2,
+      "line-opacity": 0.8
+    }
+  }
+}

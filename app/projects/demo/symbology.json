@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schema/symbology.schema.json",
+  "places-by-type": {
+    "kind": "raw",
+    "description": "Place type",
+    "paint": {
+      "circle-color": [
+        "match",
+        ["get", "featurecla"],
+        "Admin-0 capital",
+        "#dc2626",
+        "Admin-1 capital",
+        "#f59e0b",
+        "Populated place",
+        "#64748b",
+        "Scientific station",
+        "#0ea5e9",
+        "#a8a29e"
+      ],
+      "circle-radius": [
+        "match",
+        ["get", "featurecla"],
+        "Admin-0 capital",
+        5,
+        "Admin-1 capital",
+        3.5,
+        3
+      ],
+      "circle-opacity": 0.9,
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": 0.5
+    }
+  },
+  "airports-by-passengers": {
+    "kind": "raw",
+    "description": "Annual passengers",
+    "paint": {
+      "circle-color": [
+        "interpolate",
+        ["linear"],
+        ["get", "passengers"],
+        0,
+        "#bfdbfe",
+        2000000,
+        "#60a5fa",
+        8000000,
+        "#2563eb",
+        20000000,
+        "#1e3a8a"
+      ],
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["get", "passengers"],
+        0,
+        4,
+        2000000,
+        7,
+        8000000,
+        11,
+        20000000,
+        16
+      ],
+      "circle-opacity": 0.9,
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": 1
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schema/layers.schema.json",
+  "layers": [
+    {
+      "id": "peaks",
+      "name": "Peaks",
+      "type": "geojson",
+      "url": "./layers/peaks.geojson",
+      "geometryType": "point",
+      "symbology": { "kind": "ref", "name": "peak-elevation" },
+      "label": {
+        "text": "{name} · {elevation_ft} ft",
+        "anchor": "top-right",
+        "fontSize": 11,
+        "color": "#3f2a14",
+        "minZoom": 13,
+        "offset": 0
+      },
+      "popup": { "title": "name", "fields": { "elevation_ft": "Elevation (ft)" } },
+      "filters": [{ "column": "elevation_ft", "kind": "numeric", "label": "Elevation (ft)" }],
+      "minZoom": 12
+    },
+    {
+      "id": "trailheads",
+      "name": "Trailheads",
+      "type": "geojson",
+      "url": "./layers/trailheads.geojson",
+      "geometryType": "point",
+      "symbology": {
+        "kind": "simple",
+        "color": "#b45309",
+        "radius": 6,
+        "strokeColor": "#ffffff",
+        "strokeWidth": 2
+      },
+      "popup": { "title": "name", "fields": {}, "enabled": false },
+      "label": {
+        "field": "name",
+        "anchor": "top-right",
+        "offset": 0,
+        "fontSize": 13,
+        "haloWidth": 2
+      }
+    },
+    {
+      "id": "campgrounds",
+      "name": "Campgrounds",
+      "type": "geojson",
+      "url": "./layers/campgrounds.geojson",
+      "geometryType": "point",
+      "minZoom": 10,
+      "symbology": {
+        "kind": "simple",
+        "color": "#0f766e",
+        "radius": 5,
+        "strokeColor": "#ffffff",
+        "strokeWidth": 1.5
+      },
+      "popup": {
+        "title": "name",
+        "fields": { "reservation": "Reservations", "website": "Website" }
+      }
+    },
+    {
+      "id": "trails",
+      "name": "Trails",
+      "type": "geojson",
+      "url": "./layers/trails.geojson",
+      "geometryType": "line",
+      "symbology": { "kind": "ref", "name": "trail-type" },
+      "label": {
+        "field": "name",
+        "fontSize": 11,
+        "color": "#3f2a14",
+        "minZoom": 11,
+        "allowOverlap": true
+      },
+      "popup": {
+        "title": "name",
+        "fields": {
+          "type": "Type",
+          "difficulty": "Difficulty",
+          "length_mi": "Length (mi)",
+          "surface": "Surface"
+        }
+      },
+      "filters": [
+        { "column": "type", "kind": "categorical", "label": "Type" },
+        { "column": "difficulty", "kind": "categorical", "label": "Difficulty" }
+      ]
+    },
+    {
+      "id": "lakes",
+      "name": "Lakes",
+      "type": "geojson",
+      "url": "./layers/lakes.geojson",
+      "geometryType": "polygon",
+      "symbology": {
+        "kind": "simple",
+        "color": "#38bdf8",
+        "opacity": 0.55,
+        "strokeColor": "#0369a1",
+        "strokeWidth": 0.5
+      },
+      "popup": false,
+      "visible": false
+    },
+    {
+      "id": "boundaries",
+      "name": "Parks & Forests",
+      "type": "geojson",
+      "url": "./layers/boundaries.geojson",
+      "geometryType": "polygon",
+      "symbology": { "kind": "ref", "name": "land-designation" },
+      "popup": { "title": "name", "fields": { "designation": "Type" } },
+      "visible": true,
+      "maxZoom": 11.5
+    }
+  ]
+}

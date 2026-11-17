@@ -1,0 +1,66 @@
+# a release, run by hand only (Actions → Release → Run workflow): checks the kit, stamps the version,
+# moves CHANGELOG.md's Unreleased notes under it, tags, and publishes the zip on GitHub Releases
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version, like 1.0.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.version }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check the version
+        run: |
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "\"$VERSION\" isn't x.y.z"; exit 1; }
+          ! git rev-parse -q --verify "refs/tags/v$VERSION" || { echo "v$VERSION is already released"; exit 1; }
+          grep -q '^## \[Unreleased\]' CHANGELOG.md || { echo 'CHANGELOG.md has no "## [Unreleased]" section'; exit 1; }
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Check the kit
+        working-directory: app
+        run: |
+          npm ci
+          npm run typecheck
+          npm run lint
+          npm run test
+          npm run build demo
+
+      - name: Stamp the version and the changelog
+        run: |
+          (cd app && npm version "$VERSION" --no-git-tag-version)
+          # this release's notes: everything under Unreleased, up to the previous release
+          awk '/^## \[Unreleased\]/{on=1;next} /^## \[/{on=0} on' CHANGELOG.md > notes.md
+          sed -i "s/^## \[Unreleased\]/## [Unreleased]\n\n## [$VERSION] - $(date -u +%Y-%m-%d)/" CHANGELOG.md
+
+      - name: Commit and tag
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app/package.json app/package-lock.json CHANGELOG.md
+          git commit -m "Release $VERSION"
+          git tag "v$VERSION"
+          git push origin HEAD "v$VERSION"
+
+      - name: Publish
+        run: |
+          git archive --format=zip --prefix="conness-gis-$VERSION/" -o "conness-gis-$VERSION.zip" "v$VERSION"
+          gh release create "v$VERSION" "conness-gis-$VERSION.zip" --title "$VERSION" --notes-file notes.md

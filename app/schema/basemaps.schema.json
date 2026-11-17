@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "This file's JSON Schema, for editor hover help.",
+      "markdownDescription": "This file's JSON Schema, for editor hover help."
+    },
+    "basemaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique id, `<name>-<source>`. Also the thumbnail filename.",
+            "markdownDescription": "Unique id, `<name>-<source>`. Also the thumbnail filename."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name, `Name (Source)`.",
+            "markdownDescription": "Display name, `Name (Source)`."
+          },
+          "style": {
+            "anyOf": [{ "type": "string" }, {}],
+            "description": "A style URL or an inline MapLibre style object.",
+            "markdownDescription": "A style URL or an inline MapLibre style object."
+          },
+          "thumbnail": {
+            "description": "An image's name in your project's `basemap-images/` folder (or the catalog's, `widgets/basemap/assets/basemap-images/`), or an image URL. Omit to use the image named after the basemap's id.",
+            "type": "string",
+            "markdownDescription": "An image's name in your project's `basemap-images/` folder (or the catalog's, `widgets/basemap/assets/basemap-images/`), or an image URL. Omit to use the image named after the basemap's id."
+          },
+          "license": {
+            "description": "`\"restricted\"` entries are left out of the build when `commercialUse` is true.",
+            "default": "commercial-safe",
+            "type": "string",
+            "enum": ["commercial-safe", "restricted"],
+            "markdownDescription": "`\"restricted\"` entries are left out of the build when `commercialUse` is true.\n\nDefault: `\"commercial-safe\"`"
+          }
+        },
+        "required": ["id", "name", "style"],
+        "additionalProperties": false,
+        "description": "One entry in the basemap switcher.",
+        "markdownDescription": "One entry in the basemap switcher.\n\n[Docs](https://conness-gis.com/configuration/map-camera/#basemaps)"
+      },
+      "description": "The basemap switcher's entries (`basemaps.json`), in order.",
+      "markdownDescription": "The basemap switcher's entries (`basemaps.json`), in order."
+    }
+  },
+  "required": ["basemaps"],
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+/docs export-ignore
+/convert-data-python export-ignore
+/assets export-ignore
+/app/projects/demo export-ignore
+/.github export-ignore
+/.gitattributes export-ignore
+/CLAUDE.md export-ignore
+*.test.ts export-ignore
+/app/projects/blank export-ignore
+/app/projects/global-earthquakes export-ignore
+/app/projects/yosemite-trails export-ignore

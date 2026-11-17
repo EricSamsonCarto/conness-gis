@@ -1,0 +1,102 @@
+[
+  {
+    "id": "satellite-esri",
+    "name": "Satellite (ESRI)",
+    "license": "restricted",
+    "style": {
+      "version": 8,
+      "sources": {
+        "satellite": {
+          "type": "raster",
+          "tiles": [
+            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          ],
+          "tileSize": 256,
+          "maxzoom": 19,
+          "attribution": "Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community"
+        }
+      },
+      "layers": [{ "id": "satellite", "type": "raster", "source": "satellite" }]
+    }
+  },
+  {
+    "id": "positron-openfreemap",
+    "name": "Positron (OpenFreeMap)",
+    "style": "https://tiles.openfreemap.org/styles/positron"
+  },
+  {
+    "id": "liberty-openfreemap",
+    "name": "Liberty (OpenFreeMap)",
+    "style": "https://tiles.openfreemap.org/styles/liberty"
+  },
+  {
+    "id": "bright-openfreemap",
+    "name": "Bright (OpenFreeMap)",
+    "style": "https://tiles.openfreemap.org/styles/bright"
+  },
+  {
+    "id": "dark-openfreemap",
+    "name": "Dark (OpenFreeMap)",
+    "style": "https://tiles.openfreemap.org/styles/dark"
+  },
+  {
+    "id": "fiord-openfreemap",
+    "name": "Fiord (OpenFreeMap)",
+    "style": "https://tiles.openfreemap.org/styles/fiord"
+  },
+  {
+    "id": "satellite-versatiles",
+    "name": "Satellite (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/satellite/style.json"
+  },
+  {
+    "id": "colorful-versatiles",
+    "name": "Colorful (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/colorful/style.json"
+  },
+  {
+    "id": "colorful-dark-versatiles",
+    "name": "Colorful Dark (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/colorful-dark/style.json"
+  },
+  {
+    "id": "natural-versatiles",
+    "name": "Natural (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/natural/style.json"
+  },
+  {
+    "id": "natural-dark-versatiles",
+    "name": "Natural Dark (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/natural-dark/style.json"
+  },
+  {
+    "id": "muted-versatiles",
+    "name": "Muted (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/muted/style.json"
+  },
+  {
+    "id": "muted-dark-versatiles",
+    "name": "Muted Dark (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/muted-dark/style.json"
+  },
+  {
+    "id": "gray-versatiles",
+    "name": "Gray (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/gray/style.json"
+  },
+  {
+    "id": "gray-dark-versatiles",
+    "name": "Gray Dark (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/gray-dark/style.json"
+  },
+  {
+    "id": "toner-versatiles",
+    "name": "Toner (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/toner/style.json"
+  },
+  {
+    "id": "toner-dark-versatiles",
+    "name": "Toner Dark (VersaTiles)",
+    "style": "https://tiles.versatiles.org/assets/styles/toner-dark/style.json"
+  }
+]

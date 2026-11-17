@@ -1,0 +1,476 @@
+/* the docs homepage (overrides/home.html). colors and fonts are the editor's (app/editor/editor.css) */
+:root {
+  --granite: #e9ecea;
+  --sheet: #ffffff;
+  --ink: #1d2b33;
+  --lichen: #5e6b66;
+  --glacier: #2e6e8e;
+  --glacier-deep: #24576f;
+  --hairline: #d5dbd8;
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: var(--granite);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--glacier);
+}
+
+/* the ink band and its ridge, as the editor's projects page */
+.band {
+  background: var(--ink);
+  color: #fff;
+}
+
+.band__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 1.5rem;
+}
+
+.band__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-stretch: 112.5%;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.ridge {
+  position: relative;
+  height: 7rem;
+}
+
+.ridge svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* the reveal, in order: ranges rise, the line draws, then the fill and the contours come in together */
+.ridge__range {
+  animation: rise 0.45s ease-out both;
+}
+
+.ridge__range--far {
+  fill: #2a3c46;
+}
+
+.ridge__range--near {
+  fill: #364b56;
+  animation-delay: 0.06s;
+}
+
+.ridge__fill {
+  fill: var(--granite);
+  /* rises from the foot of the band as it fades in, so the light doesn't flash on all at once */
+  animation: fill-up 0.51s ease-in-out 0.77s both;
+}
+
+/* lit from the northwest: the east faces in shade */
+.ridge__shade {
+  fill: rgb(29 43 51 / 0.07);
+  animation: fade-in 0.26s ease-out 1.15s both;
+}
+
+.ridge__contour {
+  fill: none;
+  stroke: #c3ccc8;
+  stroke-width: 1;
+  animation: draw 0.38s ease-out 0.77s both;
+}
+
+.ridge__snow {
+  fill: #fff;
+  animation: fade-in 0.26s ease-out 1.28s both;
+}
+
+/* drawn left to right by widening its clip; a dash animation doesn't survive the stretched viewBox */
+.ridge__line {
+  fill: none;
+  stroke: var(--granite);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  animation: draw 0.77s cubic-bezier(0.45, 0, 0.25, 1) 0.13s both;
+}
+
+/* spot height at the summit: 820/1200 across, 188/200 up */
+.ridge__label {
+  position: absolute;
+  bottom: 94%;
+  left: 68.3%;
+  transform: translate(-50%, -0.25rem);
+  color: rgb(255 255 255 / 0.55);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  animation: fade-in 0.26s ease-out 1.41s both;
+}
+
+@keyframes draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fill-up {
+  from {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ridge * {
+    animation: none !important;
+  }
+}
+
+/* the video beside the tagline and buttons, below them on narrow screens */
+.intro {
+  display: grid;
+  width: 100%;
+  max-width: 1080px;
+  flex: 1;
+  align-content: start;
+  justify-items: center;
+  gap: 2rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 3rem;
+  text-align: center;
+}
+
+.intro__tagline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.intro__sub {
+  max-width: 38ch;
+  margin: 0.75rem auto 0;
+  color: var(--lichen);
+  font-size: 1.0625rem;
+}
+
+/* four buttons the same size, two by two at every width */
+.intro__actions {
+  display: grid;
+  width: 100%;
+  max-width: 22rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.75rem auto 0;
+}
+
+/* phones: the text reads better left-aligned than centered */
+@media (max-width: 429px) {
+  .intro {
+    justify-items: stretch;
+    text-align: left;
+  }
+
+  .intro__sub,
+  .intro__actions {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 399px) {
+  .intro__tagline {
+    font-size: 1.5rem;
+  }
+
+  .intro__actions {
+    gap: 0.5rem;
+  }
+
+  .intro__actions .btn {
+    padding: 0.5rem 0.625rem;
+    font-size: 0.875rem;
+  }
+}
+
+.intro__video {
+  width: 100%;
+  max-width: 42rem;
+  justify-self: center;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  border-radius: 0.75rem;
+  background: var(--sheet);
+}
+
+.intro__video video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* no clicks while it plays by itself; once it has controls, a tap plays it */
+.intro__video video:not([controls]) {
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .band__inner {
+    padding-top: 4rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .band__title {
+    font-size: 3rem;
+  }
+
+  .ridge {
+    height: 12rem;
+  }
+}
+
+@media (min-width: 860px) {
+  .intro {
+    max-width: 1200px;
+    grid-template-columns: 1.7fr 1fr;
+    align-items: center;
+    justify-items: stretch;
+    gap: 3rem;
+    padding-top: 3.5rem;
+    text-align: left;
+  }
+
+  .intro__sub,
+  .intro__actions {
+    margin-left: 0;
+  }
+
+  .intro__video {
+    max-width: none;
+    order: -1;
+  }
+}
+
+/* the editor's button styles (app/editor/ui.ts), a little larger */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.125rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font: 500 0.9375rem/1.25 var(--font-sans);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--glacier);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: var(--glacier);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--glacier-deep);
+}
+
+.btn--quiet {
+  border-color: var(--hairline);
+  background: var(--sheet);
+  color: var(--ink);
+}
+
+.btn--quiet:hover {
+  background: var(--hairline);
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--lichen);
+  font-size: 0.875rem;
+}
+
+.foot p {
+  margin: 0;
+}
+
+/* two short lines, about as tall as one footer line */
+.foot__made {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+
+.foot a {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.foot__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+}
+
+.foot__legal button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.foot__legal button:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.foot__legal button:focus-visible {
+  outline: 2px solid var(--glacier);
+  outline-offset: 2px;
+}
+
+/* phones: centered, "dedicated | made by …" on one row, the legal links under it */
+@media (max-width: 599px) {
+  .foot {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .foot__made {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 0.5rem;
+  }
+
+  .foot__made p + p::before {
+    content: "|";
+    margin-right: 0.5rem;
+    color: var(--hairline);
+  }
+
+  .foot__legal {
+    justify-content: center;
+  }
+}
+
+/* the legal pop-ups, as the editor's Modal.tsx */
+dialog {
+  width: calc(100% - 2rem);
+  max-width: 480px;
+  padding: 1.5rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: var(--sheet);
+  color: var(--ink);
+  box-shadow: 0 24px 60px -20px rgb(29 43 51 / 0.5);
+}
+
+dialog::backdrop {
+  background: rgb(29 43 51 / 0.45);
+}
+
+dialog[open] {
+  animation: modal-in 160ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog[open] {
+    animation: none;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+dialog h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.dialog__body {
+  margin-top: 0.75rem;
+  color: var(--lichen);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.dialog__body p {
+  margin: 0 0 0.75rem;
+}
+
+dialog form {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}

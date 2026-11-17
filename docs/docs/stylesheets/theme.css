@@ -1,0 +1,151 @@
+/* the Conness editor's colors and fonts (app/editor/editor.css): ink and glacier, Archivo headings */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..700&display=swap");
+
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #1d2b33;
+  --md-primary-fg-color--light: #2b3f4a;
+  --md-primary-fg-color--dark: #141f25;
+  --md-accent-fg-color: #2e6e8e;
+  --md-typeset-a-color: #2e6e8e;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #1d2b33;
+  --md-primary-fg-color--light: #2b3f4a;
+  --md-primary-fg-color--dark: #141f25;
+  --md-accent-fg-color: #8cc3dd;
+  --md-typeset-a-color: #8cc3dd;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-header__topic {
+  font-family: "Archivo", var(--md-text-font), sans-serif;
+  font-stretch: 112.5%;
+}
+
+/* the site name goes home, like the logo (javascripts/home-link.js) */
+.md-header__topic:first-child {
+  cursor: pointer;
+}
+
+/* the Dedicated page's photo: 720px wide, shown at most 480 so it stays sharp */
+.md-typeset .dedication-photo {
+  width: 100%;
+  max-width: 30rem;
+  border-radius: 0.5rem;
+  /* block, so no inline baseline gap under it */
+  display: block;
+}
+
+/* the photo's paragraph: the gap down to the videos matches the gap between them */
+.md-typeset p:has(> .dedication-photo) {
+  margin-bottom: 1rem;
+}
+
+/* the two portrait clips: side by side at every width, as wide as the photo above (30rem),
+   uncropped. muted and without controls */
+.md-typeset .dedication-videos {
+  display: grid;
+  max-width: 30rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.md-typeset .dedication-videos video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+/* no clicks while it plays by itself; once it has controls (iOS refused autoplay), a tap plays it */
+.md-typeset .dedication-videos video:not([controls]) {
+  pointer-events: none;
+}
+
+/* the Releases page (javascripts/releases.js): one block per release, its notes in a dialog */
+.md-typeset .releases__item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .releases__item h2 {
+  margin: 0;
+}
+
+.md-typeset .releases__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.md-typeset .releases__notes {
+  max-width: min(40rem, calc(100vw - 2rem));
+  max-height: 80vh;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .releases__notes::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+
+.md-typeset .releases__notes h2 {
+  margin-top: 0;
+}
+
+/* examples page: 2x2 app grid on every screen width */
+.md-typeset .app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1em 0 1.5em;
+}
+
+.md-typeset .app-grid p {
+  margin: 0;
+}
+
+.md-typeset .app-grid a {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.md-typeset .app-grid a:hover,
+.md-typeset .app-grid a:focus-visible {
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 0.2);
+  transform: translateY(-2px);
+}
+
+.md-typeset .app-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.md-typeset .preset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1em 0 1.5em;
+}
+
+.md-typeset .preset-grid figure {
+  margin: 0;
+}
+
+.md-typeset .preset-grid img {
+  display: block;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+}

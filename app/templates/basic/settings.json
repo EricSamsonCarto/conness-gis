@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schema/settings.schema.json",
+  "branding": { "title": "Basic", "appId": "basic", "logo": "/logo.svg" },
+  "ui": { "layout": { "showInfo": true, "showBranding": true }, "info": { "autoOpen": true } },
+  "map": {
+    "style": "https://tiles.openfreemap.org/styles/positron",
+    "center": [-98.5, 39.5],
+    "zoom": 2.5
+  },
+  "commercialUse": false,
+  "mapControls": { "navigation": { "position": "top-left" } },
+  "topBarWidgets": [],
+  "sidePanelWidgets": [
+    { "widgetName": "layer-list" },
+    { "widgetName": "legend" },
+    { "widgetName": "basemap" }
+  ],
+  "floatingWidgets": [],
+  "mobileWidgets": ["layer-list", "legend", "basemap"]
+}

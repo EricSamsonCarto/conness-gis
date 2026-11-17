@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schema/basemaps.schema.json",
+  "basemaps": [
+    {
+      "id": "gray-dark-versatiles",
+      "name": "Gray Dark (VersaTiles)",
+      "style": "https://tiles.versatiles.org/assets/styles/gray-dark/style.json"
+    }
+  ]
+}

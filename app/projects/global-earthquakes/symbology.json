@@ -1,0 +1,33 @@
+{
+  "$schema": "../../schema/symbology.schema.json",
+  "earthquake-magnitude": {
+    "kind": "raw",
+    "description": "Magnitude",
+    "paint": {
+      "circle-color": [
+        "interpolate",
+        ["linear"],
+        ["coalesce", ["get", "eq_magnitude"], 0],
+        2, "#d1fae5",
+        5, "#6ee7b7",
+        6.5, "#10b981",
+        7.5, "#047857",
+        9, "#022c22"
+      ],
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["coalesce", ["get", "eq_magnitude"], 0],
+        2, 2,
+        5, 4,
+        6.5, 7,
+        7.5, 11,
+        9, 18
+      ],
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": 0.5,
+      "circle-opacity": 0.85
+    },
+    "layout": { "circle-sort-key": ["coalesce", ["get", "eq_magnitude"], 0] }
+  }
+}

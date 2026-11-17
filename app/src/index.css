@@ -1,0 +1,421 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* safelist the palette, Tailwind v4 tree-shakes unused color vars
+   and a token like 'indigo-400' would resolve to an undefined var */
+@source inline("{bg,text,border,fill,stroke,ring,outline}-{slate,gray,zinc,neutral,stone,red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}");
+
+/* registers token utilities (bg-primary, …) and boot defaults before
+   applyTheme(). keep in sync with DEFAULT_COLORS (core/theme/theme.ts) */
+@theme {
+  --color-primary: var(--color-blue-900);
+  --color-text: var(--color-slate-600);
+  --color-strongText: var(--color-slate-900);
+  --color-surface: var(--color-slate-100);
+  --color-layerGroupBg: var(--color-surface);
+  --color-danger: var(--color-rose-600);
+  --color-dangerHover: var(--color-rose-700);
+  --color-success: var(--color-emerald-600);
+  --color-successHover: var(--color-emerald-700);
+  --color-disabledBg: var(--color-gray-200);
+  --color-disabledText: var(--color-gray-400);
+  --color-hover: var(--color-amber-500);
+  --color-featureHighlight: var(--color-cyan-400);
+  --color-slider: var(--color-primary);
+  --color-actionActive: var(--color-primary);
+  /* applyTheme writes the same expression at runtime */
+  --color-actionActiveHover: color-mix(in srgb, var(--color-primary) 85%, black);
+  --color-actionNotActive: var(--color-white);
+  --color-actionNotActiveHover: var(--color-slate-50);
+  --color-save: var(--color-primary);
+  --color-saveHover: color-mix(in srgb, var(--color-primary) 85%, black);
+  --color-popupHeaderBg: var(--color-surface);
+  --color-popupArrow: var(--color-text);
+  --color-dropdownHover: var(--color-primary);
+  --color-panelBg: var(--color-white);
+  --color-panelBorder: var(--color-slate-200);
+  --color-panelWidget: var(--color-black);
+  --color-topBarBg: var(--color-primary);
+  --color-titleText: var(--color-white);
+  --color-topBarWidget: var(--color-white);
+}
+
+/* the only text sizes, rem so they follow the browser, with no line-height */
+@theme {
+  --text-small: 0.6875rem;
+  --text-medium: 0.75rem;
+  --text-large: 0.875rem;
+  --text-title: 0.875rem;
+  --text-button: 0.875rem;
+  --text-dialogButton: 0.75rem;
+  --text-popupHeader: 0.875rem;
+  --text-popupTitle: 1rem;
+  --text-popupBody: 0.875rem;
+}
+
+:root {
+  /* fallbacks, applyUiVars overwrites at boot. mirrors uiVars.ts */
+  --floating-control-size: calc(1.5625rem / 0.75);
+  --side-rail-icon-size: 1.25rem;
+  --widget-button-cursor: pointer;
+}
+
+/* ios zooms into inputs under 16px, important so widgets can't undercut it
+   499px is MOBILE_BREAKPOINT_PX - 1 */
+@media (max-width: 499px) {
+  input:not([type]), input[type="text"], input[type="search"], input[type="number"],
+  input[type="email"], input[type="url"], input[type="tel"], input[type="password"],
+  select, textarea {
+    font-size: max(var(--text-large), 16px) !important;
+  }
+}
+
+.maplibregl-ctrl button.kit-spin-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--map-control-fg);
+}
+.maplibregl-ctrl button.kit-spin-control svg {
+  width: 75%;
+  height: 75%;
+}
+.maplibregl-ctrl.kit-zoom-level {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--map-control-bg) 80%, transparent);
+  color: var(--map-control-fg);
+  font-size: var(--text-small);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* shell/scaleBar.ts. ink is the control icon color at full strength (white on
+   dark controls), the halo the control bg, so it reads on any basemap */
+.kit-scale {
+  --scale-ink: var(--map-control-strong);
+  --scale-halo: var(--map-control-bg);
+  /* one outline for every style, so they match */
+  --scale-outline: drop-shadow(0 0 1px var(--scale-halo)) drop-shadow(0 0 1px var(--scale-halo));
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: none;
+  pointer-events: none;
+  color: var(--scale-ink);
+  font-size: var(--text-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+/* the corners' margin rule also hits nested controls */
+.kit-scale .maplibregl-ctrl {
+  margin: 0 !important;
+}
+.kit-scale-line {
+  display: block;
+  height: 7px;
+  box-sizing: border-box;
+  border: 2px solid var(--scale-ink);
+  border-top: none;
+}
+/* classic keeps MapLibre's box and colors, plus the halo and our text size */
+.kit-scale .kit-scale-classic {
+  font-size: var(--text-medium);
+  filter: var(--scale-outline);
+}
+.kit-scale-minimal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  filter: var(--scale-outline);
+}
+.kit-scale-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 8px;
+  border-radius: 9999px;
+  background: var(--map-control-bg);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+}
+.kit-scale-pill .kit-scale-line {
+  height: 5px;
+}
+.kit-scale-alt {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  /* its 1px border and small labels read lighter under the same outline */
+  filter: var(--scale-outline) drop-shadow(0 0 1px var(--scale-halo));
+}
+.kit-scale-bar {
+  position: relative;
+  padding-bottom: 16px;
+}
+.kit-scale-segments {
+  display: flex;
+  height: 7px;
+  box-sizing: border-box;
+  border: 1px solid var(--scale-ink);
+}
+.kit-scale-segments span {
+  flex: 1;
+  background: var(--scale-halo);
+}
+.kit-scale-segments span:nth-child(odd) {
+  background: var(--scale-ink);
+}
+.kit-scale-ticks span {
+  position: absolute;
+  top: 10px;
+}
+.kit-scale-ticks span:nth-child(2) {
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* the full distance sits past the bar's end, clear of the middle one */
+.kit-scale-full {
+  margin-top: 10px;
+}
+
+/* ui/RangeSlider. stacked range inputs, only the thumbs take the pointer */
+.kit-range input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.kit-range input::-webkit-slider-runnable-track {
+  background: transparent;
+}
+.kit-range input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  border: 2px solid var(--color-panelBg);
+  background: var(--color-primary);
+  cursor: var(--widget-button-cursor);
+}
+.kit-range input::-moz-range-thumb {
+  pointer-events: auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  border: 2px solid var(--color-panelBg);
+  background: var(--color-primary);
+  cursor: var(--widget-button-cursor);
+}
+
+/* one spinner for React (ui/Spinner) and plain DOM (ui/showBusy). a transform,
+   so it keeps turning while the main thread is busy */
+@keyframes kit-spin {
+  to { transform: rotate(360deg); }
+}
+.kit-spinner {
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 2px solid var(--color-panelBorder);
+  border-top-color: var(--color-primary);
+  animation: kit-spin 1s linear infinite;
+}
+.kit-busy {
+  position: relative;
+}
+.kit-busy > :not(.kit-spinner) {
+  visibility: hidden;
+}
+.kit-busy > .kit-spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+@keyframes kit-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.kit-fade-in {
+  animation: kit-fade-in 400ms ease-out;
+}
+
+/* a short confirmation that fades out, 1.2s like useCopyToClipboard's reset */
+@keyframes kit-flash {
+  0%, 60% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.kit-flash {
+  animation: kit-flash 1200ms ease-in forwards;
+}
+
+.kit-row-hover:hover,
+.kit-row-hover-active {
+  background: color-mix(in srgb, var(--color-hover) 12%, transparent);
+}
+
+/* macOS overlay scrollbars hide until scrolled. standard props gated to
+   Firefox: in Chrome they'd override the webkit pseudo-elements */
+.kit-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.kit-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+.kit-scrollbar::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-text) 40%, var(--color-surface));
+  border-radius: 4px;
+  border: 2px solid var(--color-surface);
+}
+@supports not selector(::-webkit-scrollbar) {
+  .kit-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-text) 40%, var(--color-surface))
+      var(--color-surface);
+  }
+}
+
+button {
+  cursor: var(--widget-button-cursor);
+}
+/* MapLibre sets a pointer cursor at (0,1,1), same specificity, later wins */
+.maplibregl-ctrl button,
+.maplibregl-ctrl-group button {
+  cursor: var(--widget-button-cursor);
+}
+
+/* visualizePitch gives the compass a grab cursor, but it's click-to-reset.
+   !important: the hovered target is the inner icon span */
+.maplibregl-ctrl-compass,
+.maplibregl-ctrl-compass:active,
+.maplibregl-ctrl-compass .maplibregl-ctrl-icon {
+  cursor: var(--widget-button-cursor) !important;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+/* text with no size or color class still follows the settings and the theme */
+body {
+  font-size: var(--text-medium);
+  color: var(--color-text);
+}
+
+/* MapLibre floats corner items in DOM order, flex lets a floating
+   widget's `order` place it among the native controls */
+.maplibregl-ctrl-top-left,
+.maplibregl-ctrl-bottom-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.maplibregl-ctrl-top-right,
+.maplibregl-ctrl-bottom-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* match native buttons to floating widget size. icon bg lives on the inner
+   .maplibregl-ctrl-icon, so background-size goes there */
+.maplibregl-ctrl-group button {
+  width: var(--floating-control-size) !important;
+  height: var(--floating-control-size) !important;
+}
+.maplibregl-ctrl button .maplibregl-ctrl-icon {
+  background-size: 75% 75% !important;
+}
+
+/* MapLibre's hover rule (0,3,1) beats Tailwind bg on floating buttons */
+.maplibregl-ctrl button.floating-widget-btn {
+  background-color: var(--map-control-bg);
+  border-radius: 0.25rem;
+}
+.maplibregl-ctrl button.floating-widget-btn:not(:disabled):hover {
+  background-color: var(--map-control-hover);
+}
+
+/* maplibre-gl.css loads after this file, so one class more specific */
+.maplibregl-ctrl.maplibregl-ctrl-group {
+  background-color: var(--map-control-bg);
+}
+.maplibregl-ctrl.maplibregl-ctrl-group button + button {
+  border-top-color: var(--map-control-border);
+}
+.maplibregl-ctrl.maplibregl-ctrl-group button:not(:disabled):hover {
+  background-color: var(--map-control-hover);
+}
+/* MapLibre only rounds buttons on focus, overflow hidden clips focus rings */
+.maplibregl-ctrl.maplibregl-ctrl-group button:first-child {
+  border-radius: 4px 4px 0 0;
+}
+.maplibregl-ctrl.maplibregl-ctrl-group button:last-child {
+  border-radius: 0 0 4px 4px;
+}
+.maplibregl-ctrl.maplibregl-ctrl-group button:only-child {
+  border-radius: 4px;
+}
+
+/* the icon color is what MapLibre's own #333 icons come out as, inverted
+   on dark buttons, so every icon on the map matches */
+:root,
+[data-map-controls] {
+  --map-control-bg: var(--color-mapControlBg, var(--color-panelBg));
+}
+:root,
+[data-map-controls='light'] {
+  --map-control-fg: #333;
+}
+[data-map-controls='dark'] {
+  --map-control-fg: #ccc;
+}
+/* the fg at full strength, for ink that must stand out (the scale bar) */
+:root,
+[data-map-controls='light'] {
+  --map-control-strong: #000;
+}
+[data-map-controls='dark'] {
+  --map-control-strong: #fff;
+}
+/* the border and hover blend the icon in, so they follow any colors */
+:root,
+[data-map-controls] {
+  --map-control-border: color-mix(in srgb, var(--map-control-bg) 82%, var(--map-control-fg));
+  --map-control-hover: color-mix(in srgb, var(--map-control-bg) 90%, var(--map-control-fg));
+}
+:root {
+  --floating-icon-color: var(--map-control-fg);
+}
+
+/* MapLibre glyphs are dark data-URI images with no theming hook
+   so invert and hue-rotate the icon, not the button, on dark controls */
+[data-map-controls='dark'] .maplibregl-ctrl button .maplibregl-ctrl-icon,
+[data-map-controls='dark'] .maplibregl-ctrl-attrib-button {
+  filter: invert(1) hue-rotate(180deg);
+}
+[data-map-controls='dark'] .maplibregl-ctrl.maplibregl-ctrl-scale {
+  background-color: color-mix(in srgb, var(--map-control-bg) 85%, transparent);
+  border-color: var(--map-control-fg);
+  color: var(--map-control-fg);
+}
+
+/* MapLibre's unlayered button bg beats Tailwind utilities, revert-layer
+   lets a widget's own bg-* win inside floating pop-outs */
+.maplibregl-ctrl .kit-floating-ui button {
+  background-color: revert-layer;
+}
+.maplibregl-ctrl .kit-floating-ui button:not(:disabled):hover {
+  background-color: revert-layer;
+}
+
