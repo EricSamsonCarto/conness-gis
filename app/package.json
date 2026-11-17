@@ -16,7 +16,7 @@
     "upgrade": "node scripts/upgrades.ts"
   },
   "dependencies": {
-    "@duckdb/duckdb-wasm": "1.33.1-dev114.0",
+    "@duckdb/duckdb-wasm": "1.33.1-dev115.0",
     "@mapbox/mapbox-gl-draw": "^1.5.2",
     "@turf/turf": "^7.4.0",
     "esri-gl": "^2.1.0",
