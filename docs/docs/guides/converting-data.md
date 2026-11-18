@@ -128,7 +128,7 @@ GeoParquet needs GeoPandas 1.0 or later. FlatGeobuf is one line: `gdf.to_file("p
 
 ## tippecanoe → PMTiles
 
-Use tippecanoe when a GeoJSON file is too big to load whole, or when you want more control over the tiles than GDAL gives. PMTiles only loads the tiles in view.
+Use tippecanoe when a GeoJSON file is too big to load whole, or when you want more control over the tiles than GDAL gives. Tippecanoe only works on a macbook. PMTiles only loads the tiles in view.
 
 ```bash
 brew install tippecanoe gdal   # other OSes: see the tippecanoe README

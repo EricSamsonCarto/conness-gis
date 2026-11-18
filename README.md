@@ -54,6 +54,19 @@ Pull requests are welcome. Just know there are two different things here:
 
 Contributions are accepted under the same license as the project. AI is fine but you better be prepared to explain the change and how it affects the project as a whole.
 
+## Future improvements
+
+- Undo and redo in the editor
+- Per-geometry raw paint for mixed-geometry layers
+- Style builders in the editor for categories and number ranges, so advanced symbology doesn't need hand-written expressions
+- Click tolerance for popups, so thin lines and small points are easier to hit. Tolerance can be updated by the user within the UI.
+- The map position in the URL, so a shared link opens on the same view
+- Groups within groups in the layer list
+
+## Known issues
+
+- MapLibre's map control icons are sometimes blank on the first load of the editor (only seen in Safari). A refresh fixes it. This is not an issue for fully built apps, only occurs within the editor.
+
 ## Built with
 
 **Core**

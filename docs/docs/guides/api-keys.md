@@ -8,7 +8,7 @@ Some services need an API key: a paid geocoder like MapTiler (`widgets.search.ge
 
 ## Two separate problems
 
-**1. Committing a key to git.** If you type a key into `settings.json` and push it, it stays in your repository's history for anyone who can see the repo. This one has a fix: put the key in a `.env` file in `app/`, which git already ignores, and point to it from the JSON with `$env:`.
+**1. Committing a key to git.** If you type a key into `settings.json` and push it, it stays in your repository's history for anyone who can see the repo. This one has a fix, put the key in a `.env` file in `app/`, which git already ignores, and point to it from the JSON with `$env:`.
 
 ```bash
 # app/.env  (never committed)
@@ -27,8 +27,9 @@ VITE_MAPTILER_KEY=your-key-here
 
 ## Protecting a key
 
-- **Restrict it to your domain.** Almost every provider (MapTiler, Mapbox, Esri, Google) lets you limit a key to specific websites in its dashboard (an HTTP referrer restriction). A copied key then won't work anywhere else, even though people can see it. For most map keys, this is enough.
-- **Keep truly secret keys out of the browser.** If a key can't be limited to a domain, is tied to billing you can't cap, or allows writing data, it must never reach the browser. The only fix is to send those requests through a small server or edge function that adds the key. Conness GIS doesn't include one.
+- **Restrict it to your domain.** Almost every provider (MapTiler, Mapbox, Esri, Google) lets you limit a key to specific websites in its dashboard (an HTTP referrer restriction). The browser tells the provider which site each request came from, so your key copied into someone else's website won't work. But that header is easy to fake outside a browser (a `curl` command or a small script), so someone set on it can still use your key and run up your quota. It stops casual copying, which is the usual risk with a map key, but it isn't real protection on its own.
+- **Cap the damage.** Set a usage limit or a billing alert in the provider's dashboard. And use a separate key for each site, so you can turn one off without breaking the others.
+- **Keep truly secret keys out of the browser.** The best solution is to enver have the key publicly available. If a key can't be limited to a domain, is tied to billing you can't cap, or allows writing data, it must never reach the browser. The only fix is to send those requests through a small server or edge function that adds the key. Conness GIS doesn't include one.
 
 ### Sending requests through your own server
 
@@ -50,3 +51,17 @@ It only warns; the build still succeeds, because many keys, like a domain-restri
 
 !!! warning "Your keys, your responsibility"
     Conness GIS doesn't manage or secure API keys. Protecting any key you deploy, and paying for any misuse, is up to you and your provider's settings.
+
+## Dependency alerts
+
+Dependabot watches the kit's dependencies and opens a pull request when one needs an update. CI runs the checks on each one before I merge it, and the fix reaches you with the next release.
+
+`npm ci` and `npm audit` will often list a few vulnerabilities anyway. Most are in dev tools like Vite, ESLint and TypeScript, which run on your machine while you build and never reach the people using your map. To check only what ships to the browser, run this in `app/`:
+
+```bash
+npm audit --omit=dev
+```
+
+That should find 0. If it doesn't, check the [Releases](../getting-started/releases.md) page for a newer one, or create an issue to let us know.
+
+Sometimes an advisory has no fix yet. For example, as of November 2026 that's picomatch, which comes in through Vite and typescript-eslint. npm's only suggestion is then `npm audit fix --force`, which swaps in an older major version of Vite (6, here) and breaks the kit.

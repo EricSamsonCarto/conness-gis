@@ -18,6 +18,8 @@ I like to create a folder called GIS in my documents or something, then "conness
     npm ci
     ```
 
+    It will probably list some vulnerabilities at the end. Those are in dev tools like Vite and ESLint that run on your computer, not in the map you build (more in [Dependency alerts](../guides/api-keys.md#dependency-alerts)). Please don't run `npm audit fix --force`. It downgrades Vite and breaks the kit.
+
 3. Start the editor
 
     ```bash
