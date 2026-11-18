@@ -9,6 +9,8 @@ icon: lucide/scale
 
 The `commercialUse` flag in your project's `settings.json` marks the app as commercial. When it's `true`, defaults that don't allow commercial use are left out of the build, and the app refuses to start if a restricted setting is still in place. It defaults to `false`.
 
+Please be sure that any resource you include in your app is cleared for commercial use. Right now there are only two non-commercial use items within Conness GIS: ESRI's satellite basemap and the Nominatim geocoder within the search widget. If you do not follow this and include these services in your commercial application, you are breaking the terms and services laid out in both of these services. Conness GIS is not responsible for misuse.
+
 !!! tip "In the editor"
     It's **Commercial use**, under **Branding**.
 

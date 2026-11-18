@@ -4,10 +4,6 @@ icon: lucide/layout-panel-left
 
 # Placing Widgets
 
-Widgets are the parts of the app users interact with: the layer list, legend, search box, draw tools and so on. Each one is a self-contained folder under `app/widgets/`, and the shell finds them automatically. You choose which to use and where they go by placing them in your project's `settings.json`.
-
-## Placing a widget
-
 Each widget lists the surfaces it supports.
 
 !!! tip "In the editor"
@@ -33,7 +29,7 @@ By hand, add the widget's `id` to the matching array in `settings.json`:
 
 A widget that supports several surfaces can appear in several places. The other placement fields (`panelWidth`, `header`, `order`, `stayOnMobile`) are covered in [Building a Custom Widget](../guides/custom-widget.md).
 
-`mobileWidgets` lists, in order, the widgets in the mobile carousel, which sits in the top bar or, with [`ui.layout.mobileWidgetBar`](../configuration/ui-layout.md#mobile-widget-bar) set to `"bottom"`, in its own bar under the map. On mobile it's the only way to open top-bar and side-panel widgets; floating widgets keep their buttons in the map corners. A widget can be in the carousel without being placed anywhere on desktop.
+`mobileWidgets` lists, in order, the widgets in the mobile carousel, which sits in the top bar or, with [`ui.layout.mobileWidgetBar`](../configuration/ui-layout.md#mobile-widget-bar) set to `"bottom"`, in its own bar under the map. Floating widgets keep their buttons in the map corners. A widget can be in the carousel without being placed anywhere on desktop.
 
 ## The built-in widgets
 

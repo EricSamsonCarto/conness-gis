@@ -4,7 +4,7 @@ icon: lucide/layout-dashboard
 
 # UI & Layout
 
-The `ui` block in your project's `settings.json` adjusts the shell: panel sides and widths, the top bar, the layer list, the info modal, the loading overlay, mobile sizing and more. Every sub-block is optional; leave one out to use its defaults.
+The `ui` block in your project's `settings.json` adjusts the shell: panel sides and widths, the top bar, the layer list, the info modal, the loading overlay, mobile sizing and more. Every sub-block is optional. Leave one out to use its defaults.
 
 !!! tip "In the editor"
     These are spread over several groups: **Layout** (arrangement, top bar, side rail, floating buttons, mobile and loading screen; the switches beside the Top Bar and Side Rail names show or hide each one), **App Style** (text sizes), **Branding** (the info modal), **Widgets** (widget headers, and each widget's Show info section switch), **Layers** (label defaults) and **Interaction** (the right-click menu and button cursor). The top of Layout has buttons that make every logo and icon 1 px bigger or smaller, and App Style has the same for text, above its text sizes.
