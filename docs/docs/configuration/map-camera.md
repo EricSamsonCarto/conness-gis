@@ -24,7 +24,7 @@ The `map` block in your project's `settings.json` sets the starting view, camera
 | `style` | `string \| object` | required | The starting basemap: a URL to a MapLibre style JSON, or an inline style object |
 | `center` | `[lng, lat]` | required | Starting map center |
 | `zoom` | `number` | required | Starting zoom level |
-| `pitch` | `number` | `0` | Starting tilt in degrees; 0 looks straight down. Use it for 3D or oblique views |
+| `pitch` | `number` | `0` | Starting tilt in degrees. 0 looks straight down. Use it for 3D or oblique views |
 | `bearing` | `number` | `0` | Starting rotation in degrees |
 | `backgroundColor` | `string` | `"#000000"` | Fill behind the map. Shows past the globe's edge, past a flat map's edges, before tiles load, and everywhere when the Basemap widget's [No Basemap](../widgets/basemap.md#no-basemap) is picked |
 | `minZoom` | `number` | `1.5` | How far out the user can zoom |
@@ -35,7 +35,7 @@ The `map` block in your project's `settings.json` sets the starting view, camera
 | `scrollZoom` | `boolean` | `true` | Zoom with the mouse wheel or trackpad scroll (see [below](#scroll-zoom)) |
 
 !!! note "Camera limits vs. layer zoom range"
-    `map.minZoom` and `map.maxZoom` limit the camera: how far the user can zoom the whole map. A layer's own `minZoom` and `maxZoom` set the zooms at which that layer draws (see [Adding Layers](adding-layers.md)).
+    `map.minZoom` and `map.maxZoom` limit the camera (how far the user can zoom the whole map). A layer's own `minZoom` and `maxZoom` set the zooms at which that layer draws (see [Adding Layers](adding-layers.md)).
 
 !!! warning "World-wide `maxBounds`"
     Don't use exactly `-180` / `180` for longitude; MapLibre crashes on load. Pull it in slightly, e.g. `[[-179.9999, -85], [179.9999, 85]]`.
@@ -64,9 +64,8 @@ A camera held to the San Francisco Bay Area:
 
 By default every layer loads at startup, hidden ones included, and the [loading overlay](ui-layout.md#loading-overlay-uiloader) waits for all of them, so everything is ready when it fades. With many or large hidden layers that makes startup slow. Set `"onlyVisibleOnLoad": true` in `map` to load only the layers visible at startup.
 
-- Hidden `geojson` (by URL or with `duckdb`), `geoparquet` and `flatgeobuf` layers load the first time they're turned on. Until their data is drawn, a small spinner takes the place of their eye in the [Layer List](../widgets/layer-list.md); after that, toggling is instant.
+- Hidden `geojson` (by URL or with `duckdb`), `geoparquet` and `flatgeobuf` layers load the first time they're turned on. Until their data is drawn, a small spinner takes the place of their eye in the [Layer List](../widgets/layer-list.md). After that, toggling is instant.
 - The loading overlay doesn't wait for them, so startup is faster.
-- Export Data, Filter and Zoom to Extent on a layer that hasn't loaded yet load it first. FlatGeobuf is the exception: its Zoom to Extent does nothing until the layer has been shown once.
 - PMTiles, tile servers, raster layers and Esri services aren't affected: they only ever fetch what's in view, hidden or not.
 
 ## Basemaps
@@ -101,7 +100,7 @@ The Basemap widget's catalog (`app/widgets/basemap/catalog.json`) has 17 basemap
 
 | Name | Source | Commercial use |
 |---|---|---|
-| Satellite (ESRI) | Esri World Imagery | Restricted; see [Commercial Use](commercial-use.md) |
+| Satellite (ESRI) | Esri World Imagery | Restricted. See [Commercial Use](commercial-use.md) |
 | Positron (OpenFreeMap) | OpenFreeMap | ✅ |
 | Liberty (OpenFreeMap) | OpenFreeMap | ✅ |
 | Bright (OpenFreeMap) | OpenFreeMap | ✅ |
@@ -145,7 +144,7 @@ It goes inside `map`. A speed of 6 degrees per second is about one turn a minute
 | `spin` | object | none | Auto-spin, starting once the map has finished its first load. Leave it out for no spin |
 | `spin.direction` | `"east" \| "west"` | `"east"` | `"east"` matches Earth's real rotation |
 | `spin.speed` | `number` | `6` | Degrees of longitude per second |
-| `spin.continuous` | `boolean` | `false` | `false` pauses the spin on the first interaction or camera move, including a search result or bookmark flying the map, and it stays paused until the [`spin` button](map-controls.md#spin) plays it again. `true` pauses it while the user interacts and resumes a moment later, for a kiosk-style globe that keeps turning. Either way the spin holds still while anything else moves the map, so searches, bookmarks and Zoom to Extent always finish |
+| `spin.continuous` | `boolean` | `false` | `false` pauses the spin on the first interaction or camera move, and it stays paused until the [`spin` button](map-controls.md#spin) plays it again. `true` pauses it while the user interacts and resumes a moment later. |
 
 !!! note "`atmosphere` defaults to on"
     `atmosphere` is the only field here that defaults to `true`, so a bare `"globe": { "enabled": true }` already shows the glow. Set it to `false` to turn it off.

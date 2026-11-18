@@ -1,4 +1,4 @@
-<img src="assets/mtconness.jpg" alt="Mount Conness" width="100%" style="object-fit: cover; object-position: top;" />
+<img src="https://conness-gis.com/assets/images/mtconness.jpg" alt="Mount Conness" width="100%" style="object-fit: cover; object-position: top;" />
 
 <h1 align="center">Conness GIS</h1>
 
