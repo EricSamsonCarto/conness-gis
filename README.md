@@ -28,6 +28,8 @@ You need Node 24 or newer (26 recommended).
     npm start
     ```
 
+    `npm ci` will probably report some vulnerabilities. They're in dev tools like Vite and ESLint that run on your computer, not in the app you build. `npm audit --omit=dev` checks only what ships, and it should find 0. Please don't run `npm audit fix --force`. It downgrades Vite and breaks the kit. Dependabot will be running on the repo, and I will get after the PRs as quickly as possible.
+
 3. Open the local URL it prints (<http://localhost:5173> by default) and click **New project**.
 
 You can also clone this repo, which comes with a few demo projects. The full walkthrough is in the [Quick Start](https://conness-gis.com/getting-started/quick-start/).
