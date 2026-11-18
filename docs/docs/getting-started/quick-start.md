@@ -12,21 +12,21 @@ Node 26 is recommended (see [Requirements](requirements.md)). Technically Node 2
 
 I like to create a folder called GIS in my documents or something, then "conness" within there, since there will be multiple versions eventually. Or just keep it in your downloads like a barbarian.
 
-2. Open a terminal in its `app/` folder and install
+2. Open a terminal in the unzipped folder, go into `app/` and install
 
     ```bash
-    npm ci
+    cd app && npm ci
     ```
 
     It will probably list some vulnerabilities at the end. Those are in dev tools like Vite and ESLint that run on your computer, not in the map you build (more in [Dependency alerts](../guides/api-keys.md#dependency-alerts)). Please don't run `npm audit fix --force`. It downgrades Vite and breaks the kit.
 
-3. Start the editor
+3. Start the editor from the same terminal
 
     ```bash
     npm start
     ```
 
-    It prints a local URL (<http://localhost:5173> by default). Open it in your browser:
+    Every `npm` command runs from `app/`. Next time, from the unzipped folder, run `cd app && npm start`. It prints a local URL (<http://localhost:5173> by default). Open it in your browser:
 
 ![The projects page with no projects yet](../assets/images/starting-page.jpg){ loading=lazy }
 
