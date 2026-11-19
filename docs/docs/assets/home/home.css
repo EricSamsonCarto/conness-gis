@@ -44,6 +44,10 @@ a {
 }
 
 .band__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   max-width: 1080px;
   margin: 0 auto;
   padding: 3rem 1.25rem 1.5rem;
