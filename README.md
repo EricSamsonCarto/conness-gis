@@ -4,7 +4,7 @@
 
 Conness GIS is an open-source framework for building GIS web apps on [MapLibre GL JS](https://maplibre.org/). You build an app in its editor, which runs on your own computer, and everything it saves is a set of plain files you can also edit by hand. I built it as an open alternative to the proprietary "settings-to-GIS-app" builders. It's named after the [mountain in the Sierra Nevada](https://en.wikipedia.org/wiki/Mount_Conness).
 
-![The editor, with a project's settings on the left and the app on the right](https://conness-gis.com/assets/images/editor.jpg)
+<p align="center"><img src="https://conness-gis.com/assets/images/editor.jpg" alt="The editor, with a project's settings on the left and the app on the right" width="70%" /></p>
 
 ## What comes with it
 
@@ -17,16 +17,18 @@ Conness GIS is an open-source framework for building GIS web apps on [MapLibre G
 
 ## Output examples
 
+<div align="center">
 <table>
   <tr>
-    <td><a href="https://demo.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/conness-demo.jpg" alt="Conness Demo" width="400" /></a></td>
-    <td><a href="https://yosemite-trails.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/yosemite-trails.jpg" alt="Yosemite Trails" width="400" /></a></td>
+    <td><a href="https://demo.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/conness-demo.jpg" alt="Conness Demo" width="300" /></a></td>
+    <td><a href="https://yosemite-trails.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/yosemite-trails.jpg" alt="Yosemite Trails" width="300" /></a></td>
   </tr>
   <tr>
-    <td><a href="https://global-earthquakes.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/global-earthquakes.jpg" alt="Global Earthquakes" width="400" /></a></td>
-    <td><a href="https://blank-lighthouse.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/blank.jpg" alt="Blank" width="400" /></a></td>
+    <td><a href="https://global-earthquakes.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/global-earthquakes.jpg" alt="Global Earthquakes" width="300" /></a></td>
+    <td><a href="https://blank-lighthouse.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/blank.jpg" alt="Blank" width="300" /></a></td>
   </tr>
 </table>
+</div>
 
 ## Quick start
 
