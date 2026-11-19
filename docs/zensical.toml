@@ -12,13 +12,13 @@
 site_name = "Conness GIS"
 
 # HTML head description for search engines.
-site_description = "Conness GIS — an open-source, code-driven framework for building widget-based GIS web apps on MapLibre. A clone-and-edit alternative to proprietary GIS app builders."
+site_description = "Build GIS web map apps in a visual editor that keeps your projects in one place and previews them live. Free, open source and built on MapLibre GL JS."
 
 site_author = "Eric Samson"
 
 # Canonical URL — set to the GitHub Pages URL once the repo + Pages are live.
 # (project site → https://<user>.github.io/<repo>/ ; user site → custom domain.)
-#site_url = "https://conness-gis.com/"
+site_url = "https://conness-gis.com/"
 
 copyright = """
 Copyright &copy; 2026 Eric Samson · Conness GIS · Apache License 2.0
