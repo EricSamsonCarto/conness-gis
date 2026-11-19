@@ -4,7 +4,7 @@ icon: lucide/package
 
 # Releases
 
-Download the latest and follow the [Quick Start](quick-start.md). To update a project you already have, see [Updating to a new release](quick-start.md#updating-to-a-new-release).
+Download here and reference the [Quick Start](quick-start.md). To update, see [Updating to a new release](quick-start.md#updating-to-a-new-release).
 
 <div id="releases" markdown>
 Loading the releases…

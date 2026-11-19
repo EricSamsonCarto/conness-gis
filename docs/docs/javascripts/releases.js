@@ -1,7 +1,8 @@
 // the Releases page: every GitHub release, newest first, read from the public API (no token: a
 // public repo's releases need none, 60 requests an hour per visitor). html+json returns the notes
 // as HTML, so there's no Markdown to render here
-const API = 'https://api.github.com/repos/ericsamsoncarto/conness-gis/releases'
+// one page of 100 releases, page through the API if it ever passes that
+const API = 'https://api.github.com/repos/ericsamsoncarto/conness-gis/releases?per_page=100'
 const GITHUB = 'https://github.com/ericsamsoncarto/conness-gis/releases'
 
 function el(tag, props = {}, ...children) {
@@ -40,7 +41,8 @@ async function load(root) {
     if (!res.ok) throw new Error(String(res.status))
     const releases = (await res.json()).filter((r) => !r.draft && !r.prerelease)
     if (releases.length === 0) return message(root, 'No releases yet.')
-    root.replaceChildren(...releases.map(row))
+    const total = releases.reduce((sum, r) => sum + (r.assets.find((a) => a.name.endsWith('.zip'))?.download_count ?? 0), 0)
+    root.replaceChildren(el('p', { className: 'releases__total' }, `Total Downloads: ${total.toLocaleString()}`), ...releases.map(row))
   } catch {
     message(root, "Couldn't load the releases.")
   }

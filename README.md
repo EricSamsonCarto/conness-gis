@@ -15,6 +15,19 @@ Conness GIS is an open-source framework for building GIS web apps on [MapLibre G
 - Mobile ready out the box. A button in the editor to see how they look there.
 - Build turns a project into a zip you can put on any static host.
 
+## Output examples
+
+<table>
+  <tr>
+    <td><a href="https://demo.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/conness-demo.jpg" alt="Conness Demo" width="400" /></a></td>
+    <td><a href="https://yosemite-trails.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/yosemite-trails.jpg" alt="Yosemite Trails" width="400" /></a></td>
+  </tr>
+  <tr>
+    <td><a href="https://global-earthquakes.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/global-earthquakes.jpg" alt="Global Earthquakes" width="400" /></a></td>
+    <td><a href="https://blank-lighthouse.conness-gis.com" target="_blank" rel="noopener"><img src="https://conness-gis.com/assets/images/blank.jpg" alt="Blank" width="400" /></a></td>
+  </tr>
+</table>
+
 ## Quick start
 
 You need Node 24 or newer (26 recommended).
